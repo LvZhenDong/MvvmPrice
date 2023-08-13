@@ -12,8 +12,13 @@
         android:theme="@style/Theme.MyTest"
         tools:targetApi="31">
         <activity
+            android:name=".ui.page.StoreDetailsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

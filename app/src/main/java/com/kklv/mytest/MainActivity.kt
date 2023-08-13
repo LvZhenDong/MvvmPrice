@@ -1,8 +1,10 @@
 package com.kklv.mytest
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import com.kklv.mytest.domain.message.PageMessenger
+import com.kklv.mytest.ui.page.StoreDetailsActivity
 import com.kunminx.architecture.ui.page.BaseActivity
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
@@ -19,7 +21,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun getDataBindingConfig(): DataBindingConfig {
-        return DataBindingConfig(R.layout.activity_main, BR.vm, mStates).addBindingParam(BR.click, ClickProxy())
+        return DataBindingConfig(R.layout.activity_main, BR.mainVm, mStates).addBindingParam(BR.click, ClickProxy())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +35,10 @@ class MainActivity : BaseActivity() {
     inner class ClickProxy {
         fun switchIsShow() {
             mStates.isShow.set(!(mStates.isShow.get()?:false))
+        }
+
+        fun goToStoreDetailsActivity(){
+            startActivity(Intent(this@MainActivity,StoreDetailsActivity::class.java))
         }
     }
 
