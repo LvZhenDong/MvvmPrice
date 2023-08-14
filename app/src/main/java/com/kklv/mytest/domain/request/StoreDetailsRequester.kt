@@ -47,7 +47,8 @@ class StoreDetailsRequester:Requester(),DefaultLifecycleObserver {
                 }
 
                 override fun onNext(t: DataResult<StoreDetailsBean>) {
-                    Log.i("kklv","data:${t.result.store_name}")
+                    storeDetailsInfoResult.postValue(t)
+                    Log.i("kklv","data:${t.result?.store_name}")
                 }
 
             })

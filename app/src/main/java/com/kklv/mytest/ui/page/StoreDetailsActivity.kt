@@ -21,8 +21,8 @@ class StoreDetailsActivity : BaseActivity() {
     }
 
     override fun getDataBindingConfig(): DataBindingConfig {
-        return DataBindingConfig(R.layout.activity_store_details, BR.StoreDetailsVm, mStates)
-            .addBindingParam(BR.click,ClickProxy())
+        return DataBindingConfig(R.layout.activity_store_details, BR.vm, mStates)
+            .addBindingParam(BR.click, ClickProxy())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,11 +34,11 @@ class StoreDetailsActivity : BaseActivity() {
 
         }
 
+        mStoreDetailsRequester.getDetailsInfo()
     }
 
     inner class ClickProxy {
         fun refresh() {
-            mStoreDetailsRequester.getDetailsInfo()
         }
     }
 
