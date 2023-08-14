@@ -19,6 +19,8 @@ interface StoreService {
 
     @GET("/bapi/jd_hero/stores/v3/detail/base_data")
     fun getStoreDetailsInfo(
-        @Query("store_id") storeId: String
+        @Query("store_id") storeId: String,
+        @Query("latitude")latitude:String,
+        @Query("longitude")longitude:String
     ): Call<BaseJdResponse<StoreDetailsBean>>
 }

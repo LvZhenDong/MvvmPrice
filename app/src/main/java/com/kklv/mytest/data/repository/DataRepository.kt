@@ -52,7 +52,7 @@ class DataRepository private constructor() {
 
     fun getStoreDetailsInfo(): Observable<DataResult<StoreDetailsBean>> {
         return Observable.create { emitter ->
-            val call = retrofit.create(StoreService::class.java).getStoreDetailsInfo("ed7e9adf-bce9-4120-aa89-61f807c29f4b")
+            val call = retrofit.create(StoreService::class.java).getStoreDetailsInfo("ed7e9adf-bce9-4120-aa89-61f807c29f4b","30.539129","104.054851")
             val response: Response<BaseJdResponse<StoreDetailsBean>>
             try {
                 response = call.execute()

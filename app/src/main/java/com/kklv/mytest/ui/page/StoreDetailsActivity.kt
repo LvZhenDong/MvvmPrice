@@ -9,7 +9,6 @@ import com.kunminx.architecture.ui.page.BaseActivity
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
-import io.reactivex.Observer
 
 class StoreDetailsActivity : BaseActivity() {
     private lateinit var mStates: StoreDetailsActivityStates
@@ -31,21 +30,29 @@ class StoreDetailsActivity : BaseActivity() {
         lifecycle.addObserver(mStoreDetailsRequester)
 
         mStoreDetailsRequester.getStoreDetailsInfoResult().observe(this@StoreDetailsActivity) {
-
+            mStates.dataInfo.set(it.result)
+            if(it.result.is_mark)mStates.collectionRes.set(R.drawable.iv_store_collect)
         }
 
         mStoreDetailsRequester.getDetailsInfo()
     }
 
     inner class ClickProxy {
-        fun refresh() {
+        fun clickExpandArrow() {
+            mStates.isExpanded.set(!(mStates.isExpanded.get() ?: false))
+        }
+
+        fun back(){
+            finish()
         }
     }
 
 
     class StoreDetailsActivityStates : StateHolder() {
-        val isToast: State<Boolean> = State(false)
+        val dataInfo: State<StoreDetailsBean> = State(StoreDetailsBean())
 
+        val isExpanded: State<Boolean> = State(false)
 
+        val collectionRes:State<Int> = State(R.drawable.iv_store_collect_white)
     }
 }

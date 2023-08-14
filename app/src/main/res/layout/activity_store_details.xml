@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="92dp"
-                app:contentScrim="@color/black"
+                app:contentScrim="#00ffffff"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:titleEnabled="false">
 
@@ -52,6 +52,8 @@
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        app:bannerImages="@{vm.dataInfo.bg_imgs}"
+                        app:bannerIndicatorTv='@{bannerIndex}'
                         app:layout_constraintDimensionRatio="375:152"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -94,6 +96,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
+                            android:text="@{vm.dataInfo.store_name}"
                             android:textColor="#353637"
                             android:textSize="18sp"
                             android:textStyle="bold"
@@ -117,11 +120,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="21dp"
                             android:layout_marginEnd="16dp"
-                            tools:itemCount="3"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:itemCount="3" />
 
                         <TextView
                             android:id="@+id/tvLocation"
@@ -130,6 +133,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="4dp"
+                            android:text="@{vm.dataInfo.full_address}"
                             android:textColor="#646566"
                             android:textSize="12sp"
                             app:layout_constraintEnd_toStartOf="@id/tvNavigationToMap"
@@ -144,13 +148,14 @@
                             android:layout_marginEnd="10dp"
                             android:paddingHorizontal="6dp"
                             android:paddingVertical="10dp"
+                            android:text="@{vm.dataInfo.distance}"
                             android:textColor="#646566"
                             android:textSize="10sp"
+                            app:drawableStartCompat="@drawable/icon_store_navigation"
                             app:layout_constraintBottom_toBottomOf="@id/tvLocation"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/tvLocation"
-                            tools:text="1.5km"
-                            app:drawableStartCompat="@drawable/icon_store_navigation" />
+                            tools:text="1.5km" />
 
                         <TextView
                             android:id="@+id/tvMerchantTag"
@@ -170,6 +175,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
                             android:paddingVertical="4dp"
+                            android:text="@{vm.dataInfo.merchantName}"
                             android:textColor="#5878B4"
                             android:textSize="12sp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -193,6 +199,7 @@
                             android:id="@+id/tvBusinessTime"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:text="@{vm.dataInfo.opening_hours}"
                             android:textColor="#646566"
                             android:textSize="12sp"
                             app:layout_constraintEnd_toStartOf="@id/tvChangeBusinessTime"
@@ -214,11 +221,11 @@
                             android:text="修改"
                             android:textColor="#949495"
                             android:textSize="12sp"
+                            app:drawableEndCompat="@drawable/ic_arrow"
                             app:layout_constraintBottom_toBottomOf="@id/tvBusinessTimeTag"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/tvBusinessTime"
-                            app:layout_constraintTop_toTopOf="@id/tvBusinessTimeTag"
-                            app:drawableEndCompat="@drawable/ic_arrow" />
+                            app:layout_constraintTop_toTopOf="@id/tvBusinessTimeTag" />
 
                         <TextView
                             android:id="@+id/tvContactTag"
@@ -237,6 +244,7 @@
                             android:layout_height="wrap_content"
                             android:drawablePadding="4dp"
                             android:paddingVertical="8dp"
+                            android:text="@{vm.dataInfo.contact_text}"
                             android:textColor="#646566"
                             android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="@id/tvContactTag"
@@ -250,6 +258,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
+                            android:text="@{vm.dataInfo.signerAndOperation}"
                             android:textColor="#646566"
                             android:textSize="12sp"
                             app:layout_constraintStart_toStartOf="@id/tvLocation"
@@ -261,6 +270,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
+                            android:text="@{vm.dataInfo.createTime}"
                             android:textColor="#646566"
                             android:textSize="12sp"
                             app:layout_constraintStart_toStartOf="@id/tvLocation"
@@ -271,6 +281,7 @@
                             android:id="@+id/ivExpand"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:onClick="@{()->click.clickExpandArrow()}"
                             android:padding="16dp"
                             android:src="@drawable/icon_recommend_arrow"
                             app:layout_constraintBottom_toBottomOf="@id/tvCreateTime"
@@ -281,8 +292,9 @@
                             android:id="@+id/expandLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:el_duration="200"
+                            app:el_duration="@integer/anim_duration"
                             app:el_expanded="false"
+                            app:isExpanded="@{vm.isExpanded()}"
                             app:layout_constraintTop_toBottomOf="@id/ivExpand">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
@@ -308,6 +320,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="8dp"
+                                    android:text="@{vm.dataInfo.rivalText}"
                                     android:textColor="#646566"
                                     android:textSize="10sp"
                                     app:layout_constraintStart_toStartOf="@id/lineExpand"
@@ -319,6 +332,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
+                                    android:text="@{vm.dataInfo.storeSource}"
                                     android:textColor="#646566"
                                     android:textSize="10sp"
                                     app:layout_constraintStart_toStartOf="@id/tvCompetitor"
@@ -340,6 +354,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
+                                    android:text="@{vm.dataInfo.storeType}"
                                     android:textColor="#646566"
                                     android:textSize="10sp"
                                     app:layout_constraintBottom_toBottomOf="@id/tvStoreSource"
@@ -352,6 +367,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
+                                    android:text="@{vm.dataInfo.latestClaimTime}"
                                     android:textColor="#646566"
                                     android:textSize="10sp"
                                     app:layout_constraintStart_toStartOf="@id/tvCompetitor"
@@ -363,6 +379,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
+                                    android:text="@{vm.dataInfo.storeUUID}"
                                     android:textColor="#646566"
                                     android:textSize="10sp"
                                     app:layout_constraintStart_toStartOf="@id/tvCompetitor"
@@ -398,7 +415,7 @@
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintTop_toBottomOf="@id/clStoreInfo"
                         app:spanCount="5"
-                        tools:itemCount="8"/>
+                        tools:itemCount="8" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -429,6 +446,7 @@
                 android:layout_width="52dp"
                 android:layout_height="52dp"
                 android:layout_marginTop="40dp"
+                android:onClick="@{()->click.back()}"
                 android:padding="16dp"
                 android:src="@drawable/icon_store_back"
                 app:layout_constraintStart_toStartOf="parent"
@@ -439,7 +457,7 @@
                 android:layout_width="52dp"
                 android:layout_height="52dp"
                 android:padding="16dp"
-                android:src="@drawable/iv_store_collect_white"
+                app:imgSrc="@{vm.collectionRes}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/ivBack" />
 
