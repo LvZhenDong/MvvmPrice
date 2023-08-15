@@ -1,11 +1,8 @@
 package com.kklv.mytest.data.repository
 
 
-import android.util.Log
 import com.kklv.mytest.data.api.APIs
-import com.kklv.mytest.data.api.StoreService
-import com.kklv.mytest.data.bean.BaseJdResponse
-import com.kklv.mytest.data.bean.StoreDetailsBean
+import com.kklv.mytest.data.bean.base.BaseJdResponse
 import com.kklv.mytest.data.interceptor.JdInterceptor
 import com.kunminx.architecture.data.response.DataResult
 import com.kunminx.architecture.data.response.ResponseStatus

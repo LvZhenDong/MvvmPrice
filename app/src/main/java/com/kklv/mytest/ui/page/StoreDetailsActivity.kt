@@ -3,13 +3,16 @@ package com.kklv.mytest.ui.page
 import android.os.Bundle
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
+import com.kklv.mytest.data.bean.SchemaBean
 import com.kklv.mytest.data.bean.StoreDetailsBean
+import com.kklv.mytest.databinding.ItemStoreNavigationBinding
 import com.kklv.mytest.domain.request.StoreDetailsRequester
+import com.kklv.mytest.ui.view.adapter.BaseResultDataAdapter
 import com.kunminx.architecture.ui.page.BaseActivity
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
-import kotlinx.android.synthetic.main.activity_store_details.*
+import kotlinx.android.synthetic.main.activity_store_details.rvNavigation
 
 class StoreDetailsActivity : BaseActivity() {
     private lateinit var mStates: StoreDetailsActivityStates
@@ -31,15 +34,24 @@ class StoreDetailsActivity : BaseActivity() {
         initView()
 
         mStoreDetailsRequester.getStoreDetailsInfoResult().observe(this@StoreDetailsActivity) {
-            mStates.dataInfo.set(it.result)
-            if(it.result.is_mark)mStates.collectionRes.set(R.drawable.iv_store_collect)
+            mStates.dataInfo.set(it)
+            if (it.is_mark) mStates.collectionRes.set(R.drawable.iv_store_collect)
         }
 
         mStoreDetailsRequester.getDetailsInfo()
     }
 
-    private fun initView(){
-
+    private fun initView() {
+        rvNavigation.adapter = BaseResultDataAdapter<SchemaBean, ItemStoreNavigationBinding>(
+            mStoreDetailsRequester.getNavBtnsResult(),
+            this,
+            R.layout.item_store_navigation
+        ) { _, data, binding ->
+            binding.apply {
+                imgUrl = data.icon
+                btnText = data.value
+            }
+        }
     }
 
     inner class ClickProxy {
@@ -47,7 +59,7 @@ class StoreDetailsActivity : BaseActivity() {
             mStates.isExpanded.set(!(mStates.isExpanded.get() ?: false))
         }
 
-        fun back(){
+        fun back() {
             finish()
         }
     }
@@ -58,6 +70,6 @@ class StoreDetailsActivity : BaseActivity() {
 
         val isExpanded: State<Boolean> = State(false)
 
-        val collectionRes:State<Int> = State(R.drawable.iv_store_collect_white)
+        val collectionRes: State<Int> = State(R.drawable.iv_store_collect_white)
     }
 }

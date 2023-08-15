@@ -1,13 +1,10 @@
 package com.kklv.mytest.data.api
 
-import com.kklv.mytest.data.bean.BaseJdResponse
+import com.kklv.mytest.data.bean.NavBtnsBean
 import com.kklv.mytest.data.bean.StoreDetailsBean
+import com.kklv.mytest.data.bean.base.BaseJdResponse
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
-
-import retrofit2.http.POST
 import retrofit2.http.Query
 
 /**
@@ -23,4 +20,14 @@ interface StoreService {
         @Query("latitude")latitude:String,
         @Query("longitude")longitude:String
     ): Call<BaseJdResponse<StoreDetailsBean>>
+
+    @GET("/bapi/jd_hero/stores/v3/detail/buttons1")
+    fun getStoreDetailsNavBtn1(
+        @Query("store_id") storeId: String
+    ): Call<BaseJdResponse<NavBtnsBean>>
+
+    @GET("/bapi/jd_hero/stores/v3/detail/buttons2")
+    fun getStoreDetailsNavBtn2(
+        @Query("store_id") storeId: String
+    ): Call<BaseJdResponse<NavBtnsBean>>
 }

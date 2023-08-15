@@ -1,4 +1,4 @@
-package com.kklv.mytest.data.bean
+package com.kklv.mytest.data.bean.base
 
 /**
  * Author:lvzhendong

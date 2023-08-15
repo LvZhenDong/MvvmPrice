@@ -1,13 +1,12 @@
 package com.kklv.mytest.ui.view.bind
 
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
-import androidx.annotation.IdRes
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.findViewTreeLifecycleOwner
+import com.bumptech.glide.Glide
 import com.kklv.mytest.ui.view.adapter.BannerImageAdapter
 import com.youth.banner.Banner
 import com.youth.banner.listener.OnPageChangeListener
@@ -27,6 +26,13 @@ fun setVisibleOrGone(view: View, isVisible: Boolean) {
 @BindingAdapter("imgSrc")
 fun setImgSrc(imageView: ImageView, @DrawableRes imgSrc: Int) {
     imageView.setImageResource(imgSrc)
+}
+
+@BindingAdapter("imgUrl")
+fun ImageView.setImgUrl(imageUrl: String) {
+    Glide.with(this)
+        .load(imageUrl)
+        .into(this)
 }
 
 @BindingAdapter(value = ["bannerImages", "bannerIndicatorTv"], requireAll = true)
