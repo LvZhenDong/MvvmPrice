@@ -9,6 +9,7 @@ import com.kunminx.architecture.ui.page.BaseActivity
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
+import kotlinx.android.synthetic.main.activity_store_details.*
 
 class StoreDetailsActivity : BaseActivity() {
     private lateinit var mStates: StoreDetailsActivityStates
@@ -26,8 +27,8 @@ class StoreDetailsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         lifecycle.addObserver(mStoreDetailsRequester)
+        initView()
 
         mStoreDetailsRequester.getStoreDetailsInfoResult().observe(this@StoreDetailsActivity) {
             mStates.dataInfo.set(it.result)
@@ -35,6 +36,10 @@ class StoreDetailsActivity : BaseActivity() {
         }
 
         mStoreDetailsRequester.getDetailsInfo()
+    }
+
+    private fun initView(){
+
     }
 
     inner class ClickProxy {

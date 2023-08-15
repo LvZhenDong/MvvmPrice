@@ -27,7 +27,7 @@ class JdInterceptor:Interceptor {
             .header("script-code", "Hans")
             .header("country-code", "CN")
             .header("time-zone", "GMT+08:00")
-            .header("ac-token", "uat_ba4195859a0642ce80b878f487c25a0c")
+            .header("ac-token", "uat_585daf3a92e247be99e64f236d34c42b")
             .addHeader("User-Agent", "XpKLpLXgf9YDALcVeYr7vsI0")
             .addHeader("Cookie", "sid=uat_c32cd44a23e544859a8998e3379b6295;uid=5af2adaa2161c")
             .method(original.method, original.body)

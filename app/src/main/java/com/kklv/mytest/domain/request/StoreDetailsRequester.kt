@@ -2,6 +2,7 @@ package com.kklv.mytest.domain.request
 
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
+import com.kklv.mytest.data.api.StoreService
 import com.kklv.mytest.data.bean.BaseJdResponse
 import com.kklv.mytest.data.bean.StoreDetailsBean
 import com.kklv.mytest.data.repository.DataRepository
@@ -20,18 +21,19 @@ import io.reactivex.schedulers.Schedulers
  * Created:2023/8/12
  * Desc:
  */
-class StoreDetailsRequester:Requester(),DefaultLifecycleObserver {
+class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
     private val storeDetailsInfoResult: MutableResult<DataResult<StoreDetailsBean>> = MutableResult()
 
-    fun getStoreDetailsInfoResult():Result<DataResult<StoreDetailsBean>>{
+    fun getStoreDetailsInfoResult(): Result<DataResult<StoreDetailsBean>> {
         return storeDetailsInfoResult
     }
 
     private var mDisposable: Disposable? = null
 
-    fun getDetailsInfo(){
-        DataRepository.getInstance().getStoreDetailsInfo()
-            .subscribeOn(Schedulers.io())
+    fun getDetailsInfo() {
+        DataRepository.getInstance().getNetWorkData(StoreService::class.java) { service ->
+            service.getStoreDetailsInfo("ed7e9adf-bce9-4120-aa89-61f807c29f4b", "30.539129", "104.054851")
+        }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Observer<DataResult<StoreDetailsBean>> {
                 override fun onSubscribe(d: Disposable) {
@@ -48,7 +50,7 @@ class StoreDetailsRequester:Requester(),DefaultLifecycleObserver {
 
                 override fun onNext(t: DataResult<StoreDetailsBean>) {
                     storeDetailsInfoResult.postValue(t)
-                    Log.i("kklv","data:${t.result?.store_name}")
+                    Log.i("kklv", "data:${t.result?.store_name}")
                 }
 
             })

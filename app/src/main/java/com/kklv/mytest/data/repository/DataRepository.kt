@@ -13,6 +13,7 @@ import com.kunminx.architecture.data.response.ResultSource
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -50,10 +51,11 @@ class DataRepository private constructor() {
             .build()
     }
 
-    fun getStoreDetailsInfo(): Observable<DataResult<StoreDetailsBean>> {
+    fun <S,T>getNetWorkData(serviceClass:Class<S>,function:(S)-> Call<BaseJdResponse<T>>): Observable<DataResult<T>> {
         return Observable.create { emitter ->
-            val call = retrofit.create(StoreService::class.java).getStoreDetailsInfo("ed7e9adf-bce9-4120-aa89-61f807c29f4b","30.539129","104.054851")
-            val response: Response<BaseJdResponse<StoreDetailsBean>>
+            val service = retrofit.create(serviceClass)
+            val call = function(service)
+            val response: Response<BaseJdResponse<T>>
             try {
                 response = call.execute()
                 val responseStatus = ResponseStatus(
