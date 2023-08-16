@@ -86,7 +86,9 @@
                         android:id="@+id/clStoreInfo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_top_8dp_ffffff"
+                        app:bl_solid_color="@color/white"
+                        app:bl_corners_topLeftRadius="8dp"
+                        app:bl_corners_topRightRadius="8dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/bannerHeight">
 

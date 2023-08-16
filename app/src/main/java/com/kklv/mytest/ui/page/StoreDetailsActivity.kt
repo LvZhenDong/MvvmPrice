@@ -15,9 +15,7 @@ import com.kunminx.architecture.ui.page.BaseActivity
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
-import kotlinx.android.synthetic.main.activity_store_details.rvNavigation
-import kotlinx.android.synthetic.main.activity_store_details.rvStoreTags
-import kotlinx.android.synthetic.main.activity_store_details.tvContact
+import kotlinx.android.synthetic.main.activity_store_details.*
 
 class StoreDetailsActivity : BaseActivity() {
     private lateinit var mStates: StoreDetailsActivityStates
@@ -52,6 +50,7 @@ class StoreDetailsActivity : BaseActivity() {
     private lateinit var tagAdapter: BaseSimpleAdapter<String, ItemStoreTagBinding>
 
     private fun initView() {
+        initSkeleton()
         rvNavigation.adapter = BaseResultDataAdapter<SchemaBean, ItemStoreNavigationBinding>(
             mStoreDetailsRequester.getNavBtnsResult(),
             this,
@@ -72,6 +71,11 @@ class StoreDetailsActivity : BaseActivity() {
             }
         }
         rvStoreTags.adapter = tagAdapter
+    }
+
+
+    private fun initSkeleton() {
+
     }
 
     inner class ClickProxy {
