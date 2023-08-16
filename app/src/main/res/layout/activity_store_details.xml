@@ -111,6 +111,7 @@
                             android:id="@+id/ivTag"
                             android:layout_width="28dp"
                             android:layout_height="28dp"
+                            app:imgUrl="@{vm.dataInfo.store_level_icon}"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -282,6 +283,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:onClick="@{()->click.clickExpandArrow()}"
+                            app:reverseWithAnim="@{vm.isExpanded()}"
                             android:padding="16dp"
                             android:src="@drawable/icon_recommend_arrow"
                             app:layout_constraintBottom_toBottomOf="@id/tvCreateTime"

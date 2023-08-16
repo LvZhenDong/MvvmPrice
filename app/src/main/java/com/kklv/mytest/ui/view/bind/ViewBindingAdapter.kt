@@ -1,12 +1,18 @@
 package com.kklv.mytest.ui.view.bind
 
+import android.animation.ValueAnimator
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import com.bumptech.glide.Glide
+import com.kklv.mytest.R
 import com.kklv.mytest.ui.view.adapter.BannerImageAdapter
 import com.youth.banner.Banner
 import com.youth.banner.listener.OnPageChangeListener
@@ -29,7 +35,7 @@ fun setImgSrc(imageView: ImageView, @DrawableRes imgSrc: Int) {
 }
 
 @BindingAdapter("imgUrl")
-fun ImageView.setImgUrl(imageUrl: String) {
+fun ImageView.setImgUrl(imageUrl: String?) {
     Glide.with(this)
         .load(imageUrl)
         .into(this)
@@ -63,8 +69,29 @@ fun setBannerImages(banner: Banner<String, BannerImageAdapter>, bannerImages: Ar
 @BindingAdapter("isExpanded")
 fun isExpanded(expandableLayout: ExpandableLayout, isExpanded: Boolean) {
     if (!isExpanded) {
-        expandableLayout.collapse(true);
+        expandableLayout.collapse(true)
     } else {
-        expandableLayout.expand(true);
+        expandableLayout.expand(true)
+    }
+}
+
+@BindingAdapter("reverseWithAnim")
+fun isReverseWithAnim(view: View, isReverse: Boolean) {
+    val animator = ValueAnimator.ofFloat(if (isReverse) 360f else 180f, if (isReverse) 180f else 360f)
+    animator.addUpdateListener {
+        val rotation = it.animatedValue as Float
+        view.rotation = rotation
+    }
+    animator.duration = view.context.resources.getInteger(R.integer.anim_duration).toLong()
+    animator.start()
+
+    view.findViewTreeLifecycleOwner()?.let {
+        it.lifecycle.addObserver(object : LifecycleObserver {
+            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+            fun onDestroy() {
+                Log.i("kklv","onDestroy")
+                animator.cancel()
+            }
+        })
     }
 }

@@ -35,7 +35,7 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
 
     private var mDisposable: Disposable? = null
 
-    private val storeId: String = "ed7e9adf-bce9-4120-aa89-61f807c29f4b"
+    private val storeId: String = "1abf21d5-4764-42df-bbf4-e854fc8b5a71"
 
     fun getDetailsInfo() {
         val observableInfo = DataRepository.getInstance().getNetWorkData(StoreService::class.java) { service ->
