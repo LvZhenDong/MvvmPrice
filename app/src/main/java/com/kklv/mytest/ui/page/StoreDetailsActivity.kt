@@ -1,6 +1,8 @@
 package com.kklv.mytest.ui.page
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
 import com.kklv.mytest.data.bean.SchemaBean
@@ -15,7 +17,12 @@ import com.kunminx.architecture.ui.page.BaseActivity
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
-import kotlinx.android.synthetic.main.activity_store_details.*
+import kotlinx.android.synthetic.main.activity_store_details.rvNavigation
+import kotlinx.android.synthetic.main.activity_store_details.rvStoreTags
+import kotlinx.android.synthetic.main.activity_store_details.tabStoreData
+import kotlinx.android.synthetic.main.activity_store_details.tvContact
+import kotlinx.android.synthetic.main.activity_store_details.vpStoreData
+import net.lucode.hackware.magicindicator.ViewPagerHelper
 
 class StoreDetailsActivity : BaseActivity() {
     private lateinit var mStates: StoreDetailsActivityStates
@@ -51,6 +58,7 @@ class StoreDetailsActivity : BaseActivity() {
 
     private fun initView() {
         initSkeleton()
+        initTab()
         rvNavigation.adapter = BaseResultDataAdapter<SchemaBean, ItemStoreNavigationBinding>(
             mStoreDetailsRequester.getNavBtnsResult(),
             this,
@@ -73,6 +81,25 @@ class StoreDetailsActivity : BaseActivity() {
         rvStoreTags.adapter = tagAdapter
     }
 
+    private fun initTab() {
+        val fragments = arrayListOf(
+            StoreDetailsDataFragment.getInstance(""),
+            StoreDetailsDataFragment.getInstance(""),
+            StoreDetailsDataFragment.getInstance("")
+        )
+        val mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
+            override fun getCount(): Int {
+                return fragments.size
+            }
+
+            override fun getItem(position: Int): Fragment {
+                return fragments[position]
+            }
+        }
+        vpStoreData.adapter = mPagerAdapter
+        vpStoreData.offscreenPageLimit = 2
+        ViewPagerHelper.bind(tabStoreData, vpStoreData)
+    }
 
     private fun initSkeleton() {
 
@@ -95,5 +122,7 @@ class StoreDetailsActivity : BaseActivity() {
         val isExpanded: State<Boolean> = State(false)
 
         val collectionRes: State<Int> = State(R.drawable.iv_store_collect_white)
+
+        val tabData:State<ArrayList<String>> = State(arrayListOf("数据", "设备", "合同"))
     }
 }
