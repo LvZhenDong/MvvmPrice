@@ -1,6 +1,7 @@
 package com.kklv.mytest.data.interceptor
 
 import android.os.Build
+import com.kklv.mytest.data.DataManager
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -23,19 +24,18 @@ class JdInterceptor:Interceptor {
             .header("device-version", "8.7.6")
             .header("brand", Build.BRAND.lowercase(Locale.getDefault()))
             .header("model", Build.MODEL.lowercase(Locale.getDefault()))
-            .header("language-code","zh")
+            .header("language-code", "zh")
             .header("script-code", "Hans")
             .header("country-code", "CN")
             .header("time-zone", "GMT+08:00")
-            .header("ac-token", "uat_cc1aeee9a25942f3a5f91517996c0f6d")
+            .header("ac-token", DataManager.getInstance().getAcToken())
             .addHeader("User-Agent", "XpKLpLXgf9YDALcVeYr7vsI0")
             .addHeader("Cookie", "sid=uat_c32cd44a23e544859a8998e3379b6295;uid=5af2adaa2161c")
             .method(original.method, original.body)
 
         val request = builder.build()
-        val response = chain.proceed(request)
 
-        return response
+        return chain.proceed(request)
     }
 
 }

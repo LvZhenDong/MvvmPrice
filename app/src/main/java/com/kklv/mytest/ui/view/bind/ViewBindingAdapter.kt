@@ -2,7 +2,6 @@ package com.kklv.mytest.ui.view.bind
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -98,7 +97,6 @@ fun isReverseWithAnim(view: View, isReverse: Boolean) {
         it.lifecycle.addObserver(object : LifecycleObserver {
             @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
             fun onDestroy() {
-                Log.i("kklv","onDestroy")
                 animator.cancel()
             }
         })

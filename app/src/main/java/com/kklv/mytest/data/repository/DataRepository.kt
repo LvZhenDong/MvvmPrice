@@ -1,9 +1,11 @@
 package com.kklv.mytest.data.repository
 
-
 import com.kklv.mytest.data.api.APIs
+import com.kklv.mytest.data.api.UserService
+import com.kklv.mytest.data.bean.TokenBodyBean
 import com.kklv.mytest.data.bean.base.BaseJdResponse
 import com.kklv.mytest.data.interceptor.JdInterceptor
+import com.kklv.mytest.data.interceptor.RefreshTokenInterceptor
 import com.kunminx.architecture.data.response.DataResult
 import com.kunminx.architecture.data.response.ResponseStatus
 import com.kunminx.architecture.data.response.ResultSource
@@ -40,6 +42,7 @@ class DataRepository private constructor() {
             .writeTimeout(8, TimeUnit.SECONDS)
             .addInterceptor(logging)
             .addInterceptor(JdInterceptor())
+            .addInterceptor(RefreshTokenInterceptor())
             .build()
         retrofit = Retrofit.Builder()
             .baseUrl(APIs.BASE_URL)
@@ -48,7 +51,10 @@ class DataRepository private constructor() {
             .build()
     }
 
-    fun <S,T>getNetWorkData(serviceClass:Class<S>,function:(S)-> Call<BaseJdResponse<T>>): Observable<DataResult<T>> {
+    fun <S, T> getNetWorkData(
+        serviceClass: Class<S>,
+        function: (S) -> Call<BaseJdResponse<T>>
+    ): Observable<DataResult<T>> {
         return Observable.create { emitter ->
             val service = retrofit.create(serviceClass)
             val call = function(service)
@@ -71,4 +77,17 @@ class DataRepository private constructor() {
             }
         }
     }
+
+    fun refreshToken(map: Map<String, String>): TokenBodyBean? {
+        val call = retrofit.create(UserService::class.java).refreshToken(map)
+        val response: Response<TokenBodyBean>
+        return try {
+            response = call.execute()
+            response.body()!!
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        }
+    }
+
 }
