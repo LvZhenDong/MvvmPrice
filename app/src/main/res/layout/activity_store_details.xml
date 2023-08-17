@@ -86,9 +86,9 @@
                         android:id="@+id/clStoreInfo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:bl_solid_color="@color/white"
                         app:bl_corners_topLeftRadius="8dp"
                         app:bl_corners_topRightRadius="8dp"
+                        app:bl_solid_color="@color/white"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/bannerHeight">
 
@@ -261,7 +261,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="@{vm.dataInfo.signerAndOperation}"
+                            android:text='@{"签约："+vm.dataInfo.sign_user_name+"  |  运维："+vm.dataInfo.maintain_user_name}'
                             android:textColor="#646566"
                             android:textSize="12sp"
                             app:layout_constraintStart_toStartOf="@id/tvLocation"
@@ -273,7 +273,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="@{vm.dataInfo.createTime}"
+                            android:text='@{"门店创建时间："+vm.dataInfo.create_time}'
                             android:textColor="#646566"
                             android:textSize="12sp"
                             app:layout_constraintStart_toStartOf="@id/tvLocation"
@@ -285,12 +285,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:onClick="@{()->click.clickExpandArrow()}"
-                            app:reverseWithAnim="@{vm.isExpanded()}"
                             android:padding="16dp"
                             android:src="@drawable/icon_recommend_arrow"
                             app:layout_constraintBottom_toBottomOf="@id/tvCreateTime"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/tvCreateTime" />
+                            app:layout_constraintTop_toTopOf="@id/tvCreateTime"
+                            app:reverseWithAnim="@{vm.isExpanded()}" />
 
                         <net.cachapa.expandablelayout.ExpandableLayout
                             android:id="@+id/expandLayout"
@@ -324,7 +324,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="8dp"
-                                    android:text="@{vm.dataInfo.rivalText}"
+                                    android:text='@{"竞对情况："+vm.dataInfo.rival_text}'
                                     android:textColor="#646566"
                                     android:textSize="10sp"
                                     app:layout_constraintStart_toStartOf="@id/lineExpand"
@@ -336,7 +336,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
-                                    android:text="@{vm.dataInfo.storeSource}"
+                                    android:text='@{"门店来源："+vm.dataInfo.source}'
                                     android:textColor="#646566"
                                     android:textSize="10sp"
                                     app:layout_constraintStart_toStartOf="@id/tvCompetitor"
@@ -358,7 +358,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
-                                    android:text="@{vm.dataInfo.storeType}"
+                                    android:text='@{"分类："+vm.dataInfo.classfiy}'
                                     android:textColor="#646566"
                                     android:textSize="10sp"
                                     app:layout_constraintBottom_toBottomOf="@id/tvStoreSource"
@@ -371,7 +371,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
-                                    android:text="@{vm.dataInfo.latestClaimTime}"
+                                    android:text='@{"最新认领时间："+vm.dataInfo.latest_claim_time}'
                                     android:textColor="#646566"
                                     android:textSize="10sp"
                                     app:layout_constraintStart_toStartOf="@id/tvCompetitor"
@@ -383,7 +383,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
-                                    android:text="@{vm.dataInfo.storeUUID}"
+                                    android:text='@{"门店UUID："+vm.uuid}'
                                     android:textColor="#646566"
                                     android:textSize="10sp"
                                     app:layout_constraintStart_toStartOf="@id/tvCompetitor"
@@ -430,9 +430,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_marginTop="8dp"
-                app:navigator="@{vm.tabData}"
                 android:background="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/rvNavigation" />
+                app:layout_constraintTop_toBottomOf="@id/rvNavigation"
+                app:navigator="@{vm.tabData}" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

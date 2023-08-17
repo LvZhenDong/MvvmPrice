@@ -51,7 +51,7 @@ class StoreDetailsActivity : BaseActivity() {
             it.special_tags?.let { tags -> tagAdapter.setData(tags) }
         }
 
-        mStoreDetailsRequester.getDetailsInfo()
+        mStoreDetailsRequester.getDetailsInfo(mStates.uuid.get() ?: "")
     }
 
     private lateinit var tagAdapter: BaseSimpleAdapter<String, ItemStoreTagBinding>
@@ -123,6 +123,8 @@ class StoreDetailsActivity : BaseActivity() {
 
         val collectionRes: State<Int> = State(R.drawable.iv_store_collect_white)
 
-        val tabData:State<ArrayList<String>> = State(arrayListOf("数据", "设备", "合同"))
+        val tabData: State<ArrayList<String>> = State(arrayListOf("数据", "设备", "合同"))
+
+        val uuid: State<String> = State("1abf21d5-4764-42df-bbf4-e854fc8b5a71")
     }
 }

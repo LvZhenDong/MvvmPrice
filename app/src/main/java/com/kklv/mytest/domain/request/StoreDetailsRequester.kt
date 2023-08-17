@@ -35,9 +35,7 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
 
     private var mDisposable: Disposable? = null
 
-    private val storeId: String = "1abf21d5-4764-42df-bbf4-e854fc8b5a71"
-
-    fun getDetailsInfo() {
+    fun getDetailsInfo(storeId:String) {
         val observableInfo = DataRepository.getInstance().getNetWorkData(StoreService::class.java) { service ->
             service.getStoreDetailsInfo(storeId, "30.539129", "104.054851")
         }.subscribeOn(Schedulers.io())

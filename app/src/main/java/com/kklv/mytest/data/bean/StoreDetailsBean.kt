@@ -22,44 +22,16 @@ data class StoreDetailsBean(
     val can_edit_opening_hours: Boolean = false,
     val contact_text: String = "",
     val telephone: String? = null,
-    private val rival_text: String = "",
-    private val create_time: String = "",
-    private val sign_user_name: String = "",
-    private val maintain_user_name: String = "",
-    private val source: String = "",
-    private val classfiy: String = "",
-    private val latest_claim_time: String = ""
+    val rival_text: String = "",
+    val create_time: String = "",
+    val sign_user_name: String = "",
+    val maintain_user_name: String = "",
+    val source: String = "",
+    val classfiy: String = "",
+    val latest_claim_time: String = ""
 ) {
-    fun getRivalText(): String {
-        return "竞对情况：$rival_text"
-    }
-
-    fun getCreateTime(): String {
-        return "门店创建时间：$create_time"
-    }
-
-    fun getSignerAndOperation(): String {
-        return "签约：${sign_user_name}  |  运维：${maintain_user_name}"
-    }
-
-    fun getStoreSource(): String {
-        return "门店来源：${source}"
-    }
-
-    fun getStoreType(): String {
-        return "分类：${classfiy}"
-    }
-
-    fun getLatestClaimTime(): String {
-        return "最新认领时间：${latest_claim_time}"
-    }
-
-    fun getStoreUUID(): String {
-        return "门店UUID：storeId"
-    }
-
-    fun getMerchantName():String{
-        return merchant_info?.name?:""
+    fun getMerchantName(): String {
+        return merchant_info?.name ?: ""
     }
 }
 
