@@ -3,6 +3,7 @@ package com.kklv.mytest.ui.page
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
+import com.bestbrand.lib_skeleton.skeleton.SkeletonScreen
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
 import com.kklv.mytest.data.bean.SchemaBean
@@ -12,11 +13,13 @@ import com.kklv.mytest.databinding.ItemStoreTagBinding
 import com.kklv.mytest.domain.request.StoreDetailsRequester
 import com.kklv.mytest.ui.view.adapter.BaseResultDataAdapter
 import com.kklv.mytest.ui.view.adapter.BaseSimpleAdapter
+import com.kklv.mytest.utils.buildSkeleton
 import com.kklv.mytest.utils.drawableLeft
 import com.kunminx.architecture.ui.page.BaseActivity
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
+import kotlinx.android.synthetic.main.activity_store_details.coordinator
 import kotlinx.android.synthetic.main.activity_store_details.rvNavigation
 import kotlinx.android.synthetic.main.activity_store_details.rvStoreTags
 import kotlinx.android.synthetic.main.activity_store_details.tabStoreData
@@ -41,9 +44,13 @@ class StoreDetailsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycle.addObserver(mStoreDetailsRequester)
-        initView()
+
+        initSkeleton()
 
         mStoreDetailsRequester.getStoreDetailsInfoResult().observe(this@StoreDetailsActivity) {
+            mSkeleton.hide()
+
+            initView()
             mStates.dataInfo.set(it)
             if (it.is_mark) mStates.collectionRes.set(R.drawable.iv_store_collect)
 
@@ -57,7 +64,6 @@ class StoreDetailsActivity : BaseActivity() {
     private lateinit var tagAdapter: BaseSimpleAdapter<String, ItemStoreTagBinding>
 
     private fun initView() {
-        initSkeleton()
         initTab()
         rvNavigation.adapter = BaseResultDataAdapter<SchemaBean, ItemStoreNavigationBinding>(
             mStoreDetailsRequester.getNavBtnsResult(),
@@ -101,8 +107,10 @@ class StoreDetailsActivity : BaseActivity() {
         ViewPagerHelper.bind(tabStoreData, vpStoreData)
     }
 
-    private fun initSkeleton() {
+    private lateinit var mSkeleton: SkeletonScreen
 
+    private fun initSkeleton() {
+        mSkeleton = buildSkeleton(coordinator, R.layout.skeleton_activity_store_details)
     }
 
     inner class ClickProxy {

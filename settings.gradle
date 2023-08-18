@@ -1,3 +1,4 @@
 rootProject.name = "MyTest"
 include ':app'
 include ':arch'
+include ':lib_skeleton'

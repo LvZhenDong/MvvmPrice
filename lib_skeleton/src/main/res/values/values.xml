@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="shimmer_color">#66DFDFDF</color>
+    <declare-styleable name="ShimmerLayout">
+        <attr name="shimmer_color" format="color|reference" />
+        <attr name="shimmer_animation_duration" format="integer|reference" />
+        <attr name="shimmer_auto_start" format="boolean|reference" />
+        <attr name="shimmer_angle" format="integer|reference" />
+        <attr name="shimmer_mask_width" format="float|reference" />
+        <attr name="shimmer_gradient_center_color_width" format="float|reference" />
+        <attr name="shimmer_reverse_animation" format="boolean|reference" />
+    </declare-styleable>
+    <color name="light_transparent">#F3F3F3</color>
+    <color name="dark_transparent">#24000000</color>
+    <color name="view_bg">#f3f3f3</color>
+    <declare-styleable name="SkeletonView" >
+        <attr name="sv_radius" format="integer"/>
+        <attr name="sv_bg_color" format="color|reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="ShimmerRecyclerView">
+        <attr name="shimmer_demo_layout" format="reference" />
+        <attr name="shimmer_demo_child_count" format="integer|reference" />
+        <attr name="shimmer_demo_layout_manager_type" format="enum">
+            <enum name="linear_vertical" value="0" />
+            <enum name="linear_horizontal" value="1" />
+            <enum name="grid" value="2" />
+        </attr>
+        <attr name="shimmer_demo_grid_child_count" format="integer|reference" />
+        <attr name="shimmer_demo_shimmer_color" format="color|reference" />
+        <attr name="shimmer_demo_angle" format="integer|reference" />
+        <attr name="shimmer_demo_view_holder_item_background" format="color|reference" />
+        <attr name="shimmer_demo_duration" format="integer|reference" />
+        <attr name="shimmer_demo_mask_width" format="float|reference" />
+        <attr name="shimmer_demo_reverse_animation" format="boolean|reference" />
+    </declare-styleable>
+</resources>

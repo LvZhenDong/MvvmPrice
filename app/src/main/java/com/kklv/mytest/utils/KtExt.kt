@@ -2,6 +2,11 @@ package com.kklv.mytest.utils
 
 import android.content.res.Resources
 import android.util.TypedValue
+import android.view.View
+import androidx.annotation.LayoutRes
+import com.bestbrand.lib_skeleton.skeleton.Skeleton
+import com.bestbrand.lib_skeleton.skeleton.SkeletonScreen
+import com.kklv.mytest.R
 import kotlin.math.roundToInt
 
 /**
@@ -54,3 +59,17 @@ val Int.dpFloat: Float
             Resources.getSystem().displayMetrics
         )
     }
+
+fun buildSkeleton(
+    rootView: View,
+    @LayoutRes loadId: Int,
+    showShimmer: Boolean = true
+): SkeletonScreen {
+    return Skeleton.bind(rootView)
+        .load(loadId)
+        .color(R.color.color_skeleton_shimmer)
+        .shimmer(showShimmer)
+        .duration(1400)
+        .angle(0)
+        .show()
+}

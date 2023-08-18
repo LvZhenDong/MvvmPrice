@@ -12,4 +12,6 @@
     <color name="color_666666">#666666</color>
     <color name="color_333333">#333333</color>
     <color name="color_15c782">#15c782</color>
+    <color name="color_skeleton_shimmer">#66ffffff</color>
+    <color name="color_skeleton">#DDDDDD</color>
 </resources>
