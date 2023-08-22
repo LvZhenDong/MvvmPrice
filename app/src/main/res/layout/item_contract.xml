@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="data"
+            type="com.kklv.mytest.data.bean.ContractBean" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:bl_corners_radius="8dp"
+        app:bl_solid_color="@color/white"
+        android:paddingBottom="12dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="4dp"
+            android:ellipsize="end"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:singleLine="true"
+            android:textColor="#353637"
+            android:textSize="14sp"
+            android:text="@{data.type_text}"
+            app:layout_constraintEnd_toStartOf="@id/tvStatus"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="肯德基(世界之窗地铁店)" />
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textSize="14sp"
+            android:text="@{data.contractStatusText}"
+            app:textColorStr="@{data.contractStatusColor}"
+            app:layout_constraintBottom_toBottomOf="@id/tvTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvTitle"
+            tools:text="待商户签约" />
+
+        <TextView
+            android:id="@+id/tvConditionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商务条件"
+            android:textColor="#949495"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <TextView
+            android:id="@+id/tvCondition"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{data.business_condition}"
+            android:layout_marginEnd="16dp"
+            android:textColor="#646566"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvConditionTitle"
+            app:layout_constraintTop_toTopOf="@id/tvConditionTitle"
+            tools:text="特殊付款特殊付款(预付分成+月租金+进场费+电费+介绍费+押金)" />
+
+        <TextView
+            android:id="@+id/tvTermTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="合作期限"
+            android:textColor="#949495"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvCondition" />
+
+        <TextView
+            android:id="@+id/tvTerm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:singleLine="true"
+            android:text="@{data.contract_duration}"
+            android:textColor="#646566"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvTermTitle"
+            app:layout_constraintStart_toEndOf="@id/tvTermTitle"
+            app:layout_constraintTop_toTopOf="@id/tvTermTitle"
+            tools:text="2022-05-21 至 2023-05-32" />
+
+        <TextView
+            android:id="@+id/tvTermTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:gravity="center"
+            android:paddingHorizontal="4dp"
+            android:text="@{data.expireTagText}"
+            app:isVisible="@{data.expireTagVisible}"
+            android:paddingVertical="2dp"
+            android:textColor="#353637"
+            android:textSize="10sp"
+            app:bl_corners_radius="4dp"
+            app:bl_solid_color="#f5f6f7"
+            app:layout_constraintBottom_toBottomOf="@id/tvTermTitle"
+            app:layout_constraintStart_toEndOf="@id/tvTerm"
+            app:layout_constraintTop_toTopOf="@id/tvTermTitle"
+            tools:text="36天到期" />
+
+        <TextView
+            android:id="@+id/tvSignerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="签约人    "
+            android:textColor="#949495"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvTermTitle" />
+
+        <TextView
+            android:id="@+id/tvSigner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:singleLine="true"
+            android:textColor="#646566"
+            android:text="@{data.signed_user}"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvSignerTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvSignerTitle"
+            app:layout_constraintTop_toTopOf="@id/tvSignerTitle"
+            tools:text="厦门二区大器队-Charlie" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
+

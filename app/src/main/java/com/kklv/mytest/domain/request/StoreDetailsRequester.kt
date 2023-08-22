@@ -1,6 +1,8 @@
 package com.kklv.mytest.domain.request
 
+import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.kklv.mytest.data.api.StoreService
 import com.kklv.mytest.data.bean.SchemaBean
 import com.kklv.mytest.data.bean.StoreDetailsBean
@@ -84,4 +86,10 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
         val detailsInfo: DataResult<StoreDetailsBean>,
         val navBtn: DataResult<ArrayList<SchemaBean>>
     )
+
+    override fun onDestroy(owner: LifecycleOwner) {
+        super.onDestroy(owner)
+        Log.i("kklv","vm onDestroy")
+        mDisposable?.dispose()
+    }
 }

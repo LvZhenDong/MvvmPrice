@@ -39,7 +39,7 @@
             android:layout_height="50dp"
             android:background="#ff0000"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:visibleOrGone="@{mainVm.isShow}" />
+            app:isVisible="@{mainVm.isShow}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -3,7 +3,7 @@ package com.kklv.mytest.ui.page
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import com.bestbrand.lib_skeleton.skeleton.SkeletonScreen
+import com.bestbrand.lib_skeleton.skeleton.ViewSkeletonScreen
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
 import com.kklv.mytest.data.bean.SchemaBean
@@ -22,14 +22,14 @@ import com.kunminx.architecture.ui.state.State
 import kotlinx.android.synthetic.main.activity_store_details.coordinator
 import kotlinx.android.synthetic.main.activity_store_details.rvNavigation
 import kotlinx.android.synthetic.main.activity_store_details.rvStoreTags
-import kotlinx.android.synthetic.main.activity_store_details.tabStoreData
 import kotlinx.android.synthetic.main.activity_store_details.tvContact
 import kotlinx.android.synthetic.main.activity_store_details.vpStoreData
-import net.lucode.hackware.magicindicator.ViewPagerHelper
 
 class StoreDetailsActivity : BaseActivity() {
     private lateinit var mStates: StoreDetailsActivityStates
     private lateinit var mStoreDetailsRequester: StoreDetailsRequester
+
+    private lateinit var mSkeleton: ViewSkeletonScreen
 
     override fun initViewModel() {
         mStates = getActivityScopeViewModel(StoreDetailsActivityStates::class.java)
@@ -45,12 +45,11 @@ class StoreDetailsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         lifecycle.addObserver(mStoreDetailsRequester)
 
-        initSkeleton()
+        mSkeleton = buildSkeleton(coordinator, R.layout.skeleton_activity_store_details)
 
         mStoreDetailsRequester.getStoreDetailsInfoResult().observe(this@StoreDetailsActivity) {
-            mSkeleton.hide()
+            if (mSkeleton.isShow) hideSkeletonAndInitView()
 
-            initView()
             mStates.dataInfo.set(it)
             if (it.is_mark) mStates.collectionRes.set(R.drawable.iv_store_collect)
 
@@ -59,6 +58,11 @@ class StoreDetailsActivity : BaseActivity() {
         }
 
         mStoreDetailsRequester.getDetailsInfo(mStates.uuid.get() ?: "")
+    }
+
+    private fun hideSkeletonAndInitView() {
+        mSkeleton.hide()
+        initView()
     }
 
     private lateinit var tagAdapter: BaseSimpleAdapter<String, ItemStoreTagBinding>
@@ -91,7 +95,7 @@ class StoreDetailsActivity : BaseActivity() {
         val fragments = arrayListOf(
             StoreDetailsDataFragment.getInstance(""),
             StoreDetailsDataFragment.getInstance(""),
-            StoreDetailsDataFragment.getInstance("")
+            StoreDetailsContractFragment.getInstance(mStates.uuid.get() ?: "")
         )
         val mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getCount(): Int {
@@ -104,13 +108,6 @@ class StoreDetailsActivity : BaseActivity() {
         }
         vpStoreData.adapter = mPagerAdapter
         vpStoreData.offscreenPageLimit = 2
-        ViewPagerHelper.bind(tabStoreData, vpStoreData)
-    }
-
-    private lateinit var mSkeleton: SkeletonScreen
-
-    private fun initSkeleton() {
-        mSkeleton = buildSkeleton(coordinator, R.layout.skeleton_activity_store_details)
     }
 
     inner class ClickProxy {
@@ -133,6 +130,6 @@ class StoreDetailsActivity : BaseActivity() {
 
         val tabData: State<ArrayList<String>> = State(arrayListOf("数据", "设备", "合同"))
 
-        val uuid: State<String> = State("1abf21d5-4764-42df-bbf4-e854fc8b5a71")
+        val uuid: State<String> = State("a7ca8862-5a11-4ae7-ad53-6c869177d17f")
     }
 }

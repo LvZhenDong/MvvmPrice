@@ -2,6 +2,7 @@ package com.kklv.mytest.ui.view.bind
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.findViewTreeLifecycleOwner
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.kklv.mytest.R
 import com.kklv.mytest.ui.view.CustomPagerTitleView
@@ -20,6 +22,7 @@ import com.youth.banner.Banner
 import com.youth.banner.listener.OnPageChangeListener
 import net.cachapa.expandablelayout.ExpandableLayout
 import net.lucode.hackware.magicindicator.MagicIndicator
+import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
@@ -32,8 +35,8 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
  * Desc:
  */
 
-@BindingAdapter("visibleOrGone")
-fun setVisibleOrGone(view: View, isVisible: Boolean) {
+@BindingAdapter("isVisible")
+fun setIsVisible(view: View, isVisible: Boolean) {
     view.visibility = if (isVisible) View.VISIBLE else View.GONE
 }
 
@@ -50,7 +53,11 @@ fun ImageView.setImgUrl(imageUrl: String?) {
 }
 
 @BindingAdapter(value = ["bannerImages", "bannerIndicatorTv"], requireAll = true)
-fun setBannerImages(banner: Banner<String, BannerImageAdapter>, bannerImages: ArrayList<String>?, bannerIndicatorTv: TextView) {
+fun setBannerImages(
+    banner: Banner<String, BannerImageAdapter>,
+    bannerImages: ArrayList<String>?,
+    bannerIndicatorTv: TextView
+) {
 
     banner.findViewTreeLifecycleOwner()?.let { lifecycleOwner ->
         banner.addBannerLifecycleObserver(lifecycleOwner)
@@ -103,8 +110,8 @@ fun isReverseWithAnim(view: View, isReverse: Boolean) {
     }
 }
 
-@BindingAdapter("navigator")
-fun setNavigator(magicIndicator: MagicIndicator,tabs:ArrayList<String>){
+@BindingAdapter(value = ["navigatorData", "navigatorViewPager"], requireAll = true)
+fun setNavigator(magicIndicator: MagicIndicator, tabs: ArrayList<String>, viewPager: ViewPager) {
     val commonNavigator = CommonNavigator(magicIndicator.context)
     commonNavigator.isAdjustMode = true
     commonNavigator.adapter = object : CommonNavigatorAdapter() {
@@ -119,7 +126,7 @@ fun setNavigator(magicIndicator: MagicIndicator,tabs:ArrayList<String>){
             titleView.textSize = 14f
             titleView.text = tabs[index]
             titleView.setOnClickListener {
-                commonNavigator.onPageSelected(index)
+                viewPager.currentItem = index
             }
 
             return titleView
@@ -136,4 +143,25 @@ fun setNavigator(magicIndicator: MagicIndicator,tabs:ArrayList<String>){
         }
     }
     magicIndicator.navigator = commonNavigator
+
+    ViewPagerHelper.bind(magicIndicator, viewPager)
+}
+
+@BindingAdapter("textColorStr")
+fun setTextColorStr(textView: TextView, colorString: String) {
+    val formattedColorString = colorString.replace(" ", "")?.let { str ->
+        if (str.startsWith("#")) {
+            str
+        } else {
+            "#$str"
+        }
+    }
+
+    val colorInt = try {
+        Color.parseColor(formattedColorString ?: "#FF0000")
+    } catch (e: IllegalArgumentException) {
+        // 在颜色解析失败时返回默认颜色
+        Color.parseColor("#FF0000")
+    }
+    textView.setTextColor(colorInt)
 }

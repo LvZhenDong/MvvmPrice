@@ -5,7 +5,7 @@ import android.util.TypedValue
 import android.view.View
 import androidx.annotation.LayoutRes
 import com.bestbrand.lib_skeleton.skeleton.Skeleton
-import com.bestbrand.lib_skeleton.skeleton.SkeletonScreen
+import com.bestbrand.lib_skeleton.skeleton.ViewSkeletonScreen
 import com.kklv.mytest.R
 import kotlin.math.roundToInt
 
@@ -64,7 +64,7 @@ fun buildSkeleton(
     rootView: View,
     @LayoutRes loadId: Int,
     showShimmer: Boolean = true
-): SkeletonScreen {
+): ViewSkeletonScreen {
     return Skeleton.bind(rootView)
         .load(loadId)
         .color(R.color.color_skeleton_shimmer)

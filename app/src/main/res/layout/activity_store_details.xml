@@ -432,7 +432,8 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/white"
                 app:layout_constraintTop_toBottomOf="@id/rvNavigation"
-                app:navigator="@{vm.tabData}" />
+                app:navigatorData="@{vm.tabData}"
+                app:navigatorViewPager="@{vpStoreData}" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
