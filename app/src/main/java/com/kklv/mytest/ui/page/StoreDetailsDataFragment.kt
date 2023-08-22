@@ -3,6 +3,7 @@ package com.kklv.mytest.ui.page
 import android.os.Bundle
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
+import com.kklv.mytest.databinding.FragmentStoreDetailsDataBinding
 import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
@@ -12,7 +13,7 @@ import com.kunminx.architecture.ui.page.StateHolder
  * Created:2023/8/16
  * Desc:
  */
-class StoreDetailsDataFragment : BaseFragment() {
+class StoreDetailsDataFragment : BaseFragment<FragmentStoreDetailsDataBinding>() {
 
     companion object{
         private const val ARG_STORE_ID = "storeId"

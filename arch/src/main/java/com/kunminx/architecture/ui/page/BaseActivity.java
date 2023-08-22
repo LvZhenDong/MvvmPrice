@@ -26,6 +26,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModel;
 
 import com.kunminx.architecture.data.response.manager.NetworkStateManager;
@@ -37,7 +38,7 @@ import com.kunminx.architecture.utils.ScreenUtils;
 /**
  * Create by KunMinX at 19/8/1
  */
-public abstract class BaseActivity extends DataBindingActivity {
+public abstract class BaseActivity<VB extends ViewDataBinding> extends DataBindingActivity<VB> {
 
   private final ViewModelScope mViewModelScope = new ViewModelScope();
 

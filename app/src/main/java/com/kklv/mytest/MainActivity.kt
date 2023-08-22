@@ -3,6 +3,7 @@ package com.kklv.mytest
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import com.kklv.mytest.databinding.ActivityMainBinding
 import com.kklv.mytest.domain.message.PageMessenger
 import com.kklv.mytest.ui.page.StoreDetailsActivity
 import com.kunminx.architecture.ui.page.BaseActivity
@@ -11,7 +12,7 @@ import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
 
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
     private lateinit var mStates: MainActivityStates
     private lateinit var mMessenger: PageMessenger
 

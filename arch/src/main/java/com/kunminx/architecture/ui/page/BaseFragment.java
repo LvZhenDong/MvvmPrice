@@ -23,6 +23,7 @@ import android.net.Uri;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModel;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -32,7 +33,7 @@ import com.kunminx.architecture.ui.scope.ViewModelScope;
 /**
  * Create by KunMinX at 19/7/11
  */
-public abstract class BaseFragment extends DataBindingFragment {
+public abstract class BaseFragment<VB extends ViewDataBinding> extends DataBindingFragment<VB> {
 
   private final ViewModelScope mViewModelScope = new ViewModelScope();
 

@@ -1,6 +1,7 @@
 package com.kklv.mytest.ui.page
 
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import com.bestbrand.lib_skeleton.skeleton.ViewSkeletonScreen
@@ -8,6 +9,7 @@ import com.kklv.mytest.BR
 import com.kklv.mytest.R
 import com.kklv.mytest.data.bean.SchemaBean
 import com.kklv.mytest.data.bean.StoreDetailsBean
+import com.kklv.mytest.databinding.ActivityStoreDetailsBinding
 import com.kklv.mytest.databinding.ItemStoreNavigationBinding
 import com.kklv.mytest.databinding.ItemStoreTagBinding
 import com.kklv.mytest.domain.request.StoreDetailsRequester
@@ -19,13 +21,8 @@ import com.kunminx.architecture.ui.page.BaseActivity
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
-import kotlinx.android.synthetic.main.activity_store_details.coordinator
-import kotlinx.android.synthetic.main.activity_store_details.rvNavigation
-import kotlinx.android.synthetic.main.activity_store_details.rvStoreTags
-import kotlinx.android.synthetic.main.activity_store_details.tvContact
-import kotlinx.android.synthetic.main.activity_store_details.vpStoreData
 
-class StoreDetailsActivity : BaseActivity() {
+class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
     private lateinit var mStates: StoreDetailsActivityStates
     private lateinit var mStoreDetailsRequester: StoreDetailsRequester
 
@@ -43,9 +40,11 @@ class StoreDetailsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DataBindingUtil.setContentView<ActivityStoreDetailsBinding>(this,R.layout.activity_store_details)
+
         lifecycle.addObserver(mStoreDetailsRequester)
 
-        mSkeleton = buildSkeleton(coordinator, R.layout.skeleton_activity_store_details)
+        mSkeleton = buildSkeleton(binding.coordinator, R.layout.skeleton_activity_store_details)
 
         mStoreDetailsRequester.getStoreDetailsInfoResult().observe(this@StoreDetailsActivity) {
             if (mSkeleton.isShow) hideSkeletonAndInitView()
@@ -53,7 +52,7 @@ class StoreDetailsActivity : BaseActivity() {
             mStates.dataInfo.set(it)
             if (it.is_mark) mStates.collectionRes.set(R.drawable.iv_store_collect)
 
-            tvContact.drawableLeft(if (it.telephone == null) null else R.drawable.icon_contact)
+            binding.tvContact.drawableLeft(if (it.telephone == null) null else R.drawable.icon_contact)
             it.special_tags?.let { tags -> tagAdapter.setData(tags) }
         }
 
@@ -69,7 +68,8 @@ class StoreDetailsActivity : BaseActivity() {
 
     private fun initView() {
         initTab()
-        rvNavigation.adapter = BaseResultDataAdapter<SchemaBean, ItemStoreNavigationBinding>(
+
+        binding.rvNavigation.adapter = BaseResultDataAdapter<SchemaBean, ItemStoreNavigationBinding>(
             mStoreDetailsRequester.getNavBtnsResult(),
             this,
             R.layout.item_store_navigation
@@ -88,7 +88,7 @@ class StoreDetailsActivity : BaseActivity() {
                 imgUrl = data
             }
         }
-        rvStoreTags.adapter = tagAdapter
+        binding.rvStoreTags.adapter = tagAdapter
     }
 
     private fun initTab() {
@@ -106,8 +106,8 @@ class StoreDetailsActivity : BaseActivity() {
                 return fragments[position]
             }
         }
-        vpStoreData.adapter = mPagerAdapter
-        vpStoreData.offscreenPageLimit = 2
+        binding.vpStoreData.adapter = mPagerAdapter
+        binding.vpStoreData.offscreenPageLimit = 2
     }
 
     inner class ClickProxy {
