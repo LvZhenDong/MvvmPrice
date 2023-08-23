@@ -1,6 +1,5 @@
 package com.kklv.mytest.domain.request
 
-import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.kklv.mytest.data.api.StoreService
@@ -89,7 +88,6 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
 
     override fun onDestroy(owner: LifecycleOwner) {
         super.onDestroy(owner)
-        Log.i("kklv","vm onDestroy")
         mDisposable?.dispose()
     }
 }

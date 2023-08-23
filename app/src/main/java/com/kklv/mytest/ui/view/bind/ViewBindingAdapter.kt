@@ -111,7 +111,7 @@ fun isReverseWithAnim(view: View, isReverse: Boolean) {
 }
 
 @BindingAdapter(value = ["navigatorData", "navigatorViewPager"], requireAll = true)
-fun setNavigator(magicIndicator: MagicIndicator, tabs: ArrayList<String>, viewPager: ViewPager) {
+fun setNavigatorData(magicIndicator: MagicIndicator, tabs: ArrayList<String>, viewPager: ViewPager) {
     val commonNavigator = CommonNavigator(magicIndicator.context)
     commonNavigator.isAdjustMode = true
     commonNavigator.adapter = object : CommonNavigatorAdapter() {

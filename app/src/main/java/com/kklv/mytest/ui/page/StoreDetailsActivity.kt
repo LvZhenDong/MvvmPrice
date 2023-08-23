@@ -1,7 +1,6 @@
 package com.kklv.mytest.ui.page
 
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import com.bestbrand.lib_skeleton.skeleton.ViewSkeletonScreen
@@ -40,7 +39,6 @@ class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DataBindingUtil.setContentView<ActivityStoreDetailsBinding>(this,R.layout.activity_store_details)
 
         lifecycle.addObserver(mStoreDetailsRequester)
 
@@ -97,7 +95,7 @@ class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
             StoreDetailsDataFragment.getInstance(""),
             StoreDetailsContractFragment.getInstance(mStates.uuid.get() ?: "")
         )
-        val mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
+        val mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             override fun getCount(): Int {
                 return fragments.size
             }
@@ -108,6 +106,7 @@ class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
         }
         binding.vpStoreData.adapter = mPagerAdapter
         binding.vpStoreData.offscreenPageLimit = 2
+
     }
 
     inner class ClickProxy {

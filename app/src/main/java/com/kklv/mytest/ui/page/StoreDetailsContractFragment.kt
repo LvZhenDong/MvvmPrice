@@ -1,7 +1,6 @@
 package com.kklv.mytest.ui.page
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
@@ -13,6 +12,7 @@ import com.kklv.mytest.ui.view.adapter.BaseResultDataAdapter
 import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
+import com.kunminx.architecture.ui.state.State
 
 /**
  * Author:lvzhendong
@@ -47,10 +47,6 @@ class StoreDetailsContractFragment : BaseFragment<FragmentStoreDetailsContractBi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.i("kklv", "ovViewCreated")
-
-
-        mRequester.getContractList(arguments?.getString(ARG_STORE_ID) ?: "")
 
         mAdapter = BaseResultDataAdapter(
             mRequester.getContractListResult(),
@@ -60,12 +56,19 @@ class StoreDetailsContractFragment : BaseFragment<FragmentStoreDetailsContractBi
             binding.apply {
                 this.data = data
             }
-
         }
         binding.rvContract.adapter = mAdapter
     }
 
-    class StoreDetailsDataFragmentStates : StateHolder() {
+    override fun onResume() {
+        super.onResume()
+        if (mStates.isInitDataLoad.get() == false) {
+            mStates.isInitDataLoad.set(true)
+            mRequester.getContractList(arguments?.getString(ARG_STORE_ID) ?: "")
+        }
+    }
 
+    class StoreDetailsDataFragmentStates : StateHolder() {
+        val isInitDataLoad: State<Boolean> = State(false)
     }
 }
