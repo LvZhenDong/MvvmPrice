@@ -91,7 +91,7 @@ class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
 
     private fun initTab() {
         val fragments = arrayListOf(
-            StoreDetailsDataFragment.getInstance(""),
+            StoreDetailsVisitListFragment.getInstance(""),
             StoreDetailsDataFragment.getInstance(""),
             StoreDetailsContractFragment.getInstance(mStates.uuid.get() ?: "")
         )
