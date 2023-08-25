@@ -32,7 +32,7 @@ class ContractRequester : Requester(), DefaultLifecycleObserver {
 
 
     fun getContractList(storeId: String) {
-        DataRepository.getInstance().getNetWorkData(StoreService::class.java) { storeService ->
+        DataRepository.getInstance().getNetWorkObservableData(StoreService::class.java) { storeService ->
             storeService.getStoreContractList(storeId)
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

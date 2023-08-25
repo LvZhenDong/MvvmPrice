@@ -2,13 +2,12 @@ package com.kklv.mytest.ui.page
 
 import android.os.Bundle
 import android.view.View
+import androidx.paging.LoadState
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
-import com.kklv.mytest.data.bean.VisitBean
 import com.kklv.mytest.databinding.FragmentStoreDetailsVisitListBinding
-import com.kklv.mytest.databinding.ItemVisitBinding
 import com.kklv.mytest.domain.request.VisitRequester
-import com.kklv.mytest.ui.view.adapter.BaseResultDataAdapter
+import com.kklv.mytest.ui.view.adapter.VisitListAdapter
 import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
@@ -43,16 +42,32 @@ class StoreDetailsVisitListFragment : BaseFragment<FragmentStoreDetailsVisitList
         return DataBindingConfig(R.layout.fragment_store_details_visit_list, BR.vm, mStates)
     }
 
+    private lateinit var mAdapter:VisitListAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvVisit.adapter = BaseResultDataAdapter<VisitBean, ItemVisitBinding>(
-            mRequest.getVisitListResult(), this,
-            R.layout.item_visit
-        ) { pos, data, binding ->
-            binding.apply {
-                this.data = data
+//        binding.rvVisit.adapter = BaseResultDataAdapter<VisitBean, ItemVisitBinding>(
+//            mRequest.getVisitListResult(), this,
+//            R.layout.item_visit
+//        ) { pos, data, binding ->
+//            binding.apply {
+//                this.data = data
+//            }
+//        }
+
+        mAdapter = VisitListAdapter()
+        binding.rvVisit.adapter = mAdapter
+        mAdapter.addLoadStateListener {
+            if (it.refresh == LoadState.Loading) {
+                // show progress view
+            } else {
+                //hide progress view
             }
+        }
+
+        mRequest.listData.subscribe {
+            mAdapter.submitData(lifecycle,it)
         }
     }
 

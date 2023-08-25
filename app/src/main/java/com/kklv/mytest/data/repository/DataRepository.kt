@@ -51,7 +51,7 @@ class DataRepository private constructor() {
             .build()
     }
 
-    fun <S, T> getNetWorkData(
+    fun <S, T> getNetWorkObservableData(
         serviceClass: Class<S>,
         function: (S) -> Call<BaseJdResponse<T>>
     ): Observable<DataResult<T>> {
@@ -76,6 +76,31 @@ class DataRepository private constructor() {
                 )
             }
         }
+    }
+
+    fun <S, T> getNetWorkData(
+        serviceClass: Class<S>,
+        function: (S) -> Call<BaseJdResponse<T>>
+    ): DataResult<T> {
+            val service = retrofit.create(serviceClass)
+            val call = function(service)
+            val response: Response<BaseJdResponse<T>>
+        return try {
+            response = call.execute()
+            val responseStatus = ResponseStatus(
+                response.code().toString(),
+                response.isSuccessful,
+                ResultSource.NETWORK
+            )
+            DataResult(response.body()?.data, responseStatus)
+        } catch (e: IOException) {
+            DataResult(
+                null,
+                ResponseStatus(e.message, false, ResultSource.NETWORK)
+            )
+
+        }
+
     }
 
     fun refreshToken(map: Map<String, String>): TokenBodyBean? {

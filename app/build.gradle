@@ -63,6 +63,7 @@ dependencies {
         exclude group: 'com.android.support'
     }
     api 'com.github.JavaNoober.BackgroundLibrary:libraryx:1.7.6' //shape绘制
-    api 'io.supercharge:shimmerlayout:2.1.0'
+    api 'androidx.paging:paging-runtime:3.2.0'
+    api 'androidx.paging:paging-rxjava2:3.2.0'
     api project(path: ':lib_skeleton')
 }

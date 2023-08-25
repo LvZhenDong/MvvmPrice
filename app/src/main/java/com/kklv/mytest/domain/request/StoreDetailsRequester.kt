@@ -37,15 +37,15 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
     private var mDisposable: Disposable? = null
 
     fun getDetailsInfo(storeId:String) {
-        val observableInfo = DataRepository.getInstance().getNetWorkData(StoreService::class.java) { service ->
+        val observableInfo = DataRepository.getInstance().getNetWorkObservableData(StoreService::class.java) { service ->
             service.getStoreDetailsInfo(storeId, "30.539129", "104.054851")
         }.subscribeOn(Schedulers.io())
 
-        val observableNavBtn1 = DataRepository.getInstance().getNetWorkData(StoreService::class.java) { service ->
+        val observableNavBtn1 = DataRepository.getInstance().getNetWorkObservableData(StoreService::class.java) { service ->
             service.getStoreDetailsNavBtn1(storeId)
         }.subscribeOn(Schedulers.io())
 
-        val observableNavBtn2 = DataRepository.getInstance().getNetWorkData(StoreService::class.java) { service ->
+        val observableNavBtn2 = DataRepository.getInstance().getNetWorkObservableData(StoreService::class.java) { service ->
             service.getStoreDetailsNavBtn2(storeId)
         }.subscribeOn(Schedulers.io())
 
