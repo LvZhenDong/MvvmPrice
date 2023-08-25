@@ -52,7 +52,7 @@ class StoreDetailsContractFragment : BaseFragment<FragmentStoreDetailsContractBi
             mRequester.getContractListResult(),
             this,
             R.layout.item_contract
-        ) { pos, data, binding ->
+        ) { _, data, binding ->
             binding.apply {
                 this.data = data
             }

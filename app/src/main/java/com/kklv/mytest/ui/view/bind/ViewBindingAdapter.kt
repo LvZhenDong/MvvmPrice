@@ -133,7 +133,7 @@ fun setNavigatorData(magicIndicator: MagicIndicator, tabs: ArrayList<String>, vi
         }
 
         override fun getIndicator(context: Context): IPagerIndicator {
-            val indicator = LinePagerIndicator(context!!)
+            val indicator = LinePagerIndicator(context)
             indicator.mode = LinePagerIndicator.MODE_EXACTLY
             indicator.lineWidth = 16.dpFloat
             indicator.lineHeight = 2.dpFloat
@@ -149,7 +149,7 @@ fun setNavigatorData(magicIndicator: MagicIndicator, tabs: ArrayList<String>, vi
 
 @BindingAdapter("textColorStr")
 fun setTextColorStr(textView: TextView, colorString: String) {
-    val formattedColorString = colorString.replace(" ", "")?.let { str ->
+    val formattedColorString = colorString.replace(" ", "").let { str ->
         if (str.startsWith("#")) {
             str
         } else {
@@ -158,7 +158,7 @@ fun setTextColorStr(textView: TextView, colorString: String) {
     }
 
     val colorInt = try {
-        Color.parseColor(formattedColorString ?: "#FF0000")
+        Color.parseColor(formattedColorString)
     } catch (e: IllegalArgumentException) {
         // 在颜色解析失败时返回默认颜色
         Color.parseColor("#FF0000")
