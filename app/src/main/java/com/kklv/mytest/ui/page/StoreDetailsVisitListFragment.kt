@@ -1,6 +1,7 @@
 package com.kklv.mytest.ui.page
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.paging.LoadState
 import com.kklv.mytest.BR
@@ -42,32 +43,24 @@ class StoreDetailsVisitListFragment : BaseFragment<FragmentStoreDetailsVisitList
         return DataBindingConfig(R.layout.fragment_store_details_visit_list, BR.vm, mStates)
     }
 
-    private lateinit var mAdapter:VisitListAdapter
+    private lateinit var mAdapter: VisitListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        binding.rvVisit.adapter = BaseResultDataAdapter<VisitBean, ItemVisitBinding>(
-//            mRequest.getVisitListResult(), this,
-//            R.layout.item_visit
-//        ) { pos, data, binding ->
-//            binding.apply {
-//                this.data = data
-//            }
-//        }
 
         mAdapter = VisitListAdapter()
         binding.rvVisit.adapter = mAdapter
         mAdapter.addLoadStateListener {
             if (it.refresh == LoadState.Loading) {
                 // show progress view
+                Log.i("kklv","loading")
             } else {
                 //hide progress view
             }
         }
 
-        mRequest.listData.subscribe {
-            mAdapter.submitData(lifecycle,it)
+        mRequest.pagingData.observe(viewLifecycleOwner) { pagingData ->
+            mAdapter.submitData(lifecycle, pagingData)
         }
     }
 
@@ -75,7 +68,7 @@ class StoreDetailsVisitListFragment : BaseFragment<FragmentStoreDetailsVisitList
         super.onResume()
         if (mStates.isInitLoad.get() == false) {
             mStates.isInitLoad.set(true)
-            mRequest.getContractList()
+
         }
     }
 

@@ -5,6 +5,7 @@ import com.kklv.mytest.data.bean.base.BaseJdResponse
 import com.kklv.mytest.data.bean.base.PageListBean
 import com.kklv.mytest.data.bean.request.PageRequestBean
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 

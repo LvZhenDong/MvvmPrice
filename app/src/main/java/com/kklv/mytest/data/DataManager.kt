@@ -7,7 +7,7 @@ package com.kklv.mytest.data
  */
 class DataManager private constructor() {
 
-    private var acToken: String = "uat_94c0d38f6cb840eabd34b34afe476a3d"
+    private var acToken: String = "uat_30c86ad891534112919c406f9a7817e2"
     private var rfToken:String = "urt_7a4e84832b11448ebef8d0b0ce173994"
 
     companion object {

@@ -2,8 +2,13 @@ package com.kklv.mytest.data.repository
 
 import com.kklv.mytest.data.api.APIs
 import com.kklv.mytest.data.api.UserService
+import com.kklv.mytest.data.api.VisitService
 import com.kklv.mytest.data.bean.TokenBodyBean
+import com.kklv.mytest.data.bean.VisitBean
 import com.kklv.mytest.data.bean.base.BaseJdResponse
+import com.kklv.mytest.data.bean.base.PageListBean
+import com.kklv.mytest.data.bean.request.PageRequestBean
+import com.kklv.mytest.data.bean.request.PageSizeBean
 import com.kklv.mytest.data.interceptor.JdInterceptor
 import com.kklv.mytest.data.interceptor.RefreshTokenInterceptor
 import com.kunminx.architecture.data.response.DataResult
@@ -31,15 +36,15 @@ class DataRepository private constructor() {
         }
     }
 
-    private val retrofit: Retrofit
+     val retrofit: Retrofit
 
     init {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
         val client = OkHttpClient.Builder()
-            .connectTimeout(8, TimeUnit.SECONDS)
-            .readTimeout(8, TimeUnit.SECONDS)
-            .writeTimeout(8, TimeUnit.SECONDS)
+            .connectTimeout(16, TimeUnit.SECONDS)
+            .readTimeout(16, TimeUnit.SECONDS)
+            .writeTimeout(16, TimeUnit.SECONDS)
             .addInterceptor(logging)
             .addInterceptor(JdInterceptor())
             .addInterceptor(RefreshTokenInterceptor())
@@ -100,7 +105,6 @@ class DataRepository private constructor() {
             )
 
         }
-
     }
 
     fun refreshToken(map: Map<String, String>): TokenBodyBean? {
