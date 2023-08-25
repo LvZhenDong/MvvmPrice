@@ -6,9 +6,11 @@ import android.view.View
 import androidx.paging.LoadState
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
+import com.kklv.mytest.data.bean.VisitBean
 import com.kklv.mytest.databinding.FragmentStoreDetailsVisitListBinding
+import com.kklv.mytest.databinding.ItemVisitBinding
 import com.kklv.mytest.domain.request.VisitRequester
-import com.kklv.mytest.ui.view.adapter.VisitListAdapter
+import com.kklv.mytest.ui.view.adapter.BasePagingListAdapter
 import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
@@ -23,6 +25,7 @@ class StoreDetailsVisitListFragment : BaseFragment<FragmentStoreDetailsVisitList
 
     companion object {
         private const val ARG_STORE_ID = "storeId"
+
         fun getInstance(storeId: String): StoreDetailsVisitListFragment {
             val fragment = StoreDetailsVisitListFragment()
             val args = Bundle()
@@ -43,17 +46,23 @@ class StoreDetailsVisitListFragment : BaseFragment<FragmentStoreDetailsVisitList
         return DataBindingConfig(R.layout.fragment_store_details_visit_list, BR.vm, mStates)
     }
 
-    private lateinit var mAdapter: VisitListAdapter
+    private lateinit var mAdapter: BasePagingListAdapter<VisitBean, ItemVisitBinding>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mAdapter = VisitListAdapter()
+        mAdapter = BasePagingListAdapter(R.layout.item_visit, { _, data, bind ->
+            bind.data = data
+        }, { oldItem, newItem ->
+            return@BasePagingListAdapter oldItem.visit_id == newItem.visit_id
+        }, { oldItem, newItem ->
+            return@BasePagingListAdapter oldItem == newItem
+        })
         binding.rvVisit.adapter = mAdapter
         mAdapter.addLoadStateListener {
             if (it.refresh == LoadState.Loading) {
                 // show progress view
-                Log.i("kklv","loading")
+                Log.i("kklv", "loading")
             } else {
                 //hide progress view
             }
