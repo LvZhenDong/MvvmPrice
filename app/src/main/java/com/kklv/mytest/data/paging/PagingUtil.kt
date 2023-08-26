@@ -13,7 +13,7 @@ class PagingUtil {
         fun getPagingConfig(): PagingConfig {
             return PagingConfig(
                 pageSize = PageSizeBean.PAGE_SIZE, // 每页的项数
-                prefetchDistance = 1, // 预加载距离
+                prefetchDistance = 5, // 预加载距离
                 initialLoadSize = PageSizeBean.PAGE_SIZE,//初始加载项数
                 enablePlaceholders = false // 是否启用占位符
             )
