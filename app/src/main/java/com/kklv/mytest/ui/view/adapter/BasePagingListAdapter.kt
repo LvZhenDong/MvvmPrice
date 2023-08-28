@@ -7,7 +7,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.paging.PagingDataAdapter
-import com.kklv.mytest.data.paging.HeaderFooterAdapter
 
 class BasePagingListAdapter<T : Any, VB : ViewDataBinding>(
     private val layoutId: Int,
@@ -17,10 +16,6 @@ class BasePagingListAdapter<T : Any, VB : ViewDataBinding>(
 ) : PagingDataAdapter<T, BasePagingListAdapter<T, VB>.ViewHolder>(
     GenericDiffUtilCallback(areItemsTheSameFun, areContentsTheSameFun)
 ) {
-
-    init {
-//        withLoadStateFooter(HeaderFooterAdapter())
-    }
 
     inner class ViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
 

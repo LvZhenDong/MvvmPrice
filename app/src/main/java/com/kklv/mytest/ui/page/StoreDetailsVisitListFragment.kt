@@ -1,14 +1,13 @@
 package com.kklv.mytest.ui.page
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.paging.LoadState
-import androidx.paging.liveData
+import androidx.recyclerview.widget.ConcatAdapter
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
 import com.kklv.mytest.data.bean.VisitBean
-import com.kklv.mytest.data.paging.HeaderFooterAdapter
+import com.kklv.mytest.data.paging.FooterAdapter
+import com.kklv.mytest.data.paging.HeaderAdapter
 import com.kklv.mytest.databinding.FragmentStoreDetailsVisitListBinding
 import com.kklv.mytest.databinding.ItemVisitBinding
 import com.kklv.mytest.domain.request.VisitRequester
@@ -17,7 +16,6 @@ import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
-import kotlinx.coroutines.flow.collectLatest
 
 /**
  * Author:lvzhendong
@@ -61,7 +59,8 @@ class StoreDetailsVisitListFragment : BaseFragment<FragmentStoreDetailsVisitList
         }, { oldItem, newItem ->
             return@BasePagingListAdapter oldItem == newItem
         })
-        binding.rvVisit.adapter = mAdapter.withLoadStateFooter(HeaderFooterAdapter())
+
+        binding.rvVisit.adapter = ConcatAdapter(HeaderAdapter(), mAdapter.withLoadStateFooter(footer = FooterAdapter()))
 
         mRequest.pagingData.observe(viewLifecycleOwner) { pagingData ->
             mAdapter.submitData(lifecycle, pagingData)

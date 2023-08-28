@@ -1,6 +1,5 @@
 package com.kklv.mytest.data.paging
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -15,9 +14,9 @@ import com.kklv.mytest.databinding.ViewListFooterBinding
  * @data 2023/8/26
  * @description
  */
-class HeaderFooterAdapter() : LoadStateAdapter<HeaderFooterAdapter.FooterViewHolder>() {
+class FooterAdapter() : LoadStateAdapter<FooterAdapter.FooterViewHolder>() {
 
-    inner class FooterViewHolder(val binding: ViewListFooterBinding) : RecyclerView.ViewHolder(binding.root)
+    class FooterViewHolder(val binding: ViewListFooterBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onBindViewHolder(holder: FooterViewHolder, loadState: LoadState) {
 
@@ -29,7 +28,7 @@ class HeaderFooterAdapter() : LoadStateAdapter<HeaderFooterAdapter.FooterViewHol
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): FooterViewHolder {
-        Log.i("kklv", "onCreateViewHolder")
+
         val inflater = LayoutInflater.from(parent.context)
         return FooterViewHolder(DataBindingUtil.inflate(inflater, R.layout.view_list_footer, parent, false))
     }
