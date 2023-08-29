@@ -1,8 +1,10 @@
 package com.kklv.mytest.ui.page
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.bestbrand.lib_skeleton.skeleton.ViewSkeletonScreen
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
@@ -16,6 +18,7 @@ import com.kklv.mytest.ui.view.adapter.BaseResultDataAdapter
 import com.kklv.mytest.ui.view.adapter.BaseSimpleAdapter
 import com.kklv.mytest.utils.buildSkeleton
 import com.kklv.mytest.utils.drawableLeft
+import com.kklv.mytest.utils.toast
 import com.kunminx.architecture.ui.page.BaseActivity
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
@@ -46,12 +49,29 @@ class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
 
         mStoreDetailsRequester.getStoreDetailsInfoResult().observe(this@StoreDetailsActivity) {
             if (mSkeleton.isShow) hideSkeletonAndInitView()
+            if (it.responseStatus.isSuccess) {
+                it.result.detailsInfo?.let { storeDetailsBean ->
+                    mStates.dataInfo.set(storeDetailsBean)
+                    if (storeDetailsBean.is_mark) mStates.collectionRes.set(R.drawable.iv_store_collect)
 
-            mStates.dataInfo.set(it)
-            if (it.is_mark) mStates.collectionRes.set(R.drawable.iv_store_collect)
+                    binding.tvContact.drawableLeft(if (storeDetailsBean.telephone == null) null else R.drawable.icon_contact)
+                    storeDetailsBean.special_tags?.let { tags -> tagAdapter.setData(tags) }
+                }
 
-            binding.tvContact.drawableLeft(if (it.telephone == null) null else R.drawable.icon_contact)
-            it.special_tags?.let { tags -> tagAdapter.setData(tags) }
+                it.result.navBtn?.let { list ->
+                    binding.rvNavigation.adapter = BaseSimpleAdapter<SchemaBean, ItemStoreNavigationBinding>(
+                        list,
+                        R.layout.item_store_navigation
+                    ) { _, data, binding ->
+                        binding.apply {
+                            imgUrl = data.icon
+                            btnText = data.value
+                        }
+                    }
+                }
+            } else {
+                it.responseStatus.responseCode.toast()
+            }
         }
 
         mStoreDetailsRequester.getDetailsInfo(mStates.uuid.get() ?: "")
@@ -66,17 +86,6 @@ class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
 
     private fun initView() {
         initTab()
-
-        binding.rvNavigation.adapter = BaseResultDataAdapter<SchemaBean, ItemStoreNavigationBinding>(
-            mStoreDetailsRequester.getNavBtnsResult(),
-            this,
-            R.layout.item_store_navigation
-        ) { _, data, binding ->
-            binding.apply {
-                imgUrl = data.icon
-                btnText = data.value
-            }
-        }
 
         tagAdapter = BaseSimpleAdapter(
             arrayListOf(),
@@ -95,15 +104,16 @@ class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
             StoreDetailsDataFragment.getInstance(""),
             StoreDetailsContractFragment.getInstance(mStates.uuid.get() ?: "")
         )
-        val mPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-            override fun getCount(): Int {
-                return fragments.size
-            }
+        val mPagerAdapter =
+            object : FragmentStatePagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+                override fun getCount(): Int {
+                    return fragments.size
+                }
 
-            override fun getItem(position: Int): Fragment {
-                return fragments[position]
+                override fun getItem(position: Int): Fragment {
+                    return fragments[position]
+                }
             }
-        }
         binding.vpStoreData.adapter = mPagerAdapter
         binding.vpStoreData.offscreenPageLimit = 2
 

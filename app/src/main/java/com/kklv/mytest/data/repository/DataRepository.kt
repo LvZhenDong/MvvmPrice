@@ -9,6 +9,7 @@ import com.kklv.mytest.data.bean.base.BaseJdResponse
 import com.kklv.mytest.data.bean.base.PageListBean
 import com.kklv.mytest.data.bean.request.PageRequestBean
 import com.kklv.mytest.data.bean.request.PageSizeBean
+import com.kklv.mytest.data.exception.NetWorkException
 import com.kklv.mytest.data.interceptor.JdInterceptor
 import com.kklv.mytest.data.interceptor.RefreshTokenInterceptor
 import com.kunminx.architecture.data.response.DataResult
@@ -36,7 +37,7 @@ class DataRepository private constructor() {
         }
     }
 
-     val retrofit: Retrofit
+    val retrofit: Retrofit
 
     init {
         val logging = HttpLoggingInterceptor()
@@ -66,12 +67,16 @@ class DataRepository private constructor() {
             val response: Response<BaseJdResponse<T>>
             try {
                 response = call.execute()
-                val responseStatus = ResponseStatus(
-                    response.code().toString(),
-                    response.isSuccessful,
-                    ResultSource.NETWORK
-                )
-                emitter.onNext(DataResult(response.body()?.data, responseStatus))
+                if (response.body()?.isSuccess() == true) {
+                    val responseStatus = ResponseStatus(
+                        response.code().toString(),
+                        response.isSuccessful,
+                        ResultSource.NETWORK
+                    )
+                    emitter.onNext(DataResult(response.body()?.data, responseStatus))
+                } else {
+                    throw NetWorkException(response.body()?.message ?: "网络异常，请稍后重试")
+                }
             } catch (e: IOException) {
                 emitter.onNext(
                     DataResult(
@@ -87,17 +92,21 @@ class DataRepository private constructor() {
         serviceClass: Class<S>,
         function: (S) -> Call<BaseJdResponse<T>>
     ): DataResult<T> {
-            val service = retrofit.create(serviceClass)
-            val call = function(service)
-            val response: Response<BaseJdResponse<T>>
+        val service = retrofit.create(serviceClass)
+        val call = function(service)
+        val response: Response<BaseJdResponse<T>>
         return try {
             response = call.execute()
-            val responseStatus = ResponseStatus(
-                response.code().toString(),
-                response.isSuccessful,
-                ResultSource.NETWORK
-            )
-            DataResult(response.body()?.data, responseStatus)
+            if (response.body()?.isSuccess() == true) {
+                val responseStatus = ResponseStatus(
+                    response.code().toString(),
+                    response.isSuccessful,
+                    ResultSource.NETWORK
+                )
+                DataResult(response.body()?.data, responseStatus)
+            } else {
+                throw NetWorkException(response.body()?.message ?: "网络异常，请稍后重试")
+            }
         } catch (e: IOException) {
             DataResult(
                 null,

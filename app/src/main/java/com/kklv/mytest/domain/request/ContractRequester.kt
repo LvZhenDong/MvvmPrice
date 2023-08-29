@@ -23,9 +23,9 @@ class ContractRequester : Requester(), DefaultLifecycleObserver {
 
     private var mDisposable: Disposable? = null
 
-    private val contractListResult: MutableResult<ArrayList<ContractBean>> = MutableResult()
+    private val contractListResult: MutableResult<DataResult<ContractListBean>> = MutableResult()
 
-    fun getContractListResult(): Result<ArrayList<ContractBean>> {
+    fun getContractListResult(): Result<DataResult<ContractListBean>> {
         return contractListResult
     }
 
@@ -50,7 +50,7 @@ class ContractRequester : Requester(), DefaultLifecycleObserver {
                 }
 
                 override fun onNext(t: DataResult<ContractListBean>) {
-                    if(t.result.is_have_auth && t.result.list.isNullOrEmpty().not()) contractListResult.postValue(t.result.list)
+                    contractListResult.postValue(t)
                 }
             })
     }

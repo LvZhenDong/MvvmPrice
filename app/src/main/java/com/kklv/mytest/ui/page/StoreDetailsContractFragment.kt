@@ -9,6 +9,7 @@ import com.kklv.mytest.databinding.FragmentStoreDetailsContractBinding
 import com.kklv.mytest.databinding.ItemContractBinding
 import com.kklv.mytest.domain.request.ContractRequester
 import com.kklv.mytest.ui.view.adapter.BaseResultDataAdapter
+import com.kklv.mytest.ui.view.adapter.BaseSimpleAdapter
 import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
@@ -43,21 +44,27 @@ class StoreDetailsContractFragment : BaseFragment<FragmentStoreDetailsContractBi
         return DataBindingConfig(R.layout.fragment_store_details_contract, BR.vm, mStates)
     }
 
-    private lateinit var mAdapter: BaseResultDataAdapter<ContractBean, ItemContractBinding>
+    private lateinit var mAdapter: BaseSimpleAdapter<ContractBean, ItemContractBinding>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mAdapter = BaseResultDataAdapter(
-            mRequester.getContractListResult(),
-            this,
-            R.layout.item_contract
-        ) { _, data, binding ->
-            binding.apply {
-                this.data = data
+
+        mRequester.getContractListResult().observe(this){resultData->
+            if(resultData.responseStatus.isSuccess && resultData.result.list.isNullOrEmpty().not()){
+                mAdapter = BaseSimpleAdapter(
+                    resultData.result.list!!,
+                    R.layout.item_contract
+                ) { _, data, binding ->
+                    binding.apply {
+                        this.data = data
+                    }
+                }
+                binding.rvContract.adapter = mAdapter
+            }else{
+
             }
         }
-        binding.rvContract.adapter = mAdapter
     }
 
     override fun onResume() {
