@@ -1,6 +1,7 @@
 package com.kklv.mytest.domain.request
 
 import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.viewModelScope
 import com.kklv.mytest.data.api.StoreService
 import com.kklv.mytest.data.bean.ContractBean
 import com.kklv.mytest.data.bean.ContractListBean
@@ -13,6 +14,8 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * @author lvzhendong
@@ -21,37 +24,18 @@ import io.reactivex.schedulers.Schedulers
  */
 class ContractRequester : Requester(), DefaultLifecycleObserver {
 
-    private var mDisposable: Disposable? = null
-
     private val contractListResult: MutableResult<DataResult<ContractListBean>> = MutableResult()
 
     fun getContractListResult(): Result<DataResult<ContractListBean>> {
         return contractListResult
     }
 
-
-
     fun getContractList(storeId: String) {
-        DataRepository.getInstance().getNetWorkObservableData(StoreService::class.java) { storeService ->
-            storeService.getStoreContractList(storeId)
-        }.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<DataResult<ContractListBean>> {
-                override fun onSubscribe(d: Disposable) {
-                    mDisposable = d
-                }
-
-                override fun onError(e: Throwable) {
-
-                }
-
-                override fun onComplete() {
-                    mDisposable = null
-                }
-
-                override fun onNext(t: DataResult<ContractListBean>) {
-                    contractListResult.postValue(t)
-                }
-            })
+        viewModelScope.launch {
+            val dataResult = DataRepository.getInstance().getNetWorkData(StoreService::class.java) { storeService ->
+                storeService.getStoreContractList(storeId)
+            }
+            contractListResult.postValue(dataResult)
+        }
     }
 }

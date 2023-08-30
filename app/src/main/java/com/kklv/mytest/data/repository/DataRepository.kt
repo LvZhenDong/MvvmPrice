@@ -16,6 +16,8 @@ import com.kunminx.architecture.data.response.DataResult
 import com.kunminx.architecture.data.response.ResponseStatus
 import com.kunminx.architecture.data.response.ResultSource
 import io.reactivex.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -37,7 +39,7 @@ class DataRepository private constructor() {
         }
     }
 
-    val retrofit: Retrofit
+    private val retrofit: Retrofit
 
     init {
         val logging = HttpLoggingInterceptor()
@@ -57,11 +59,11 @@ class DataRepository private constructor() {
             .build()
     }
 
-    fun <S, T> getNetWorkObservableData(
+    suspend fun <S, T> getNetWorkData(
         serviceClass: Class<S>,
         function: (S) -> Call<BaseJdResponse<T>>
-    ): Observable<DataResult<T>> {
-        return Observable.create { emitter ->
+    ): DataResult<T> {
+        return withContext(Dispatchers.IO) {
             val service = retrofit.create(serviceClass)
             val call = function(service)
             val response: Response<BaseJdResponse<T>>
@@ -73,46 +75,16 @@ class DataRepository private constructor() {
                         response.isSuccessful,
                         ResultSource.NETWORK
                     )
-                    emitter.onNext(DataResult(response.body()?.data, responseStatus))
+                    DataResult(response.body()?.data, responseStatus)
                 } else {
                     throw NetWorkException(response.body()?.message ?: "网络异常，请稍后重试")
                 }
             } catch (e: IOException) {
-                emitter.onNext(
-                    DataResult(
-                        null,
-                        ResponseStatus(e.message, false, ResultSource.NETWORK)
-                    )
+                DataResult(
+                    null,
+                    ResponseStatus(e.message, false, ResultSource.NETWORK)
                 )
             }
-        }
-    }
-
-    fun <S, T> getNetWorkData(
-        serviceClass: Class<S>,
-        function: (S) -> Call<BaseJdResponse<T>>
-    ): DataResult<T> {
-        val service = retrofit.create(serviceClass)
-        val call = function(service)
-        val response: Response<BaseJdResponse<T>>
-        return try {
-            response = call.execute()
-            if (response.body()?.isSuccess() == true) {
-                val responseStatus = ResponseStatus(
-                    response.code().toString(),
-                    response.isSuccessful,
-                    ResultSource.NETWORK
-                )
-                DataResult(response.body()?.data, responseStatus)
-            } else {
-                throw NetWorkException(response.body()?.message ?: "网络异常，请稍后重试")
-            }
-        } catch (e: IOException) {
-            DataResult(
-                null,
-                ResponseStatus(e.message, false, ResultSource.NETWORK)
-            )
-
         }
     }
 

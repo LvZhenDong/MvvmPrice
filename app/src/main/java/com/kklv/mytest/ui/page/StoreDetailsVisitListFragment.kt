@@ -38,6 +38,7 @@ class StoreDetailsVisitListFragment : BaseFragment<FragmentStoreDetailsVisitList
 
     private lateinit var mStates: StoreDetailsVisitListFragmentStates
     private lateinit var mRequest: VisitRequester
+
     override fun initViewModel() {
         mStates = getFragmentScopeViewModel(StoreDetailsVisitListFragmentStates::class.java)
         mRequest = getFragmentScopeViewModel(VisitRequester::class.java)

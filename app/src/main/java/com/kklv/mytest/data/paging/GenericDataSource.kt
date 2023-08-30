@@ -36,11 +36,10 @@ class GenericDataSource<T : Any, S>(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
         val currentPageKey = params.key ?: PAGE_START
 
-        val resultData = withContext(Dispatchers.IO) {
-            DataRepository.getInstance().getNetWorkData(serviceClass) { service ->
-                function(service, PageRequestBean(PageSizeBean(currentPageKey, size = params.loadSize)))
-            }
+        val resultData = DataRepository.getInstance().getNetWorkData(serviceClass) { service ->
+            function(service, PageRequestBean(PageSizeBean(currentPageKey, size = params.loadSize)))
         }
+
         if (resultData.responseStatus.isSuccess) {
             val result = resultData.result
             return if (result.page.current > ceil(result.page.total.toDouble() / result.page.size).toInt()) {

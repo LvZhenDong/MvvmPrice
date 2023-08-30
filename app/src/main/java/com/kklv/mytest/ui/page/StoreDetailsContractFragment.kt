@@ -49,9 +49,8 @@ class StoreDetailsContractFragment : BaseFragment<FragmentStoreDetailsContractBi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        mRequester.getContractListResult().observe(this){resultData->
-            if(resultData.responseStatus.isSuccess && resultData.result.list.isNullOrEmpty().not()){
+        mRequester.getContractListResult().observe(this) { resultData ->
+            if (resultData.responseStatus.isSuccess && resultData.result.list.isNullOrEmpty().not()) {
                 mAdapter = BaseSimpleAdapter(
                     resultData.result.list!!,
                     R.layout.item_contract
@@ -61,7 +60,7 @@ class StoreDetailsContractFragment : BaseFragment<FragmentStoreDetailsContractBi
                     }
                 }
                 binding.rvContract.adapter = mAdapter
-            }else{
+            } else {
 
             }
         }
