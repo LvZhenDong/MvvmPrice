@@ -3,6 +3,7 @@ package com.kklv.mytest.domain.request
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.viewModelScope
 import com.kklv.mytest.data.api.StoreService
 import com.kklv.mytest.data.bean.SchemaBean
 import com.kklv.mytest.data.bean.StoreDetailsBean
@@ -17,6 +18,10 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * Author:lvzhendong
@@ -32,56 +37,45 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
 
     private var mDisposable: Disposable? = null
 
-    fun getDetailsInfo(storeId: String) {
-        val observableInfo =
-            DataRepository.getInstance().getNetWorkObservableData(StoreService::class.java) { service ->
-                service.getStoreDetailsInfo(storeId, "30.539129", "104.054851")
-            }.subscribeOn(Schedulers.io())
+    fun getDetailsInfoByCoroutineScope(storeId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            coroutineScope {
+                val storeInfoJob = async {
+                    DataRepository.getInstance().getNetWorkData(StoreService::class.java) { storeService ->
+                        storeService.getStoreDetailsInfo(storeId, "30.539129", "104.054851")
+                    }
+                }
 
-        val observableNavBtn1 =
-            DataRepository.getInstance().getNetWorkObservableData(StoreService::class.java) { service ->
-                service.getStoreDetailsNavBtn1(storeId)
-            }.subscribeOn(Schedulers.io())
+                val navBtn1Job = async {
+                    DataRepository.getInstance().getNetWorkData(StoreService::class.java) { storeService ->
+                        storeService.getStoreDetailsNavBtn1(storeId)
+                    }
+                }
 
-        val observableNavBtn2 =
-            DataRepository.getInstance().getNetWorkObservableData(StoreService::class.java) { service ->
-                service.getStoreDetailsNavBtn2(storeId)
-            }.subscribeOn(Schedulers.io())
+                val navBtn2Job = async {
+                    DataRepository.getInstance().getNetWorkData(StoreService::class.java) { storeService ->
+                        storeService.getStoreDetailsNavBtn2(storeId)
+                    }
+                }
 
-        Observable.zip(
-            observableInfo,
-            observableNavBtn1,
-            observableNavBtn2
-        ) { t1, t2, t3 ->
-            if (t1.responseStatus.isSuccess.not() || t2.responseStatus.isSuccess.not() || t3.responseStatus.isSuccess.not()) {
-                DataResult(DetailsInfoNavBtn(null, null), ResponseStatus("网络异常，请稍后重试", false))
-            } else {
-                val totalNavList: ArrayList<SchemaBean> = t2.result.buttons
-                totalNavList.addAll(t3.result.buttons)
-                totalNavList.sortBy { item -> 20 - item.display_index }
+                val t1 = storeInfoJob.await()
+                val t2 = navBtn1Job.await()
+                val t3 = navBtn2Job.await()
 
-                DataResult(DetailsInfoNavBtn(t1.result, totalNavList))
+                val dataResult =
+                    if (t1.responseStatus.isSuccess.not() || t2.responseStatus.isSuccess.not() || t3.responseStatus.isSuccess.not()) {
+                        DataResult(DetailsInfoNavBtn(null, null), ResponseStatus("网络异常，请稍后重试", false))
+                    } else {
+                        val totalNavList: ArrayList<SchemaBean> = t2.result.buttons
+                        totalNavList.addAll(t3.result.buttons)
+                        totalNavList.sortBy { item -> 20 - item.display_index }
+
+                        DataResult(DetailsInfoNavBtn(t1.result, totalNavList))
+                    }
+
+                storeDetailsInfoResult.postValue(dataResult)
             }
-
-        }.observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<DataResult<DetailsInfoNavBtn>> {
-                override fun onSubscribe(d: Disposable) {
-                    mDisposable = d
-                }
-
-                override fun onError(e: Throwable) {
-                    Log.i("kklv", "error")
-                }
-
-                override fun onComplete() {
-                    mDisposable = null
-                }
-
-                override fun onNext(t: DataResult<DetailsInfoNavBtn>) {
-                    storeDetailsInfoResult.postValue(t)
-                }
-
-            })
+        }
     }
 
     data class DetailsInfoNavBtn(

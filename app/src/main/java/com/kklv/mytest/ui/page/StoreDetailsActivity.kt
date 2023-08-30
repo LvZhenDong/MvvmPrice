@@ -74,7 +74,8 @@ class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
             }
         }
 
-        mStoreDetailsRequester.getDetailsInfo(mStates.uuid.get() ?: "")
+//        mStoreDetailsRequester.getDetailsInfo(mStates.uuid.get() ?: "")
+        mStoreDetailsRequester.getDetailsInfoByCoroutineScope(mStates.uuid.get() ?: "")
     }
 
     private fun hideSkeletonAndInitView() {
