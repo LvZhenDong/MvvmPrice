@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bestbrand.lib_skeleton.skeleton.ViewSkeletonScreen
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
@@ -74,7 +75,6 @@ class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
             }
         }
 
-//        mStoreDetailsRequester.getDetailsInfo(mStates.uuid.get() ?: "")
         mStoreDetailsRequester.getDetailsInfoByCoroutineScope(mStates.uuid.get() ?: "")
     }
 
@@ -106,14 +106,15 @@ class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
             StoreDetailsContractFragment.getInstance(mStates.uuid.get() ?: "")
         )
         val mPagerAdapter =
-            object : FragmentStatePagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-                override fun getCount(): Int {
+            object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
+                override fun getItemCount(): Int {
                     return fragments.size
                 }
 
-                override fun getItem(position: Int): Fragment {
+                override fun createFragment(position: Int): Fragment {
                     return fragments[position]
                 }
+
             }
         binding.vpStoreData.adapter = mPagerAdapter
         binding.vpStoreData.offscreenPageLimit = 2

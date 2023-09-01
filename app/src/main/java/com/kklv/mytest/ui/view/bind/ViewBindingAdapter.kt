@@ -13,11 +13,13 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.kklv.mytest.R
 import com.kklv.mytest.ui.view.CustomPagerTitleView
 import com.kklv.mytest.ui.view.adapter.BannerImageAdapter
 import com.kklv.mytest.utils.dpFloat
+import com.kunminx.architecture.utils.ViewPager2Helper
 import com.youth.banner.Banner
 import com.youth.banner.listener.OnPageChangeListener
 import net.cachapa.expandablelayout.ExpandableLayout
@@ -111,7 +113,7 @@ fun isReverseWithAnim(view: View, isReverse: Boolean) {
 }
 
 @BindingAdapter(value = ["navigatorData", "navigatorViewPager"], requireAll = true)
-fun setNavigatorData(magicIndicator: MagicIndicator, tabs: ArrayList<String>, viewPager: ViewPager) {
+fun setNavigatorData(magicIndicator: MagicIndicator, tabs: ArrayList<String>, viewPager: ViewPager2) {
     val commonNavigator = CommonNavigator(magicIndicator.context)
     commonNavigator.isAdjustMode = true
     commonNavigator.adapter = object : CommonNavigatorAdapter() {
@@ -144,7 +146,7 @@ fun setNavigatorData(magicIndicator: MagicIndicator, tabs: ArrayList<String>, vi
     }
     magicIndicator.navigator = commonNavigator
 
-    ViewPagerHelper.bind(magicIndicator, viewPager)
+    ViewPager2Helper.bind(magicIndicator, viewPager)
 }
 
 @BindingAdapter("textColorStr")

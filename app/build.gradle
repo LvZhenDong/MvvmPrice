@@ -47,22 +47,6 @@ android {
 }
 
 dependencies {
-
-    api 'androidx.core:core-ktx:1.9.0'
-    api 'com.google.android.material:material:1.8.0'
-    api 'androidx.constraintlayout:constraintlayout:2.1.4'
     api project(path: ':arch')
-    api 'androidx.appcompat:appcompat:1.6.1'
-    api('io.github.youth5201314:banner:2.2.2') {
-        exclude group: 'com.android.support'
-    }
-    api ('com.github.cachapa:ExpandableLayout:2.9.2') {
-        exclude group: 'com.android.support'
-    }
-    api ('com.github.hackware1993:MagicIndicator:1.6.0') {
-        exclude group: 'com.android.support'
-    }
-    api 'com.github.JavaNoober.BackgroundLibrary:libraryx:1.7.6' //shape绘制
-    api 'androidx.paging:paging-runtime:3.2.0'
     api project(path: ':lib_skeleton')
 }
