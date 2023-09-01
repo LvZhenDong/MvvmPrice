@@ -1,10 +1,7 @@
 package com.kklv.mytest.ui.page
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bestbrand.lib_skeleton.skeleton.ViewSkeletonScreen
 import com.kklv.mytest.BR
@@ -15,7 +12,6 @@ import com.kklv.mytest.databinding.ActivityStoreDetailsBinding
 import com.kklv.mytest.databinding.ItemStoreNavigationBinding
 import com.kklv.mytest.databinding.ItemStoreTagBinding
 import com.kklv.mytest.domain.request.StoreDetailsRequester
-import com.kklv.mytest.ui.view.adapter.BaseResultDataAdapter
 import com.kklv.mytest.ui.view.adapter.BaseSimpleAdapter
 import com.kklv.mytest.utils.buildSkeleton
 import com.kklv.mytest.utils.drawableLeft

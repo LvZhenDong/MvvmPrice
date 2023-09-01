@@ -34,7 +34,7 @@ class BasePagingListAdapter<T : Any, VB : ViewDataBinding>(
     }
 }
 
-class GenericDiffUtilCallback<T>(
+class GenericDiffUtilCallback<T:Any>(
     private val areItemsTheSameFun: (T, T) -> Boolean,
     private val areContentsTheSameFun: (T, T) -> Boolean
 ) : DiffUtil.ItemCallback<T>() {

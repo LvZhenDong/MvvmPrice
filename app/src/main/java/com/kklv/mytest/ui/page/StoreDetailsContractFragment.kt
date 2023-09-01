@@ -8,7 +8,6 @@ import com.kklv.mytest.data.bean.ContractBean
 import com.kklv.mytest.databinding.FragmentStoreDetailsContractBinding
 import com.kklv.mytest.databinding.ItemContractBinding
 import com.kklv.mytest.domain.request.ContractRequester
-import com.kklv.mytest.ui.view.adapter.BaseResultDataAdapter
 import com.kklv.mytest.ui.view.adapter.BaseSimpleAdapter
 import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
