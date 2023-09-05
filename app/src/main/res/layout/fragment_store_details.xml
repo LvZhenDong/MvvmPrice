@@ -7,11 +7,11 @@
 
         <variable
             name="vm"
-            type="com.kklv.mytest.ui.page.StoreDetailsActivity.StoreDetailsActivityStates" />
+            type="com.kklv.mytest.ui.page.StoreDetailsFragment.StoreDetailsFragmentStates" />
 
         <variable
             name="click"
-            type="com.kklv.mytest.ui.page.StoreDetailsActivity.ClickProxy" />
+            type="com.kklv.mytest.ui.page.StoreDetailsFragment.ClickProxy" />
 
         <variable
             name="infoData"

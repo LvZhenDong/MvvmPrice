@@ -1,14 +1,16 @@
 package com.kklv.mytest.ui.page
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bestbrand.lib_skeleton.skeleton.ViewSkeletonScreen
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
 import com.kklv.mytest.data.bean.SchemaBean
 import com.kklv.mytest.data.bean.StoreDetailsBean
-import com.kklv.mytest.databinding.ActivityStoreDetailsBinding
+import com.kklv.mytest.databinding.FragmentStoreDetailsBinding
 import com.kklv.mytest.databinding.ItemStoreNavigationBinding
 import com.kklv.mytest.databinding.ItemStoreTagBinding
 import com.kklv.mytest.domain.request.StoreDetailsRequester
@@ -16,36 +18,37 @@ import com.kklv.mytest.ui.view.adapter.BaseSimpleAdapter
 import com.kklv.mytest.utils.buildSkeleton
 import com.kklv.mytest.utils.drawableLeft
 import com.kklv.mytest.utils.toast
-import com.kunminx.architecture.ui.page.BaseActivity
+import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
 
-class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
-    private lateinit var mStates: StoreDetailsActivityStates
+class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
+    private lateinit var mStates: StoreDetailsFragmentStates
     private lateinit var mStoreDetailsRequester: StoreDetailsRequester
 
     private lateinit var mSkeleton: ViewSkeletonScreen
 
     override fun initViewModel() {
-        mStates = getActivityScopeViewModel(StoreDetailsActivityStates::class.java)
+        mStates = getActivityScopeViewModel(StoreDetailsFragmentStates::class.java)
         mStoreDetailsRequester = getActivityScopeViewModel(StoreDetailsRequester::class.java)
     }
 
     override fun getDataBindingConfig(): DataBindingConfig {
-        return DataBindingConfig(R.layout.activity_store_details, BR.vm, mStates)
+        return DataBindingConfig(R.layout.fragment_store_details, BR.vm, mStates)
             .addBindingParam(BR.click, ClickProxy())
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         lifecycle.addObserver(mStoreDetailsRequester)
 
-        mSkeleton = buildSkeleton(binding.coordinator, R.layout.skeleton_activity_store_details)
+//        mSkeleton = buildSkeleton(binding.coordinator, R.layout.skeleton_activity_store_details)
 
-        mStoreDetailsRequester.getStoreDetailsInfoResult().observe(this@StoreDetailsActivity) {
-            if (mSkeleton.isShow) hideSkeletonAndInitView()
+        mStoreDetailsRequester.getStoreDetailsInfoResult().observe(this@StoreDetailsFragment) {
+//            if (mSkeleton.isShow) hideSkeletonAndInitView()
+            initView()
             if (it.responseStatus.isSuccess) {
                 it.result.detailsInfo?.let { storeDetailsBean ->
                     mStates.dataInfo.set(storeDetailsBean)
@@ -102,7 +105,7 @@ class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
             StoreDetailsContractFragment.getInstance(mStates.uuid.get() ?: "")
         )
         val mPagerAdapter =
-            object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
+            object : FragmentStateAdapter(childFragmentManager, lifecycle) {
                 override fun getItemCount(): Int {
                     return fragments.size
                 }
@@ -123,12 +126,14 @@ class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
         }
 
         fun back() {
-            finish()
+            activity?.let {
+                Navigation.findNavController(it, R.id.fragmentContainerView).navigateUp()
+            }
         }
     }
 
 
-    class StoreDetailsActivityStates : StateHolder() {
+    class StoreDetailsFragmentStates : StateHolder() {
         val dataInfo: State<StoreDetailsBean> = State(StoreDetailsBean())
 
         val isExpanded: State<Boolean> = State(false)

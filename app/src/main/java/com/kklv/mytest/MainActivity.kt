@@ -1,11 +1,10 @@
 package com.kklv.mytest
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.navigation.Navigation
 import com.kklv.mytest.databinding.ActivityMainBinding
 import com.kklv.mytest.domain.message.PageMessenger
-import com.kklv.mytest.ui.page.StoreDetailsActivity
 import com.kunminx.architecture.ui.page.BaseActivity
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
@@ -35,16 +34,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     inner class ClickProxy {
         fun switchIsShow() {
-            mStates.isShow.set(!(mStates.isShow.get()?:false))
-        }
-
-        fun goToStoreDetailsActivity(){
-            startActivity(Intent(this@MainActivity,StoreDetailsActivity::class.java))
+            mStates.isShow.set(!(mStates.isShow.get() ?: false))
         }
     }
 
     class MainActivityStates : StateHolder() {
-        val isShow: State<Boolean> = State(false)
+        val isShow: State<Boolean> = State(true)
         val showText: State<String> = State("默认文案")
     }
 }
