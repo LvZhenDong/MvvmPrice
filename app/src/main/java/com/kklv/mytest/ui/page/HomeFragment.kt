@@ -1,12 +1,11 @@
 package com.kklv.mytest.ui.page
 
-import android.os.Bundle
+ import android.os.Bundle
 import android.view.View
 import androidx.navigation.Navigation
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
 import com.kklv.mytest.databinding.FragmentHomeBinding
-import com.kklv.mytest.databinding.FragmentStoreDetailsDataBinding
 import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder

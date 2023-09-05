@@ -19,464 +19,469 @@
 
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinator"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#f4f5f6"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinator"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="#f4f5f6"
-            android:orientation="vertical"
-            app:elevation="0dp"
-            app:layout_behavior="com.kklv.mytest.ui.view.behavior.FixAppBarLayoutBehavior">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/collapsingToolBarLayout"
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="92dp"
-                app:contentScrim="#00ffffff"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:titleEnabled="false">
+                android:background="#f4f5f6"
+                android:orientation="vertical"
+                app:elevation="0dp"
+                app:layout_behavior="com.kklv.mytest.ui.view.behavior.FixAppBarLayoutBehavior">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:id="@+id/collapsingToolBarLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.youth.banner.Banner
-                        android:id="@+id/banner"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:bannerImages="@{vm.dataInfo.bg_imgs}"
-                        app:bannerIndicatorTv='@{bannerIndex}'
-                        app:layout_constraintDimensionRatio="375:152"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/bannerIndex"
-                        android:layout_width="44dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="12dp"
-                        android:background="#70353637"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:bl_corners_radius="12dp"
-                        app:bl_solid_color="#70353637"
-                        app:layout_constraintBottom_toBottomOf="@id/banner"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:ignore="MissingPrefix"
-                        tools:text="1/3" />
-
-                    <View
-                        android:id="@+id/bannerHeight"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:background="@drawable/bg_img_cover"
-                        app:layout_constraintDimensionRatio="375:148"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_height="wrap_content"
+                    android:minHeight="92dp"
+                    app:contentScrim="#00ffffff"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    app:titleEnabled="false">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clStoreInfo"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bl_corners_topLeftRadius="8dp"
-                        app:bl_corners_topRightRadius="8dp"
-                        app:bl_solid_color="@color/white"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/bannerHeight">
+                        android:layout_height="wrap_content">
 
-                        <TextView
-                            android:id="@+id/tvTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:text="@{vm.dataInfo.store_name}"
-                            android:textColor="#353637"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toStartOf="@id/rvStoreTags"
-                            app:layout_constraintHorizontal_bias="0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_default="wrap"
-                            tools:text="陈鹏鹏潮汕菜" />
-
-                        <ImageView
-                            android:id="@+id/ivTag"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            app:imgUrl="@{vm.dataInfo.store_level_icon}"
-                            app:layout_constraintStart_toStartOf="parent"
+                        <com.youth.banner.Banner
+                            android:id="@+id/banner"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:bannerImages="@{vm.dataInfo.bg_imgs}"
+                            app:bannerIndicatorTv='@{bannerIndex}'
+                            app:layout_constraintDimensionRatio="375:152"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rvStoreTags"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="21dp"
+                        <TextView
+                            android:id="@+id/bannerIndex"
+                            android:layout_width="44dp"
+                            android:layout_height="20dp"
                             android:layout_marginEnd="16dp"
-                            android:orientation="horizontal"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:itemCount="3" />
-
-                        <TextView
-                            android:id="@+id/tvLocation"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginEnd="4dp"
-                            android:text="@{vm.dataInfo.full_address}"
-                            android:textColor="#646566"
-                            android:textSize="12sp"
-                            app:layout_constraintEnd_toStartOf="@id/tvNavigationToMap"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tvTitle"
-                            tools:text="南山区粤海街道科苑北路68号金融科技大厦A座10F" />
-
-                        <TextView
-                            android:id="@+id/tvNavigationToMap"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:paddingHorizontal="6dp"
-                            android:paddingVertical="10dp"
-                            android:text="@{vm.dataInfo.distance}"
-                            android:textColor="#646566"
-                            android:textSize="10sp"
-                            app:drawableStartCompat="@drawable/icon_store_navigation"
-                            app:layout_constraintBottom_toBottomOf="@id/tvLocation"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/tvLocation"
-                            tools:text="1.5km" />
-
-                        <TextView
-                            android:id="@+id/tvMerchantTag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            android:background="#70353637"
                             android:gravity="center"
-                            android:paddingVertical="4dp"
-                            android:text="关联商户："
-                            android:textColor="#646566"
+                            android:textColor="@color/white"
                             android:textSize="12sp"
-                            app:layout_constraintStart_toStartOf="@id/tvLocation"
-                            app:layout_constraintTop_toBottomOf="@id/tvLocation" />
-
-                        <TextView
-                            android:id="@+id/tvMerchant"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:paddingVertical="4dp"
-                            android:text="@{vm.dataInfo.merchantName}"
-                            android:textColor="#5878B4"
-                            android:textSize="12sp"
+                            app:bl_corners_radius="12dp"
+                            app:bl_solid_color="#70353637"
+                            app:layout_constraintBottom_toBottomOf="@id/banner"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0"
-                            app:layout_constraintStart_toEndOf="@id/tvMerchantTag"
-                            app:layout_constraintTop_toTopOf="@id/tvMerchantTag"
-                            app:layout_constraintWidth_default="wrap"
-                            tools:text="四川海底捞餐饮股份有限公司" />
+                            tools:ignore="MissingPrefix"
+                            tools:text="1/3" />
 
-                        <TextView
-                            android:id="@+id/tvBusinessTimeTag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="营业时间："
-                            android:textColor="#646566"
-                            android:textSize="12sp"
-                            app:layout_constraintStart_toStartOf="@id/tvLocation"
-                            app:layout_constraintTop_toBottomOf="@id/tvMerchant" />
+                        <View
+                            android:id="@+id/bannerHeight"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:background="@drawable/bg_img_cover"
+                            app:layout_constraintDimensionRatio="375:148"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/tvBusinessTime"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="@{vm.dataInfo.opening_hours}"
-                            android:textColor="#646566"
-                            android:textSize="12sp"
-                            app:layout_constraintEnd_toStartOf="@id/tvChangeBusinessTime"
-                            app:layout_constraintHorizontal_bias="0"
-                            app:layout_constraintHorizontal_chainStyle="packed"
-                            app:layout_constraintStart_toEndOf="@id/tvBusinessTimeTag"
-                            app:layout_constraintTop_toTopOf="@id/tvBusinessTimeTag"
-                            app:layout_constraintWidth_default="wrap"
-                            tools:text="周一至周五 9:00-22:00" />
-
-                        <TextView
-                            android:id="@+id/tvChangeBusinessTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginEnd="16dp"
-                            android:drawablePadding="2dp"
-                            android:padding="4dp"
-                            android:text="修改"
-                            android:textColor="#949495"
-                            android:textSize="12sp"
-                            app:drawableEndCompat="@drawable/ic_arrow"
-                            app:layout_constraintBottom_toBottomOf="@id/tvBusinessTimeTag"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/tvBusinessTime"
-                            app:layout_constraintTop_toTopOf="@id/tvBusinessTimeTag" />
-
-                        <TextView
-                            android:id="@+id/tvContactTag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="联系人："
-                            android:textColor="#646566"
-                            android:textSize="12sp"
-                            app:layout_constraintStart_toStartOf="@id/tvLocation"
-                            app:layout_constraintTop_toBottomOf="@id/tvBusinessTime" />
-
-                        <TextView
-                            android:id="@+id/tvContact"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="4dp"
-                            android:paddingVertical="8dp"
-                            android:text="@{vm.dataInfo.contact_text}"
-                            android:textColor="#646566"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@id/tvContactTag"
-                            app:layout_constraintStart_toEndOf="@id/tvContactTag"
-                            app:layout_constraintTop_toTopOf="@id/tvContactTag"
-                            tools:drawableStart="@drawable/icon_contact"
-                            tools:text="沐橙/132****9034" />
-
-                        <TextView
-                            android:id="@+id/tvSignerAndOperation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text='@{"签约："+vm.dataInfo.sign_user_name+"  |  运维："+vm.dataInfo.maintain_user_name}'
-                            android:textColor="#646566"
-                            android:textSize="12sp"
-                            app:layout_constraintStart_toStartOf="@id/tvLocation"
-                            app:layout_constraintTop_toBottomOf="@id/tvContactTag"
-                            tools:text="签约：毕蓉  |  运维：霍珠超" />
-
-                        <TextView
-                            android:id="@+id/tvCreateTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text='@{"门店创建时间："+vm.dataInfo.create_time}'
-                            android:textColor="#646566"
-                            android:textSize="12sp"
-                            app:layout_constraintStart_toStartOf="@id/tvLocation"
-                            app:layout_constraintTop_toBottomOf="@id/tvSignerAndOperation"
-                            tools:text="门店创建时间：2023-09-10 11:03:34" />
-
-                        <ImageView
-                            android:id="@+id/ivExpand"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:onClick="@{()->click.clickExpandArrow()}"
-                            android:padding="16dp"
-                            android:src="@drawable/icon_recommend_arrow"
-                            app:layout_constraintBottom_toBottomOf="@id/tvCreateTime"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/tvCreateTime"
-                            app:reverseWithAnim="@{vm.isExpanded()}" />
-
-                        <net.cachapa.expandablelayout.ExpandableLayout
-                            android:id="@+id/expandLayout"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/clStoreInfo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:el_duration="@integer/anim_duration"
-                            app:el_expanded="false"
-                            app:isExpanded="@{vm.isExpanded()}"
-                            app:layout_constraintTop_toBottomOf="@id/ivExpand">
+                            app:bl_corners_topLeftRadius="8dp"
+                            app:bl_corners_topRightRadius="8dp"
+                            app:bl_solid_color="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/bannerHeight">
 
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/clExpandStoreInfo"
+                            <TextView
+                                android:id="@+id/tvTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:text="@{vm.dataInfo.store_name}"
+                                android:textColor="#353637"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toStartOf="@id/rvStoreTags"
+                                app:layout_constraintHorizontal_bias="0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintWidth_default="wrap"
+                                tools:text="陈鹏鹏潮汕菜" />
+
+                            <ImageView
+                                android:id="@+id/ivTag"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                app:imgUrl="@{vm.dataInfo.store_level_icon}"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvStoreTags"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="21dp"
+                                android:layout_marginEnd="16dp"
+                                android:orientation="horizontal"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:itemCount="3" />
+
+                            <TextView
+                                android:id="@+id/tvLocation"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginEnd="4dp"
+                                android:text="@{vm.dataInfo.full_address}"
+                                android:textColor="#646566"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toStartOf="@id/tvNavigationToMap"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/tvTitle"
+                                tools:text="南山区粤海街道科苑北路68号金融科技大厦A座10F" />
+
+                            <TextView
+                                android:id="@+id/tvNavigationToMap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:paddingHorizontal="6dp"
+                                android:paddingVertical="10dp"
+                                android:text="@{vm.dataInfo.distance}"
+                                android:textColor="#646566"
+                                android:textSize="10sp"
+                                app:drawableStartCompat="@drawable/icon_store_navigation"
+                                app:layout_constraintBottom_toBottomOf="@id/tvLocation"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/tvLocation"
+                                tools:text="1.5km" />
+
+                            <TextView
+                                android:id="@+id/tvMerchantTag"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:paddingVertical="4dp"
+                                android:text="关联商户："
+                                android:textColor="#646566"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toStartOf="@id/tvLocation"
+                                app:layout_constraintTop_toBottomOf="@id/tvLocation" />
+
+                            <TextView
+                                android:id="@+id/tvMerchant"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:paddingVertical="4dp"
+                                android:text="@{vm.dataInfo.merchantName}"
+                                android:textColor="#5878B4"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0"
+                                app:layout_constraintStart_toEndOf="@id/tvMerchantTag"
+                                app:layout_constraintTop_toTopOf="@id/tvMerchantTag"
+                                app:layout_constraintWidth_default="wrap"
+                                tools:text="四川海底捞餐饮股份有限公司" />
+
+                            <TextView
+                                android:id="@+id/tvBusinessTimeTag"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="营业时间："
+                                android:textColor="#646566"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toStartOf="@id/tvLocation"
+                                app:layout_constraintTop_toBottomOf="@id/tvMerchant" />
+
+                            <TextView
+                                android:id="@+id/tvBusinessTime"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@{vm.dataInfo.opening_hours}"
+                                android:textColor="#646566"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toStartOf="@id/tvChangeBusinessTime"
+                                app:layout_constraintHorizontal_bias="0"
+                                app:layout_constraintHorizontal_chainStyle="packed"
+                                app:layout_constraintStart_toEndOf="@id/tvBusinessTimeTag"
+                                app:layout_constraintTop_toTopOf="@id/tvBusinessTimeTag"
+                                app:layout_constraintWidth_default="wrap"
+                                tools:text="周一至周五 9:00-22:00" />
+
+                            <TextView
+                                android:id="@+id/tvChangeBusinessTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_marginEnd="16dp"
+                                android:drawablePadding="2dp"
+                                android:padding="4dp"
+                                android:text="修改"
+                                android:textColor="#949495"
+                                android:textSize="12sp"
+                                app:drawableEndCompat="@drawable/ic_arrow"
+                                app:layout_constraintBottom_toBottomOf="@id/tvBusinessTimeTag"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tvBusinessTime"
+                                app:layout_constraintTop_toTopOf="@id/tvBusinessTimeTag" />
+
+                            <TextView
+                                android:id="@+id/tvContactTag"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="联系人："
+                                android:textColor="#646566"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toStartOf="@id/tvLocation"
+                                app:layout_constraintTop_toBottomOf="@id/tvBusinessTime" />
+
+                            <TextView
+                                android:id="@+id/tvContact"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="4dp"
+                                android:paddingVertical="8dp"
+                                android:text="@{vm.dataInfo.contact_text}"
+                                android:textColor="#646566"
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toBottomOf="@id/tvContactTag"
+                                app:layout_constraintStart_toEndOf="@id/tvContactTag"
+                                app:layout_constraintTop_toTopOf="@id/tvContactTag"
+                                tools:drawableStart="@drawable/icon_contact"
+                                tools:text="沐橙/132****9034" />
+
+                            <TextView
+                                android:id="@+id/tvSignerAndOperation"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text='@{"签约："+vm.dataInfo.sign_user_name+"  |  运维："+vm.dataInfo.maintain_user_name}'
+                                android:textColor="#646566"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toStartOf="@id/tvLocation"
+                                app:layout_constraintTop_toBottomOf="@id/tvContactTag"
+                                tools:text="签约：毕蓉  |  运维：霍珠超" />
+
+                            <TextView
+                                android:id="@+id/tvCreateTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text='@{"门店创建时间："+vm.dataInfo.create_time}'
+                                android:textColor="#646566"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toStartOf="@id/tvLocation"
+                                app:layout_constraintTop_toBottomOf="@id/tvSignerAndOperation"
+                                tools:text="门店创建时间：2023-09-10 11:03:34" />
+
+                            <ImageView
+                                android:id="@+id/ivExpand"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:onClick="@{()->click.clickExpandArrow()}"
+                                android:padding="16dp"
+                                android:src="@drawable/icon_recommend_arrow"
+                                app:layout_constraintBottom_toBottomOf="@id/tvCreateTime"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/tvCreateTime"
+                                app:reverseWithAnim="@{vm.isExpanded()}" />
+
+                            <net.cachapa.expandablelayout.ExpandableLayout
+                                android:id="@+id/expandLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/white"
-                                app:layout_constraintBottom_toBottomOf="@id/clStoreInfo">
+                                app:el_duration="@integer/anim_duration"
+                                app:el_expanded="false"
+                                app:isExpanded="@{vm.isExpanded()}"
+                                app:layout_constraintTop_toBottomOf="@id/ivExpand">
 
-                                <View
-                                    android:id="@+id/lineExpand"
-                                    android:layout_width="0dp"
-                                    android:layout_height="1dp"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginEnd="16dp"
-                                    android:background="#EEEEF0"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:id="@+id/tvCompetitor"
-                                    android:layout_width="wrap_content"
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/clExpandStoreInfo"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="8dp"
-                                    android:text='@{"竞对情况："+vm.dataInfo.rival_text}'
-                                    android:textColor="#646566"
-                                    android:textSize="10sp"
-                                    app:layout_constraintStart_toStartOf="@id/lineExpand"
-                                    app:layout_constraintTop_toBottomOf="@id/lineExpand"
-                                    tools:text="竞对情况：怪兽/小电/悟空/怪兽" />
+                                    android:background="@color/white"
+                                    app:layout_constraintBottom_toBottomOf="@id/clStoreInfo">
 
-                                <TextView
-                                    android:id="@+id/tvStoreSource"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:text='@{"门店来源："+vm.dataInfo.source}'
-                                    android:textColor="#646566"
-                                    android:textSize="10sp"
-                                    app:layout_constraintStart_toStartOf="@id/tvCompetitor"
-                                    app:layout_constraintTop_toBottomOf="@id/tvCompetitor"
-                                    tools:text="门店来源：高德地图" />
+                                    <View
+                                        android:id="@+id/lineExpand"
+                                        android:layout_width="0dp"
+                                        android:layout_height="1dp"
+                                        android:layout_marginStart="16dp"
+                                        android:layout_marginEnd="16dp"
+                                        android:background="#EEEEF0"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
 
-                                <View
-                                    android:id="@+id/line3"
-                                    android:layout_width="1dp"
-                                    android:layout_height="12dp"
-                                    android:layout_marginStart="8dp"
-                                    android:background="#EEEEF0"
-                                    app:layout_constraintBottom_toBottomOf="@id/tvStoreSource"
-                                    app:layout_constraintStart_toEndOf="@id/tvStoreSource"
-                                    app:layout_constraintTop_toTopOf="@id/tvStoreSource" />
+                                    <TextView
+                                        android:id="@+id/tvCompetitor"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:text='@{"竞对情况："+vm.dataInfo.rival_text}'
+                                        android:textColor="#646566"
+                                        android:textSize="10sp"
+                                        app:layout_constraintStart_toStartOf="@id/lineExpand"
+                                        app:layout_constraintTop_toBottomOf="@id/lineExpand"
+                                        tools:text="竞对情况：怪兽/小电/悟空/怪兽" />
 
-                                <TextView
-                                    android:id="@+id/tvStoreType"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:text='@{"分类："+vm.dataInfo.classfiy}'
-                                    android:textColor="#646566"
-                                    android:textSize="10sp"
-                                    app:layout_constraintBottom_toBottomOf="@id/tvStoreSource"
-                                    app:layout_constraintStart_toEndOf="@id/line3"
-                                    app:layout_constraintTop_toTopOf="@id/tvStoreSource"
-                                    tools:text="分类：洗浴-水会/洗浴中心" />
+                                    <TextView
+                                        android:id="@+id/tvStoreSource"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text='@{"门店来源："+vm.dataInfo.source}'
+                                        android:textColor="#646566"
+                                        android:textSize="10sp"
+                                        app:layout_constraintStart_toStartOf="@id/tvCompetitor"
+                                        app:layout_constraintTop_toBottomOf="@id/tvCompetitor"
+                                        tools:text="门店来源：高德地图" />
 
-                                <TextView
-                                    android:id="@+id/tvLatestClaimTime"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:text='@{"最新认领时间："+vm.dataInfo.latest_claim_time}'
-                                    android:textColor="#646566"
-                                    android:textSize="10sp"
-                                    app:layout_constraintStart_toStartOf="@id/tvCompetitor"
-                                    app:layout_constraintTop_toBottomOf="@id/tvStoreSource"
-                                    tools:text="最新认领时间：2023-10-10 11:03:34" />
+                                    <View
+                                        android:id="@+id/line3"
+                                        android:layout_width="1dp"
+                                        android:layout_height="12dp"
+                                        android:layout_marginStart="8dp"
+                                        android:background="#EEEEF0"
+                                        app:layout_constraintBottom_toBottomOf="@id/tvStoreSource"
+                                        app:layout_constraintStart_toEndOf="@id/tvStoreSource"
+                                        app:layout_constraintTop_toTopOf="@id/tvStoreSource" />
 
-                                <TextView
-                                    android:id="@+id/tvStoreUUID"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:text='@{"门店UUID："+vm.uuid}'
-                                    android:textColor="#646566"
-                                    android:textSize="10sp"
-                                    app:layout_constraintStart_toStartOf="@id/tvCompetitor"
-                                    app:layout_constraintTop_toBottomOf="@id/tvLatestClaimTime"
-                                    tools:text="门店UUID：9bdf220f-6207-435c-aaa0-f59e6bb27713" />
+                                    <TextView
+                                        android:id="@+id/tvStoreType"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:text='@{"分类："+vm.dataInfo.classfiy}'
+                                        android:textColor="#646566"
+                                        android:textSize="10sp"
+                                        app:layout_constraintBottom_toBottomOf="@id/tvStoreSource"
+                                        app:layout_constraintStart_toEndOf="@id/line3"
+                                        app:layout_constraintTop_toTopOf="@id/tvStoreSource"
+                                        tools:text="分类：洗浴-水会/洗浴中心" />
 
-                                <ImageView
-                                    android:id="@+id/ivCopyUUID"
-                                    android:layout_width="26dp"
-                                    android:layout_height="32dp"
-                                    android:paddingVertical="8dp"
-                                    android:paddingStart="2dp"
-                                    android:paddingEnd="8dp"
-                                    android:src="@drawable/icon_copy"
-                                    app:layout_constraintBottom_toBottomOf="@id/tvStoreUUID"
-                                    app:layout_constraintStart_toEndOf="@id/tvStoreUUID"
-                                    app:layout_constraintTop_toTopOf="@id/tvStoreUUID" />
+                                    <TextView
+                                        android:id="@+id/tvLatestClaimTime"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text='@{"最新认领时间："+vm.dataInfo.latest_claim_time}'
+                                        android:textColor="#646566"
+                                        android:textSize="10sp"
+                                        app:layout_constraintStart_toStartOf="@id/tvCompetitor"
+                                        app:layout_constraintTop_toBottomOf="@id/tvStoreSource"
+                                        tools:text="最新认领时间：2023-10-10 11:03:34" />
 
-                            </androidx.constraintlayout.widget.ConstraintLayout>
+                                    <TextView
+                                        android:id="@+id/tvStoreUUID"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text='@{"门店UUID："+vm.uuid}'
+                                        android:textColor="#646566"
+                                        android:textSize="10sp"
+                                        app:layout_constraintStart_toStartOf="@id/tvCompetitor"
+                                        app:layout_constraintTop_toBottomOf="@id/tvLatestClaimTime"
+                                        tools:text="门店UUID：9bdf220f-6207-435c-aaa0-f59e6bb27713" />
 
-                        </net.cachapa.expandablelayout.ExpandableLayout>
+                                    <ImageView
+                                        android:id="@+id/ivCopyUUID"
+                                        android:layout_width="26dp"
+                                        android:layout_height="32dp"
+                                        android:paddingVertical="8dp"
+                                        android:paddingStart="2dp"
+                                        android:paddingEnd="8dp"
+                                        android:src="@drawable/icon_copy"
+                                        app:layout_constraintBottom_toBottomOf="@id/tvStoreUUID"
+                                        app:layout_constraintStart_toEndOf="@id/tvStoreUUID"
+                                        app:layout_constraintTop_toTopOf="@id/tvStoreUUID" />
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            </net.cachapa.expandablelayout.ExpandableLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvNavigation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@color/white"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                            app:layout_constraintTop_toBottomOf="@id/clStoreInfo"
+                            app:spanCount="5"
+                            tools:itemCount="8" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvNavigation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/white"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@id/clStoreInfo"
-                        app:spanCount="5"
-                        tools:itemCount="8" />
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <net.lucode.hackware.magicindicator.MagicIndicator
+                    android:id="@+id/tabStoreData"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    app:layout_constraintTop_toBottomOf="@id/rvNavigation"
+                    app:navigatorData="@{vm.tabData}"
+                    app:navigatorViewPager="@{vpStoreData}" />
+            </com.google.android.material.appbar.AppBarLayout>
 
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-            <net.lucode.hackware.magicindicator.MagicIndicator
-                android:id="@+id/tabStoreData"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/rvNavigation"
-                app:navigatorData="@{vm.tabData}"
-                app:navigatorViewPager="@{vpStoreData}" />
-        </com.google.android.material.appbar.AppBarLayout>
+                android:layout_height="92dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="92dp">
+                <View
+                    android:id="@+id/bgTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0"
+                    android:background="@color/white" />
 
-            <View
-                android:id="@+id/bgTop"
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="40dp"
+                    android:onClick="@{()->click.back()}"
+                    android:padding="16dp"
+                    android:src="@drawable/icon_store_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivCollect"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:padding="16dp"
+                    app:imgSrc="@{vm.collectionRes}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ivBack" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vpStoreData"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0"
-                android:background="@color/white" />
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
-            <ImageView
-                android:id="@+id/ivBack"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
-                android:layout_marginTop="40dp"
-                android:onClick="@{()->click.back()}"
-                android:padding="16dp"
-                android:src="@drawable/icon_store_back"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/ivCollect"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
-                android:padding="16dp"
-                app:imgSrc="@{vm.collectionRes}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/ivBack" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vpStoreData"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </FrameLayout>
 
 </layout>
 

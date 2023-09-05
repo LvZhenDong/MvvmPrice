@@ -44,11 +44,10 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
         super.onViewCreated(view, savedInstanceState)
         lifecycle.addObserver(mStoreDetailsRequester)
 
-//        mSkeleton = buildSkeleton(binding.coordinator, R.layout.skeleton_activity_store_details)
+        mSkeleton = buildSkeleton(binding.coordinator, R.layout.skeleton_activity_store_details)
 
         mStoreDetailsRequester.getStoreDetailsInfoResult().observe(this@StoreDetailsFragment) {
-//            if (mSkeleton.isShow) hideSkeletonAndInitView()
-            initView()
+            if (mSkeleton.isShow) hideSkeletonAndInitView()
             if (it.responseStatus.isSuccess) {
                 it.result.detailsInfo?.let { storeDetailsBean ->
                     mStates.dataInfo.set(storeDetailsBean)
@@ -100,8 +99,8 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
     private fun initTab() {
         val fragments = arrayListOf(
-            StoreDetailsVisitListFragment.getInstance(""),
-            StoreDetailsDataFragment.getInstance(""),
+            StoreDetailsVisitListFragment.getInstance(mStates.uuid.get() ?: ""),
+            StoreDetailsDataFragment.getInstance(mStates.uuid.get() ?: ""),
             StoreDetailsContractFragment.getInstance(mStates.uuid.get() ?: "")
         )
         val mPagerAdapter =
