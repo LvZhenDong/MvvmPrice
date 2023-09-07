@@ -2,7 +2,6 @@ package com.kklv.mytest
 
 import android.os.Bundle
 import android.util.Log
-import androidx.navigation.Navigation
 import com.kklv.mytest.databinding.ActivityMainBinding
 import com.kklv.mytest.domain.message.PageMessenger
 import com.kunminx.architecture.ui.page.BaseActivity

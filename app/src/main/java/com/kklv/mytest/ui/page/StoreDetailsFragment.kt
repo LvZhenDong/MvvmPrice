@@ -16,12 +16,12 @@ import com.kklv.mytest.databinding.ItemStoreNavigationBinding
 import com.kklv.mytest.databinding.ItemStoreTagBinding
 import com.kklv.mytest.domain.request.StoreDetailsRequester
 import com.kklv.mytest.ui.view.adapter.BaseSimpleAdapter
-import com.kunminx.architecture.utils.ext.drawableLeft
-import com.kunminx.architecture.utils.ext.toast
 import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
+import com.kunminx.architecture.utils.ext.drawableLeft
+import com.kunminx.architecture.utils.ext.toast
 
 class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
     private lateinit var mStates: StoreDetailsFragmentStates
