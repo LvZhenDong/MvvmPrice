@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import java.util.Objects
 
 /**
  * Author:lvzhendong
@@ -26,6 +27,12 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
 
     fun getStoreDetailsInfoResult(): Result<DataResult<DetailsInfoNavBtn>> {
         return storeDetailsInfoResult
+    }
+
+    private val collectResult: MutableResult<DataResult<Boolean>> = MutableResult()
+
+    fun getCollectResult(): Result<DataResult<Boolean>> {
+        return collectResult
     }
 
     fun getDetailsInfoByCoroutineScope(storeId: String) {
@@ -55,7 +62,7 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
 
                 val dataResult =
                     if (t1.responseStatus.isSuccess.not() || t2.responseStatus.isSuccess.not() || t3.responseStatus.isSuccess.not()) {
-                        DataResult(DetailsInfoNavBtn(null, null), ResponseStatus("网络异常，请稍后重试", false))
+                        DataResult(DetailsInfoNavBtn(null, null), ResponseStatus(false))
                     } else {
                         val totalNavList: ArrayList<SchemaBean> = t2.result.buttons
                         totalNavList.addAll(t3.result.buttons)
@@ -66,6 +73,24 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
 
                 storeDetailsInfoResult.postValue(dataResult)
             }
+        }
+    }
+
+    fun collect(storeId: String, isCollected: Boolean) {
+        viewModelScope.launch {
+            val result = DataRepository.getInstance().getNetWorkData(StoreService::class.java) { storeService ->
+                val map = HashMap<String, Any>()
+                map["store_id"] = storeId
+                map["collect"] = !isCollected
+                map["isTokenIntercept"] = true
+                storeService.collectStore(map)
+            }
+            if (result.responseStatus.isSuccess) {
+                collectResult.postValue(DataResult(!isCollected))
+            } else {
+                collectResult.postValue(DataResult(isCollected, ResponseStatus(isSuccess = false)))
+            }
+
         }
     }
 

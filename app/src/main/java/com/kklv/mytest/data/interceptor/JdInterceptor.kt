@@ -30,7 +30,7 @@ class JdInterceptor:Interceptor {
             .header("time-zone", "GMT+08:00")
             .header("ac-token", DataManager.getInstance().getAcToken())
             .addHeader("User-Agent", "XpKLpLXgf9YDALcVeYr7vsI0")
-            .addHeader("Cookie", "sid=uat_c32cd44a23e544859a8998e3379b6295;uid=5af2adaa2161c")
+            .addHeader("Cookie", "sid=${DataManager.getInstance().getAcToken()};uid=5af2adaa2161c")
             .method(original.method, original.body)
 
         val request = builder.build()

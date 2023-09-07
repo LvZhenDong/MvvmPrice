@@ -5,7 +5,9 @@ import com.kklv.mytest.data.bean.NavBtnsBean
 import com.kklv.mytest.data.bean.StoreDetailsBean
 import com.kklv.mytest.data.bean.base.BaseJdResponse
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 /**
@@ -48,5 +50,10 @@ interface StoreService {
     fun getStoreContractList(
         @Query("store_id") storeId: String
     ): Call<BaseJdResponse<ContractListBean>>
+
+    @POST("/Device/Store/MarkStore")
+    fun collectStore(
+        @Body body:HashMap<String,Any>
+    ):Call<BaseJdResponse<Boolean>>
 
 }

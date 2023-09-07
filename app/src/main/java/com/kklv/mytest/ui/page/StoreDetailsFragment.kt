@@ -3,6 +3,7 @@ package com.kklv.mytest.ui.page
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bestbrand.lib_skeleton.skeleton.ViewSkeletonScreen
@@ -22,8 +23,14 @@ import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
 import com.kunminx.architecture.utils.ext.drawableLeft
 import com.kunminx.architecture.utils.ext.toast
+import kotlin.math.abs
 
 class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
+
+    companion object {
+        private const val COLLAPSE_RATE = 0.1F
+    }
+
     private lateinit var mStates: StoreDetailsFragmentStates
     private lateinit var mStoreDetailsRequester: StoreDetailsRequester
 
@@ -51,7 +58,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
             if (it.responseStatus.isSuccess) {
                 it.result.detailsInfo?.let { storeDetailsBean ->
                     mStates.dataInfo.set(storeDetailsBean)
-                    if (storeDetailsBean.is_mark) mStates.collectionRes.set(R.drawable.iv_store_collect)
+                    mStates.isCollected.value = storeDetailsBean.is_mark
 
                     binding.tvContact.drawableLeft(if (storeDetailsBean.telephone == null) null else R.drawable.icon_contact)
                     storeDetailsBean.special_tags?.let { tags -> tagAdapter.setData(tags) }
@@ -73,7 +80,32 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
             }
         }
 
+        mStoreDetailsRequester.getCollectResult().observe(viewLifecycleOwner) {
+            if (it.responseStatus.isSuccess) {
+                mStates.isCollected.value = it.result
+            } else {
+                it.responseStatus.responseCode.toast()
+            }
+        }
+
+        mStates.isCollapsed.observe(viewLifecycleOwner) { isCollapsed ->
+            binding.ivBack.setImageResource(if (isCollapsed) R.drawable.icon_store_back_black else R.drawable.icon_store_back)
+            setCollectImg(isCollapsed, mStates.isCollected.value ?: false)
+        }
+
+        mStates.isCollected.observe(viewLifecycleOwner) { isCollected ->
+            setCollectImg(mStates.isCollapsed.value ?: false, isCollected)
+        }
+
         mStoreDetailsRequester.getDetailsInfoByCoroutineScope(mStates.uuid.get() ?: "")
+    }
+
+    private fun setCollectImg(isCollapsed: Boolean, isCollected: Boolean) {
+        binding.ivCollect.setImageResource(
+            if (isCollected) R.drawable.iv_store_collect
+            else if (isCollapsed) R.drawable.iv_store_collect_black
+            else R.drawable.iv_store_collect_white
+        )
     }
 
     private fun hideSkeletonAndInitView() {
@@ -95,6 +127,17 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
             }
         }
         binding.rvStoreTags.adapter = tagAdapter
+
+        binding.appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            // 获取CollapsingToolbarLayout的总高度
+            val totalScrollRange = appBarLayout.totalScrollRange
+
+            // 计算折叠进度
+            val collapsePercentage = (abs(verticalOffset).toFloat() / totalScrollRange.toFloat()).coerceIn(0f, 1f)
+            binding.bgTop.alpha = collapsePercentage
+
+            mStates.isCollapsed.value = collapsePercentage > COLLAPSE_RATE
+        }
     }
 
     private fun initTab() {
@@ -124,6 +167,10 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
             mStates.isExpanded.set(!(mStates.isExpanded.get() ?: false))
         }
 
+        fun collect() {
+            mStoreDetailsRequester.collect(mStates.uuid.get() ?: "", mStates.isCollected.value ?: false)
+        }
+
         fun back() {
             activity?.let {
                 Navigation.findNavController(it, R.id.fragmentContainerView).navigateUp()
@@ -131,16 +178,17 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
         }
     }
 
-
     class StoreDetailsFragmentStates : StateHolder() {
         val dataInfo: State<StoreDetailsBean> = State(StoreDetailsBean())
 
         val isExpanded: State<Boolean> = State(false)
 
-        val collectionRes: State<Int> = State(R.drawable.iv_store_collect_white)
+        val isCollapsed: MutableLiveData<Boolean> = MutableLiveData(false)
+
+        val isCollected: MutableLiveData<Boolean> = MutableLiveData(false)
 
         val tabData: State<ArrayList<String>> = State(arrayListOf("数据", "设备", "合同"))
 
-        val uuid: State<String> = State("a7ca8862-5a11-4ae7-ad53-6c869177d17f")
+        val uuid: State<String> = State("18fbec57-ee17-4cd7-adc2-7f95cb12b400")
     }
 }

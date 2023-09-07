@@ -467,7 +467,7 @@
                     android:layout_width="52dp"
                     android:layout_height="52dp"
                     android:padding="16dp"
-                    app:imgSrc="@{vm.collectionRes}"
+                    android:onClick="@{()->click.collect()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/ivBack" />
 

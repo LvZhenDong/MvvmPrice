@@ -71,8 +71,8 @@ class DataRepository private constructor() {
                 response = call.execute()
                 if (response.body()?.isSuccess() == true) {
                     val responseStatus = ResponseStatus(
-                        response.code().toString(),
                         response.isSuccessful,
+                        response.code().toString(),
                         ResultSource.NETWORK
                     )
                     DataResult(response.body()?.data, responseStatus)
@@ -82,7 +82,7 @@ class DataRepository private constructor() {
             } catch (e: IOException) {
                 DataResult(
                     null,
-                    ResponseStatus(e.message, false, ResultSource.NETWORK)
+                    ResponseStatus(false, e.message?:"网络异常，请稍后重试", ResultSource.NETWORK)
                 )
             }
         }
