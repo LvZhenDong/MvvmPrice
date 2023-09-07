@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bestbrand.lib_skeleton.skeleton.ViewSkeletonScreen
+import com.bestbrand.lib_skeleton.skeleton.buildSkeleton
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
 import com.kklv.mytest.data.bean.SchemaBean
@@ -15,9 +16,8 @@ import com.kklv.mytest.databinding.ItemStoreNavigationBinding
 import com.kklv.mytest.databinding.ItemStoreTagBinding
 import com.kklv.mytest.domain.request.StoreDetailsRequester
 import com.kklv.mytest.ui.view.adapter.BaseSimpleAdapter
-import com.kklv.mytest.utils.buildSkeleton
-import com.kklv.mytest.utils.drawableLeft
-import com.kklv.mytest.utils.toast
+import com.kunminx.architecture.utils.ext.drawableLeft
+import com.kunminx.architecture.utils.ext.toast
 import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
@@ -30,8 +30,8 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
     private lateinit var mSkeleton: ViewSkeletonScreen
 
     override fun initViewModel() {
-        mStates = getActivityScopeViewModel(StoreDetailsFragmentStates::class.java)
-        mStoreDetailsRequester = getActivityScopeViewModel(StoreDetailsRequester::class.java)
+        mStates = getFragmentScopeViewModel(StoreDetailsFragmentStates::class.java)
+        mStoreDetailsRequester = getFragmentScopeViewModel(StoreDetailsRequester::class.java)
     }
 
     override fun getDataBindingConfig(): DataBindingConfig {
@@ -46,7 +46,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
         mSkeleton = buildSkeleton(binding.coordinator, R.layout.skeleton_activity_store_details)
 
-        mStoreDetailsRequester.getStoreDetailsInfoResult().observe(this@StoreDetailsFragment) {
+        mStoreDetailsRequester.getStoreDetailsInfoResult().observe(viewLifecycleOwner) {
             if (mSkeleton.isShow) hideSkeletonAndInitView()
             if (it.responseStatus.isSuccess) {
                 it.result.detailsInfo?.let { storeDetailsBean ->

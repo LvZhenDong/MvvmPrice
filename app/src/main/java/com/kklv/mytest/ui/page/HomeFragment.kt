@@ -32,7 +32,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private lateinit var mStates: HomeFragmentStates
     override fun initViewModel() {
-        mStates = getActivityScopeViewModel(HomeFragmentStates::class.java)
+        mStates = getFragmentScopeViewModel(HomeFragmentStates::class.java)
     }
 
     override fun getDataBindingConfig(): DataBindingConfig {

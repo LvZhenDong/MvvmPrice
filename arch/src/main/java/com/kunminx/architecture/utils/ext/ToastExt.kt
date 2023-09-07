@@ -1,6 +1,7 @@
-package com.kklv.mytest.utils
+package com.kunminx.architecture.utils.ext
 
 import android.widget.Toast
+import com.kunminx.architecture.utils.Utils
 import java.util.LinkedList
 import java.util.Queue
 
@@ -24,6 +25,6 @@ fun String.toast() {
 
     toastQueue.add(this)
     if (!isToastShowing) {
-        Toast.makeText(getAppContext(), this, Toast.LENGTH_SHORT).show()
+        Toast.makeText(Utils.getApp(), this, Toast.LENGTH_SHORT).show()
     }
 }

@@ -48,7 +48,7 @@ class StoreDetailsContractFragment : BaseFragment<FragmentStoreDetailsContractBi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mRequester.getContractListResult().observe(this) { resultData ->
+        mRequester.getContractListResult().observe(viewLifecycleOwner) { resultData ->
             if (resultData.responseStatus.isSuccess && resultData.result.list.isNullOrEmpty().not()) {
                 mAdapter = BaseSimpleAdapter(
                     resultData.result.list!!,
