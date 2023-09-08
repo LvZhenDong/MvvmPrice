@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,10 @@ public abstract class BaseFragment<VB extends ViewDataBinding> extends DataBindi
 
   protected <T extends ViewModel> T getFragmentScopeViewModel(@NonNull Class<T> modelClass) {
     return mViewModelScope.getFragmentScopeViewModel(this, modelClass);
+  }
+
+  protected <T extends ViewModel> T getParentFragmentScopeViewModel(@NonNull Class<T> modelClass) {
+    return mViewModelScope.getParentFragmentScopeViewModel(requireParentFragment(), modelClass);
   }
 
   protected <T extends ViewModel> T getActivityScopeViewModel(@NonNull Class<T> modelClass) {

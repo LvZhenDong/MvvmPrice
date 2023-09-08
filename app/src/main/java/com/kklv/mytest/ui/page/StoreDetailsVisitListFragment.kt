@@ -1,7 +1,9 @@
 package com.kklv.mytest.ui.page
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ConcatAdapter
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
@@ -12,6 +14,8 @@ import com.kklv.mytest.databinding.FragmentStoreDetailsVisitListBinding
 import com.kklv.mytest.databinding.ItemVisitBinding
 import com.kklv.mytest.domain.request.VisitRequester
 import com.kklv.mytest.ui.view.adapter.BasePagingListAdapter
+import com.kunminx.architecture.domain.message.MutableResult
+import com.kunminx.architecture.ui.callback.ProtectedUnPeekLiveData
 import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
@@ -41,7 +45,7 @@ class StoreDetailsVisitListFragment : BaseFragment<FragmentStoreDetailsVisitList
 
     override fun initViewModel() {
         mStates = getFragmentScopeViewModel(StoreDetailsVisitListFragmentStates::class.java)
-        mRequest = getFragmentScopeViewModel(VisitRequester::class.java)
+        mRequest = getParentFragmentScopeViewModel(VisitRequester::class.java)
     }
 
     override fun getDataBindingConfig(): DataBindingConfig {
@@ -65,6 +69,12 @@ class StoreDetailsVisitListFragment : BaseFragment<FragmentStoreDetailsVisitList
 
         mRequest.pagingData.observe(viewLifecycleOwner) { pagingData ->
             mAdapter.submitData(lifecycle, pagingData)
+        }
+
+        mRequest.isNeedRefresh.observe(viewLifecycleOwner) { isNeedRefresh ->
+            if (isNeedRefresh){
+                mAdapter.refresh()
+            }
         }
     }
 

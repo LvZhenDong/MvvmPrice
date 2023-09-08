@@ -1,4 +1,4 @@
-package com.kklv.mytest.domain.event
+package com.kklv.mytest.domain.message
 
 /**
  * Author lvzhendong

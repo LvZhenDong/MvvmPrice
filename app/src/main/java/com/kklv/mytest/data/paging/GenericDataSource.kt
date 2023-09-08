@@ -1,5 +1,6 @@
 package com.kklv.mytest.data.paging
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.kklv.mytest.data.bean.base.BaseJdResponse
@@ -34,7 +35,7 @@ class GenericDataSource<T : Any, S>(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
-        val currentPageKey = params.key ?: PAGE_START
+        val currentPageKey = if (params is LoadParams.Refresh<Int>) PAGE_START else params.key ?: PAGE_START
 
         val resultData = DataRepository.getInstance().getNetWorkData(serviceClass) { service ->
             function(service, PageRequestBean(PageSizeBean(currentPageKey, size = params.loadSize)))

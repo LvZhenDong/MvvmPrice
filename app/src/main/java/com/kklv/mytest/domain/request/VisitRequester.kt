@@ -8,6 +8,7 @@ import androidx.paging.liveData
 import com.kklv.mytest.data.api.VisitService
 import com.kklv.mytest.data.paging.PagingUtil
 import com.kklv.mytest.data.paging.GenericDataSource
+import com.kunminx.architecture.domain.message.MutableResult
 import com.kunminx.architecture.domain.request.Requester
 
 /**
@@ -16,6 +17,8 @@ import com.kunminx.architecture.domain.request.Requester
  * @description
  */
 class VisitRequester : Requester(), DefaultLifecycleObserver {
+
+    val isNeedRefresh: MutableResult<Boolean> = MutableResult(false)
 
     val pagingData = Pager(
         config = PagingUtil.getPagingConfig(),

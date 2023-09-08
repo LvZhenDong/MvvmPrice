@@ -1,6 +1,5 @@
 package com.kklv.mytest.domain.message
 
-import com.kklv.mytest.domain.event.Messages
 import com.kunminx.architecture.domain.dispatch.MviDispatcher
 
 /**

@@ -1,6 +1,7 @@
 package com.kklv.mytest.ui.page
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -16,6 +17,7 @@ import com.kklv.mytest.databinding.FragmentStoreDetailsBinding
 import com.kklv.mytest.databinding.ItemStoreNavigationBinding
 import com.kklv.mytest.databinding.ItemStoreTagBinding
 import com.kklv.mytest.domain.request.StoreDetailsRequester
+import com.kklv.mytest.domain.request.VisitRequester
 import com.kklv.mytest.ui.view.adapter.BaseSimpleAdapter
 import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
@@ -34,11 +36,14 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
     private lateinit var mStates: StoreDetailsFragmentStates
     private lateinit var mStoreDetailsRequester: StoreDetailsRequester
 
+    private lateinit var mVisitRequester: VisitRequester
+
     private lateinit var mSkeleton: ViewSkeletonScreen
 
     override fun initViewModel() {
         mStates = getFragmentScopeViewModel(StoreDetailsFragmentStates::class.java)
         mStoreDetailsRequester = getFragmentScopeViewModel(StoreDetailsRequester::class.java)
+        mVisitRequester = getFragmentScopeViewModel(VisitRequester::class.java)
     }
 
     override fun getDataBindingConfig(): DataBindingConfig {
@@ -102,8 +107,11 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
         refresh()
     }
 
-    private fun refresh() {
+    private fun refresh(isNeedRefreshChild: Boolean = false) {
         mStoreDetailsRequester.getDetailsInfoByCoroutineScope(mStates.uuid.get() ?: "")
+        if (isNeedRefreshChild) {
+            mVisitRequester.isNeedRefresh.value = true
+        }
     }
 
     private fun setCollectImg(isCollapsed: Boolean, isCollected: Boolean) {
@@ -134,7 +142,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
         }
         binding.rvStoreTags.adapter = tagAdapter
         binding.refreshLayout.setOnRefreshListener {
-            refresh()
+            refresh(true)
         }
 
         binding.appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
