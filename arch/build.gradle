@@ -59,4 +59,6 @@ dependencies {
         exclude group: 'com.android.support'
     }
     api 'com.github.JavaNoober.BackgroundLibrary:libraryx:1.7.6' //shape绘制
+    api  'io.github.scwang90:refresh-layout-kernel:2.0.6'      //核心必须依赖
+    api  'io.github.scwang90:refresh-header-classics:2.0.6'    //经典刷新头
 }

@@ -51,10 +51,12 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
         super.onViewCreated(view, savedInstanceState)
         lifecycle.addObserver(mStoreDetailsRequester)
 
-        mSkeleton = buildSkeleton(binding.coordinator, R.layout.skeleton_activity_store_details)
+        mSkeleton = buildSkeleton(binding.refreshLayout, R.layout.skeleton_activity_store_details)
 
         mStoreDetailsRequester.getStoreDetailsInfoResult().observe(viewLifecycleOwner) {
             if (mSkeleton.isShow) hideSkeletonAndInitView()
+            if (binding.refreshLayout.isRefreshing) binding.refreshLayout.finishRefresh()
+
             if (it.responseStatus.isSuccess) {
                 it.result.detailsInfo?.let { storeDetailsBean ->
                     mStates.dataInfo.set(storeDetailsBean)
@@ -97,6 +99,10 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
             setCollectImg(mStates.isCollapsed.value ?: false, isCollected)
         }
 
+        refresh()
+    }
+
+    private fun refresh() {
         mStoreDetailsRequester.getDetailsInfoByCoroutineScope(mStates.uuid.get() ?: "")
     }
 
@@ -127,6 +133,9 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
             }
         }
         binding.rvStoreTags.adapter = tagAdapter
+        binding.refreshLayout.setOnRefreshListener {
+            refresh()
+        }
 
         binding.appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
             // 获取CollapsingToolbarLayout的总高度

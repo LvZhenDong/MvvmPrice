@@ -1,6 +1,8 @@
 package com.kklv.mytest
 
 import android.app.Application
+import com.scwang.smart.refresh.header.ClassicsHeader
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import dagger.hilt.android.HiltAndroidApp
 
 /**
@@ -9,10 +11,14 @@ import dagger.hilt.android.HiltAndroidApp
  * @description
  */
 @HiltAndroidApp
-class MyApplication:Application() {
+class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
+            layout.setPrimaryColorsId(R.color.white, R.color.color_666666)
+            ClassicsHeader(context)
+        }
     }
 }
