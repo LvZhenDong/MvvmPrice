@@ -41,3 +41,16 @@ data class StoreDetailsMerchantInfo(
     val is_bind_merchant: Boolean,
     val is_have_auth: Boolean
 )
+
+data class StoreDetailsStatBean(
+    val description: String,
+    val device_data: StoreDetailsGraphDeviceData
+)
+
+data class StoreDetailsGraphDeviceData(
+    val sign_device_num: String = "",
+    val bind_device_num: String = "",
+    val offline_device_num: String = "",
+    val slot_num: String = "",
+    val battery_num: String = ""
+)

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.kklv.mytest.data.api.StoreService
 import com.kklv.mytest.data.bean.SchemaBean
 import com.kklv.mytest.data.bean.StoreDetailsBean
+import com.kklv.mytest.data.bean.StoreDetailsStatBean
 import com.kklv.mytest.data.repository.DataRepository
 import com.kunminx.architecture.data.response.DataResult
 import com.kunminx.architecture.data.response.ResponseStatus
@@ -27,6 +28,12 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
 
     fun getStoreDetailsInfoResult(): Result<DataResult<DetailsInfoNavBtn>> {
         return storeDetailsInfoResult
+    }
+
+    private val storeStatResult: MutableResult<DataResult<StoreDetailsStatBean>> = MutableResult()
+
+    fun getStoreStatResult(): Result<DataResult<StoreDetailsStatBean>> {
+        return storeStatResult
     }
 
     private val collectResult: MutableResult<DataResult<Boolean>> = MutableResult()
@@ -56,9 +63,16 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
                     }
                 }
 
+                val statDataJob = async {
+                    DataRepository.getInstance().getNetWorkData(StoreService::class.java) { storeService ->
+                        storeService.getStoreDetailsStatInfo(storeId, "today")
+                    }
+                }
+
                 val t1 = storeInfoJob.await()
                 val t2 = navBtn1Job.await()
                 val t3 = navBtn2Job.await()
+                val t4 = statDataJob.await()
 
                 val dataResult =
                     if (t1.responseStatus.isSuccess.not() || t2.responseStatus.isSuccess.not() || t3.responseStatus.isSuccess.not()) {
@@ -72,6 +86,8 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
                     }
 
                 storeDetailsInfoResult.postValue(dataResult)
+
+                storeStatResult.postValue(t4)
             }
         }
     }

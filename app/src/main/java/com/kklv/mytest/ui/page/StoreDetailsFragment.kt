@@ -159,8 +159,8 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
     private fun initTab() {
         val fragments = arrayListOf(
-            StoreDetailsVisitListFragment.getInstance(mStates.uuid.get() ?: ""),
             StoreDetailsDataFragment.getInstance(mStates.uuid.get() ?: ""),
+            StoreDetailsVisitListFragment.getInstance(mStates.uuid.get() ?: ""),
             StoreDetailsContractFragment.getInstance(mStates.uuid.get() ?: "")
         )
         val mPagerAdapter =
