@@ -56,10 +56,10 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
         super.onViewCreated(view, savedInstanceState)
         lifecycle.addObserver(mStoreDetailsRequester)
 
-        mSkeleton = buildSkeleton(binding.refreshLayout, R.layout.skeleton_activity_store_details)
-
         mStoreDetailsRequester.getStoreDetailsInfoResult().observe(viewLifecycleOwner) {
-            if (mSkeleton.isShow) hideSkeletonAndInitView()
+            if (this::mSkeleton.isInitialized && mSkeleton.isShow) hideSkeletonAndInitView()
+            else initView()
+
             if (binding.refreshLayout.isRefreshing) binding.refreshLayout.finishRefresh()
 
             if (it.responseStatus.isSuccess) {
@@ -104,7 +104,11 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
             setCollectImg(mStates.isCollapsed.value ?: false, isCollected)
         }
 
-        refresh()
+        //是否需要加载数据
+        if (mStoreDetailsRequester.getStoreDetailsInfoResult().value == null) {
+            mSkeleton = buildSkeleton(binding.refreshLayout, R.layout.skeleton_activity_store_details)
+            refresh()
+        }
     }
 
     private fun refresh(isNeedRefreshChild: Boolean = false) {

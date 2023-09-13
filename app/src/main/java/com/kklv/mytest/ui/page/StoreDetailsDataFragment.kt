@@ -67,8 +67,6 @@ class StoreDetailsDataFragment : BaseFragment<FragmentStoreDetailsDataBinding>()
                 }
             }
         }
-
-
     }
 
     class StoreDetailsDataFragmentStates : StateHolder() {
