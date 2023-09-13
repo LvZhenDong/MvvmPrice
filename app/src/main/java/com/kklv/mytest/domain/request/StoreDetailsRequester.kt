@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.kklv.mytest.data.api.StoreService
 import com.kklv.mytest.data.bean.SchemaBean
 import com.kklv.mytest.data.bean.StoreDetailsBean
+import com.kklv.mytest.data.bean.StoreDetailsGraphDeviceData
 import com.kklv.mytest.data.bean.StoreDetailsStatBean
 import com.kklv.mytest.data.repository.DataRepository
 import com.kunminx.architecture.data.response.DataResult
@@ -15,6 +16,8 @@ import com.kunminx.architecture.domain.request.Requester
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.Objects
 
@@ -34,6 +37,19 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
 
     fun getStoreStatResult(): Result<DataResult<StoreDetailsStatBean>> {
         return storeStatResult
+    }
+
+    private val storeStatFlow: MutableStateFlow<DataResult<StoreDetailsStatBean>> = MutableStateFlow(
+        DataResult(
+            StoreDetailsStatBean(
+                description = "",
+                device_data = StoreDetailsGraphDeviceData()
+            )
+        )
+    )
+
+    fun getStoreStatFlow(): StateFlow<DataResult<StoreDetailsStatBean>> {
+        return storeStatFlow
     }
 
     private val collectResult: MutableResult<DataResult<Boolean>> = MutableResult()
@@ -88,6 +104,7 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
                 storeDetailsInfoResult.value = dataResult
 
                 storeStatResult.value = t4
+                storeStatFlow.value = t4
             }
         }
     }
