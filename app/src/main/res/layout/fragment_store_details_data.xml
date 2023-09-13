@@ -8,6 +8,14 @@
         <variable
             name="vm"
             type="com.kklv.mytest.ui.page.StoreDetailsDataFragment.StoreDetailsDataFragmentStates" />
+        
+        <variable
+            name="statDataDesc"
+            type="String" />
+        
+        <variable
+            name="statData"
+            type="com.kklv.mytest.data.bean.StoreDetailsGraphDeviceData" />
 
     </data>
 
@@ -44,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="@{vm.statDataDesc}"
+                android:text="@{statDataDesc}"
                 android:textColor="#949495"
                 android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="@id/tvDeviceDataTag"
@@ -70,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="@{vm.statData.sign_device_num}"
+                android:text="@{statData.sign_device_num}"
                 android:textColor="#353637"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/tvBindDeviceNum"
@@ -96,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="@{vm.statData.bind_device_num}"
+                android:text="@{statData.bind_device_num}"
                 android:textColor="#353637"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/tvOfflineDeviceNum"
@@ -122,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="@{vm.statData.offline_device_num}"
+                android:text="@{statData.offline_device_num}"
                 android:textColor="#353637"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@id/bgDeviceData"
@@ -148,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:gravity="center"
-                android:text="@{vm.statData.slot_num}"
+                android:text="@{statData.slot_num}"
                 android:textColor="#353637"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@id/tvSlot"
@@ -174,7 +182,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:gravity="center"
-                android:text="@{vm.statData.battery_num}"
+                android:text="@{statData.battery_num}"
                 android:textColor="#353637"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@id/tvBattery"

@@ -92,6 +92,8 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
                         totalNavList.addAll(t3.result.buttons)
                         totalNavList.sortBy { item -> 20 - item.display_index }
 
+                        collectResult.value = DataResult(t1.result.is_mark)
+
                         DataResult(DetailsInfoNavBtn(t1.result, totalNavList))
                     }
 

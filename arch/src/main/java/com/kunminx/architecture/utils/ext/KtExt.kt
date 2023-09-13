@@ -1,7 +1,13 @@
 package com.kunminx.architecture.utils.ext
 
 import android.content.res.Resources
+import android.util.Log
 import android.util.TypedValue
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import kotlin.math.roundToInt
 
 /**
@@ -54,3 +60,17 @@ val Int.dpFloat: Float
             Resources.getSystem().displayMetrics
         )
     }
+
+/**
+ * 带Lifecycle的OnOffsetChangedListener
+ */
+fun <T : AppBarLayout> T.addLifecycleOnOffsetChangedListener(lifecycleOwner: LifecycleOwner,listener: OnOffsetChangedListener) {
+    addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+        if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            listener.onOffsetChanged(appBarLayout, verticalOffset)
+        }else{
+            //todo lzd 这里是否有内存泄露
+            Log.i("kklv","not STARTED")
+        }
+    }
+}

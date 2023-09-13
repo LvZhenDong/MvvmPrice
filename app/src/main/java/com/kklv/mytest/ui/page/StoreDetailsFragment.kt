@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -23,6 +24,7 @@ import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
+import com.kunminx.architecture.utils.ext.addLifecycleOnOffsetChangedListener
 import com.kunminx.architecture.utils.ext.drawableLeft
 import com.kunminx.architecture.utils.ext.toast
 import kotlin.math.abs
@@ -64,8 +66,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
             if (it.responseStatus.isSuccess) {
                 it.result.detailsInfo?.let { storeDetailsBean ->
-                    mStates.dataInfo.set(storeDetailsBean)
-                    mStates.isCollected.value = storeDetailsBean.is_mark
+                    binding.infoData = storeDetailsBean
 
                     binding.tvContact.drawableLeft(if (storeDetailsBean.telephone == null) null else R.drawable.icon_contact)
                     storeDetailsBean.special_tags?.let { tags -> tagAdapter.setData(tags) }
@@ -89,7 +90,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
         mStoreDetailsRequester.getCollectResult().observe(viewLifecycleOwner) {
             if (it.responseStatus.isSuccess) {
-                mStates.isCollected.value = it.result
+                setCollectImg(mStates.isCollapsed.value ?: false, it.result)
             } else {
                 it.responseStatus.responseCode.toast()
             }
@@ -97,11 +98,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
         mStates.isCollapsed.observe(viewLifecycleOwner) { isCollapsed ->
             binding.ivBack.setImageResource(if (isCollapsed) R.drawable.icon_store_back_black else R.drawable.icon_store_back)
-            setCollectImg(isCollapsed, mStates.isCollected.value ?: false)
-        }
-
-        mStates.isCollected.observe(viewLifecycleOwner) { isCollected ->
-            setCollectImg(mStates.isCollapsed.value ?: false, isCollected)
+            setCollectImg(isCollapsed, mStoreDetailsRequester.getCollectResult().value?.result ?: false)
         }
 
         //是否需要加载数据
@@ -149,7 +146,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
             refresh(true)
         }
 
-        binding.appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+        binding.appBarLayout.addLifecycleOnOffsetChangedListener(viewLifecycleOwner) { appBarLayout, verticalOffset ->
             // 获取CollapsingToolbarLayout的总高度
             val totalScrollRange = appBarLayout.totalScrollRange
 
@@ -189,7 +186,10 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
         }
 
         fun collect() {
-            mStoreDetailsRequester.collect(mStates.uuid.get() ?: "", mStates.isCollected.value ?: false)
+            mStoreDetailsRequester.collect(
+                mStates.uuid.get() ?: "",
+                mStoreDetailsRequester.getCollectResult().value?.result ?: false
+            )
         }
 
         fun back() {
@@ -200,13 +200,9 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
     }
 
     class StoreDetailsFragmentStates : StateHolder() {
-        val dataInfo: State<StoreDetailsBean> = State(StoreDetailsBean())
-
         val isExpanded: State<Boolean> = State(false)
 
         val isCollapsed: MutableLiveData<Boolean> = MutableLiveData(false)
-
-        val isCollected: MutableLiveData<Boolean> = MutableLiveData(false)
 
         val tabData: State<ArrayList<String>> = State(arrayListOf("数据", "设备", "合同"))
 

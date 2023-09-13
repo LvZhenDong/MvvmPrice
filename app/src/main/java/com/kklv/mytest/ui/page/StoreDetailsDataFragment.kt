@@ -1,6 +1,7 @@
 package com.kklv.mytest.ui.page
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -61,8 +62,8 @@ class StoreDetailsDataFragment : BaseFragment<FragmentStoreDetailsDataBinding>()
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mStoreDetailsRequester.getStoreStatFlow().collectLatest {
                     if (it.responseStatus.isSuccess) {
-                        mStates.statDataDesc.set(it.result.description)
-                        mStates.statData.set(it.result.device_data)
+                        binding.statDataDesc = it.result.description
+                        binding.statData = it.result.device_data
                     }
                 }
             }
@@ -70,7 +71,5 @@ class StoreDetailsDataFragment : BaseFragment<FragmentStoreDetailsDataBinding>()
     }
 
     class StoreDetailsDataFragmentStates : StateHolder() {
-        val statData: State<StoreDetailsGraphDeviceData> = State(StoreDetailsGraphDeviceData())
-        val statDataDesc: State<String> = State("")
     }
 }

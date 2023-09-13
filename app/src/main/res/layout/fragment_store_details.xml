@@ -61,7 +61,7 @@
                                 android:id="@+id/banner"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                app:bannerImages="@{vm.dataInfo.bg_imgs}"
+                                app:bannerImages="@{infoData.bg_imgs}"
                                 app:bannerIndicatorTv='@{bannerIndex}'
                                 app:layout_constraintDimensionRatio="375:152"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -107,7 +107,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="16dp"
                                     android:layout_marginTop="16dp"
-                                    android:text="@{vm.dataInfo.store_name}"
+                                    android:text="@{infoData.store_name}"
                                     android:textColor="#353637"
                                     android:textSize="18sp"
                                     android:textStyle="bold"
@@ -122,7 +122,7 @@
                                     android:id="@+id/ivTag"
                                     android:layout_width="28dp"
                                     android:layout_height="28dp"
-                                    app:imgUrl="@{vm.dataInfo.store_level_icon}"
+                                    app:imgUrl="@{infoData.store_level_icon}"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -145,7 +145,7 @@
                                     android:layout_marginStart="16dp"
                                     android:layout_marginTop="4dp"
                                     android:layout_marginEnd="4dp"
-                                    android:text="@{vm.dataInfo.full_address}"
+                                    android:text="@{infoData.full_address}"
                                     android:textColor="#646566"
                                     android:textSize="12sp"
                                     app:layout_constraintEnd_toStartOf="@id/tvNavigationToMap"
@@ -160,7 +160,7 @@
                                     android:layout_marginEnd="10dp"
                                     android:paddingHorizontal="6dp"
                                     android:paddingVertical="10dp"
-                                    android:text="@{vm.dataInfo.distance}"
+                                    android:text="@{infoData.distance}"
                                     android:textColor="#646566"
                                     android:textSize="10sp"
                                     app:drawableStartCompat="@drawable/icon_store_navigation"
@@ -187,7 +187,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="16dp"
                                     android:paddingVertical="4dp"
-                                    android:text="@{vm.dataInfo.merchantName}"
+                                    android:text="@{infoData.merchantName}"
                                     android:textColor="#5878B4"
                                     android:textSize="12sp"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -211,7 +211,7 @@
                                     android:id="@+id/tvBusinessTime"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:text="@{vm.dataInfo.opening_hours}"
+                                    android:text="@{infoData.opening_hours}"
                                     android:textColor="#646566"
                                     android:textSize="12sp"
                                     app:layout_constraintEnd_toStartOf="@id/tvChangeBusinessTime"
@@ -256,7 +256,7 @@
                                     android:layout_height="wrap_content"
                                     android:drawablePadding="4dp"
                                     android:paddingVertical="8dp"
-                                    android:text="@{vm.dataInfo.contact_text}"
+                                    android:text="@{infoData.contact_text}"
                                     android:textColor="#646566"
                                     android:textSize="12sp"
                                     app:layout_constraintBottom_toBottomOf="@id/tvContactTag"
@@ -270,7 +270,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
-                                    android:text='@{"签约："+vm.dataInfo.sign_user_name+"  |  运维："+vm.dataInfo.maintain_user_name}'
+                                    android:text='@{"签约："+infoData.sign_user_name+"  |  运维："+infoData.maintain_user_name}'
                                     android:textColor="#646566"
                                     android:textSize="12sp"
                                     app:layout_constraintStart_toStartOf="@id/tvLocation"
@@ -282,7 +282,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
-                                    android:text='@{"门店创建时间："+vm.dataInfo.create_time}'
+                                    android:text='@{"门店创建时间："+infoData.create_time}'
                                     android:textColor="#646566"
                                     android:textSize="12sp"
                                     app:layout_constraintStart_toStartOf="@id/tvLocation"
@@ -333,7 +333,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="8dp"
-                                            android:text='@{"竞对情况："+vm.dataInfo.rival_text}'
+                                            android:text='@{"竞对情况："+infoData.rival_text}'
                                             android:textColor="#646566"
                                             android:textSize="10sp"
                                             app:layout_constraintStart_toStartOf="@id/lineExpand"
@@ -345,7 +345,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="4dp"
-                                            android:text='@{"门店来源："+vm.dataInfo.source}'
+                                            android:text='@{"门店来源："+infoData.source}'
                                             android:textColor="#646566"
                                             android:textSize="10sp"
                                             app:layout_constraintStart_toStartOf="@id/tvCompetitor"
@@ -367,7 +367,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginStart="8dp"
-                                            android:text='@{"分类："+vm.dataInfo.classfiy}'
+                                            android:text='@{"分类："+infoData.classfiy}'
                                             android:textColor="#646566"
                                             android:textSize="10sp"
                                             app:layout_constraintBottom_toBottomOf="@id/tvStoreSource"
@@ -380,7 +380,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="4dp"
-                                            android:text='@{"最新认领时间："+vm.dataInfo.latest_claim_time}'
+                                            android:text='@{"最新认领时间："+infoData.latest_claim_time}'
                                             android:textColor="#646566"
                                             android:textSize="10sp"
                                             app:layout_constraintStart_toStartOf="@id/tvCompetitor"
@@ -446,6 +446,7 @@
                 </com.google.android.material.appbar.AppBarLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
                     android:layout_height="92dp">
 

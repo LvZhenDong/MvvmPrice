@@ -109,12 +109,12 @@ fun isReverseWithAnim(view: View, isReverse: Boolean) {
 }
 
 @BindingAdapter(value = ["navigatorData", "navigatorViewPager"], requireAll = true)
-fun setNavigatorData(magicIndicator: MagicIndicator, tabs: ArrayList<String>, viewPager: ViewPager2) {
+fun setNavigatorData(magicIndicator: MagicIndicator, tabs: ArrayList<String>?, viewPager: ViewPager2) {
     val commonNavigator = CommonNavigator(magicIndicator.context)
     commonNavigator.isAdjustMode = true
     commonNavigator.adapter = object : CommonNavigatorAdapter() {
         override fun getCount(): Int {
-            return tabs.size
+            return tabs?.size?:0
         }
 
         override fun getTitleView(context: Context, index: Int): IPagerTitleView {
@@ -122,7 +122,7 @@ fun setNavigatorData(magicIndicator: MagicIndicator, tabs: ArrayList<String>, vi
             titleView.normalColor = context.getColor(R.color.color_666666)
             titleView.selectedColor = context.getColor(R.color.color_333333)
             titleView.textSize = 14f
-            titleView.text = tabs[index]
+            titleView.text = tabs?.get(index)
             titleView.setOnClickListener {
                 viewPager.currentItem = index
             }
