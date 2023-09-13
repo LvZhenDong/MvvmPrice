@@ -35,7 +35,7 @@ class ContractRequester : Requester(), DefaultLifecycleObserver {
             val dataResult = DataRepository.getInstance().getNetWorkData(StoreService::class.java) { storeService ->
                 storeService.getStoreContractList(storeId)
             }
-            contractListResult.postValue(dataResult)
+            contractListResult.value = dataResult
         }
     }
 }

@@ -85,9 +85,9 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
                         DataResult(DetailsInfoNavBtn(t1.result, totalNavList))
                     }
 
-                storeDetailsInfoResult.postValue(dataResult)
+                storeDetailsInfoResult.value = dataResult
 
-                storeStatResult.postValue(t4)
+                storeStatResult.value = t4
             }
         }
     }
@@ -102,9 +102,9 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
                 storeService.collectStore(map)
             }
             if (result.responseStatus.isSuccess) {
-                collectResult.postValue(DataResult(!isCollected))
+                collectResult.value = DataResult(!isCollected)
             } else {
-                collectResult.postValue(DataResult(isCollected, ResponseStatus(isSuccess = false)))
+                collectResult.value = DataResult(isCollected, ResponseStatus(isSuccess = false))
             }
 
         }
