@@ -5,21 +5,29 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.beloo.widget.chipslayoutmanager.ChipsLayoutManager
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
 import com.kklv.mytest.data.bean.VisitBean
+import com.kklv.mytest.data.bean.VisitTag
 import com.kklv.mytest.data.paging.FooterAdapter
 import com.kklv.mytest.data.paging.HeaderAdapter
 import com.kklv.mytest.databinding.FragmentStoreDetailsVisitListBinding
+import com.kklv.mytest.databinding.ItemTagBinding
 import com.kklv.mytest.databinding.ItemVisitBinding
 import com.kklv.mytest.domain.request.VisitRequester
 import com.kklv.mytest.ui.view.adapter.BasePagingListAdapter
+import com.kklv.mytest.ui.view.adapter.BaseSimpleAdapter
 import com.kunminx.architecture.domain.message.MutableResult
+import com.kunminx.architecture.ui.bind.DrawablesBindingAdapter.Orientation
 import com.kunminx.architecture.ui.callback.ProtectedUnPeekLiveData
 import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
+import com.kunminx.architecture.ui.view.MyItemDecorator
+import com.kunminx.architecture.utils.ext.removeAllItemDecorations
 
 /**
  * Author:lvzhendong
@@ -59,6 +67,25 @@ class StoreDetailsVisitListFragment : BaseFragment<FragmentStoreDetailsVisitList
 
         mAdapter = BasePagingListAdapter(R.layout.item_visit, { _, data, bind ->
             bind.data = data
+            data.tags?.let { tags ->
+                val adapter = BaseSimpleAdapter<VisitTag, ItemTagBinding>(
+                    tags,
+                    R.layout.item_tag
+                ) { pos, data, binding ->
+                    binding.apply {
+                        text = data.getTagText()
+                    }
+                }
+                bind.rvTag.adapter = adapter
+                val layoutManager = ChipsLayoutManager
+                    .newBuilder(context)
+                    .setOrientation(ChipsLayoutManager.HORIZONTAL)
+                    .build()
+                bind.rvTag.removeAllItemDecorations()
+                bind.rvTag.addItemDecoration(MyItemDecorator())
+                bind.rvTag.layoutManager = layoutManager
+            }
+
         }, { oldItem, newItem ->
             return@BasePagingListAdapter oldItem.visit_id == newItem.visit_id
         }, { oldItem, newItem ->
@@ -72,7 +99,7 @@ class StoreDetailsVisitListFragment : BaseFragment<FragmentStoreDetailsVisitList
         }
 
         mRequest.isNeedRefresh.observe(viewLifecycleOwner) { isNeedRefresh ->
-            if (isNeedRefresh){
+            if (isNeedRefresh) {
                 mAdapter.refresh()
             }
         }

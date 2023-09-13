@@ -61,4 +61,6 @@ dependencies {
     api 'com.github.JavaNoober.BackgroundLibrary:libraryx:1.7.6' //shape绘制
     api  'io.github.scwang90:refresh-layout-kernel:2.0.6'      //核心必须依赖
     api  'io.github.scwang90:refresh-header-classics:2.0.6'    //经典刷新头
+
+    api 'com.beloo.widget:ChipsLayoutManager:0.3.7@aar'//流式布局layoutManager
 }
