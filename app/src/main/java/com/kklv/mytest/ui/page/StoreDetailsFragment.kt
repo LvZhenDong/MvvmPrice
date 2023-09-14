@@ -130,7 +130,13 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
     private lateinit var tagAdapter: BaseSimpleAdapter<String, ItemStoreTagBinding>
 
+    /**
+     * view是否已经初始化
+     */
+    private var isViewInitialized = false
+
     private fun initView() {
+        if (isViewInitialized) return
         initTab()
 
         tagAdapter = BaseSimpleAdapter(
@@ -156,6 +162,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
             mStates.isCollapsed.value = collapsePercentage > COLLAPSE_RATE
         }
+        isViewInitialized = true
     }
 
     private fun initTab() {

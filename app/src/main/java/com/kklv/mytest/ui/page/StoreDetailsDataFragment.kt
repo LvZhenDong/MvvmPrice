@@ -58,9 +58,9 @@ class StoreDetailsDataFragment : BaseFragment<FragmentStoreDetailsDataBinding>()
 //        }
 
         //与上面的效果一样的
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mStoreDetailsRequester.getStoreStatFlow().collectLatest {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mStoreDetailsRequester.storeStatFlow.collectLatest {
                     if (it.responseStatus.isSuccess) {
                         binding.statDataDesc = it.result.description
                         binding.statData = it.result.device_data

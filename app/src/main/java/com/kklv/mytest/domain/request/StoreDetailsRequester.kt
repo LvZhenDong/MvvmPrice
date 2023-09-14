@@ -19,6 +19,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -33,7 +34,7 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
         return storeDetailsInfoResult
     }
 
-    private val storeStatFlow: MutableStateFlow<DataResult<StoreDetailsStatBean>> = MutableStateFlow(
+    private val _storeStatFlow: MutableStateFlow<DataResult<StoreDetailsStatBean>> = MutableStateFlow(
         DataResult(
             StoreDetailsStatBean(
                 description = "",
@@ -42,9 +43,7 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
         )
     )
 
-    fun getStoreStatFlow(): StateFlow<DataResult<StoreDetailsStatBean>> {
-        return storeStatFlow
-    }
+    val storeStatFlow: StateFlow<DataResult<StoreDetailsStatBean>> = _storeStatFlow.asStateFlow()
 
     private val collectResult: MutableResult<DataResult<Boolean>> = MutableResult()
 
@@ -99,7 +98,7 @@ class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
 
                 storeDetailsInfoResult.value = dataResult
 
-                storeStatFlow.value = t4
+                _storeStatFlow.value = t4
             }
         }
     }
