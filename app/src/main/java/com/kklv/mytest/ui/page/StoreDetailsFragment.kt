@@ -56,7 +56,6 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycle.addObserver(mStoreDetailsRequester)
 
         mStoreDetailsRequester.getStoreDetailsInfoResult().observe(viewLifecycleOwner) {
             if (this::mSkeleton.isInitialized && mSkeleton.isShow) hideSkeletonAndInitView()

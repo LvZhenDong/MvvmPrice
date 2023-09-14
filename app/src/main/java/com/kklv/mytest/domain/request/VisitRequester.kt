@@ -1,13 +1,12 @@
 package com.kklv.mytest.domain.request
 
-import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.cachedIn
 import androidx.paging.liveData
 import com.kklv.mytest.data.api.VisitService
-import com.kklv.mytest.data.paging.PagingUtil
 import com.kklv.mytest.data.paging.GenericDataSource
+import com.kklv.mytest.data.paging.PagingUtil
 import com.kunminx.architecture.domain.message.MutableResult
 import com.kunminx.architecture.domain.request.Requester
 
@@ -16,7 +15,7 @@ import com.kunminx.architecture.domain.request.Requester
  * @data 2023/8/22
  * @description
  */
-class VisitRequester : Requester(), DefaultLifecycleObserver {
+class VisitRequester : Requester() {
 
     val isNeedRefresh: MutableResult<Boolean> = MutableResult(false)
 

@@ -1,6 +1,5 @@
 package com.kklv.mytest.domain.request
 
-import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -27,7 +26,7 @@ import kotlinx.coroutines.launch
  * Created:2023/8/12
  * Desc:
  */
-class StoreDetailsRequester : Requester(), DefaultLifecycleObserver {
+class StoreDetailsRequester : Requester() {
     private val storeDetailsInfoResult: MutableLiveData<DataResult<DetailsInfoNavBtn>> = MutableLiveData()
 
     fun getStoreDetailsInfoResult(): LiveData<DataResult<DetailsInfoNavBtn>> {
