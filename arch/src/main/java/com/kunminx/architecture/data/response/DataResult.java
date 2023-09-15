@@ -1,51 +1,53 @@
-/*
- *
- * Copyright 2018-present KunMinX
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
-
 package com.kunminx.architecture.data.response;
 
-/**
- * Create by KunMinX at 2020/7/20
- */
+import com.drake.statelayout.Status;
+
 public class DataResult<T> {
-
   private final T mEntity;
-  private final ResponseStatus mResponseStatus;
-
-  public DataResult(T entity, ResponseStatus responseStatus) {
-    mEntity = entity;
-    mResponseStatus = responseStatus;
-  }
+  private final Status status;
+  private final String errorMsg;
+  private final ResultSource source;
 
   public DataResult(T entity) {
-    mEntity = entity;
-    mResponseStatus = new ResponseStatus();
+    this(entity, Status.CONTENT, "网络异常，请稍后重试", ResultSource.NETWORK);
+  }
+
+  public DataResult(Status status){
+    this(null, status, "网络异常，请稍后重试", ResultSource.NETWORK);
+  }
+
+  public DataResult(T entity, Status status) {
+    this(entity, status, "网络异常，请稍后重试", ResultSource.NETWORK);
+  }
+
+  public DataResult(T entity, Status status, String errorMsg) {
+    this(entity, status, errorMsg, ResultSource.NETWORK);
+  }
+
+  public DataResult(T entity, Status status, String errorMsg, ResultSource source) {
+    this.mEntity = entity;
+    this.status = status;
+    this.errorMsg = errorMsg;
+    this.source = source;
   }
 
   public T getResult() {
     return mEntity;
   }
 
-  public ResponseStatus getResponseStatus() {
-    return mResponseStatus;
+  public Status getStatus() {
+    return status;
+  }
+
+  public String getErrorMsg(){
+    return errorMsg;
+  }
+
+  public boolean isSuccess() {
+    return status == Status.CONTENT;
   }
 
   public interface Result<T> {
     void onResult(DataResult<T> dataResult);
   }
 }
-

@@ -61,7 +61,7 @@ class StoreDetailsDataFragment : BaseFragment<FragmentStoreDetailsDataBinding>()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mStoreDetailsRequester.storeStatFlow.collectLatest {
-                    if (it.responseStatus.isSuccess) {
+                    if (it.isSuccess) {
                         binding.statDataDesc = it.result.description
                         binding.statData = it.result.device_data
                     }

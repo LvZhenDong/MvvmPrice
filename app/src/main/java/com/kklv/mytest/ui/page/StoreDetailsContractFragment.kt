@@ -49,7 +49,7 @@ class StoreDetailsContractFragment : BaseFragment<FragmentStoreDetailsContractBi
         super.onViewCreated(view, savedInstanceState)
 
         mRequester.getContractListResult().observe(viewLifecycleOwner) { resultData ->
-            if (resultData.responseStatus.isSuccess && resultData.result.list.isNullOrEmpty().not()) {
+            if (resultData.isSuccess && resultData.result.list.isNullOrEmpty().not()) {
                 mAdapter = BaseSimpleAdapter(
                     resultData.result.list!!,
                     R.layout.item_contract

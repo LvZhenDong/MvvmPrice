@@ -25,28 +25,31 @@ open class LestOnceAnimationStateChangedHandler : StateChangedHandler {
         if (container.indexOfChild(state) != -1) {
             state.visibility = View.VISIBLE
         } else if (status == Status.LOADING) {
-            val shimmerLayout: ShimmerLayout = LayoutInflater.from(container.context)
-                .inflate(R.layout.layout_shimmer, container, false) as ShimmerLayout
-            shimmerLayout.setShimmerColor(container.context.getColor(com.bestbrand.lib_skeleton.R.color.color_skeleton_shimmer))
-            shimmerLayout.setShimmerAngle(0)
-            shimmerLayout.setShimmerAnimationDuration(1200)
-            val lp: ViewGroup.LayoutParams = state.layoutParams
-            if (lp != null) {
+            if (state.parent is ShimmerLayout) {
+                state.visibility = View.VISIBLE
+                (state.parent as ShimmerLayout).startShimmerAnimation()
+            } else {
+                val shimmerLayout: ShimmerLayout = LayoutInflater.from(container.context)
+                    .inflate(R.layout.layout_shimmer, container, false) as ShimmerLayout
+                shimmerLayout.setShimmerColor(container.context.getColor(com.bestbrand.lib_skeleton.R.color.color_skeleton_shimmer))
+                shimmerLayout.setShimmerAngle(0)
+                shimmerLayout.setShimmerAnimationDuration(1200)
+                val lp: ViewGroup.LayoutParams = state.layoutParams
                 shimmerLayout.layoutParams = lp
+                shimmerLayout.addView(state)
+
+                shimmerLayout.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+                    override fun onViewAttachedToWindow(v: View) {
+                        shimmerLayout.startShimmerAnimation()
+                    }
+
+                    override fun onViewDetachedFromWindow(v: View) {
+                        shimmerLayout.stopShimmerAnimation()
+                    }
+                })
+                container.addView(shimmerLayout)
+                shimmerLayout.startShimmerAnimation()
             }
-            shimmerLayout.addView(state)
-
-            shimmerLayout.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
-                override fun onViewAttachedToWindow(v: View) {
-                    shimmerLayout.startShimmerAnimation()
-                }
-
-                override fun onViewDetachedFromWindow(v: View) {
-                    shimmerLayout.stopShimmerAnimation()
-                }
-            })
-            container.addView(shimmerLayout)
-            shimmerLayout.startShimmerAnimation()
         } else {
             container.addView(state)
         }

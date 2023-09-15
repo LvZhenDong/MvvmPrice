@@ -6,6 +6,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.drake.statelayout.StateConfig.emptyLayout
+import com.drake.statelayout.StateConfig.errorLayout
+import com.drake.statelayout.StateConfig.loadingLayout
+import com.drake.statelayout.Status
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
 import com.kklv.mytest.data.bean.SchemaBean
@@ -52,10 +56,11 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
         initView()
         mStoreDetailsRequester.getStoreDetailsInfoResult().observe(viewLifecycleOwner) {
-            binding.stateLayout.showContent()
+
             if (binding.refreshLayout.isRefreshing) binding.refreshLayout.finishRefresh()
 
-            if (it.responseStatus.isSuccess) {
+            if (it.isSuccess) {
+                binding.stateLayout.showContent()
                 it.result.detailsInfo?.let { storeDetailsBean ->
                     binding.infoData = storeDetailsBean
 
@@ -74,27 +79,27 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
                         }
                     }
                 }
+            } else if (it.status == Status.LOADING) {
+                binding.stateLayout.showLoading()
+            } else if (it.status == Status.ERROR) {
+                binding.stateLayout.showError()
+                it.errorMsg.toast()
             } else {
-                it.responseStatus.responseCode.toast()
+                binding.stateLayout.showEmpty()
             }
         }
 
         mStoreDetailsRequester.getCollectResult().observe(viewLifecycleOwner) {
-            if (it.responseStatus.isSuccess) {
+            if (it.isSuccess) {
                 setCollectImg(mStates.isCollapsed.value ?: false, it.result)
             } else {
-                it.responseStatus.responseCode.toast()
+                it.errorMsg.toast()
             }
         }
 
         mStates.isCollapsed.observe(viewLifecycleOwner) { isCollapsed ->
             binding.ivBack.setImageResource(if (isCollapsed) R.drawable.icon_store_back_black else R.drawable.icon_store_back)
             setCollectImg(isCollapsed, mStoreDetailsRequester.getCollectResult().value?.result ?: false)
-        }
-
-        //是否需要加载数据
-        if (mStoreDetailsRequester.getStoreDetailsInfoResult().value == null) {
-            refresh()
         }
     }
 
@@ -115,13 +120,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
     private lateinit var tagAdapter: BaseSimpleAdapter<String, ItemStoreTagBinding>
 
-    /**
-     * view是否已经初始化
-     */
-    private var isViewInitialized = false
-
     private fun initView() {
-        if (isViewInitialized) return
         initStateLayout()
         initTab()
 
@@ -148,14 +147,18 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
             mStates.isCollapsed.value = collapsePercentage > COLLAPSE_RATE
         }
-        isViewInitialized = true
     }
 
     private fun initStateLayout() {
         binding.stateLayout.apply {
             loadingLayout = R.layout.skeleton_activity_store_details
+            emptyLayout = R.layout.layout_empty
+            errorLayout = R.layout.layout_error
+            setRetryIds(R.id.tvRetry)
+            onRefresh {
+                this@StoreDetailsFragment.refresh()
+            }
         }
-        binding.stateLayout.showLoading()
     }
 
     private fun initTab() {

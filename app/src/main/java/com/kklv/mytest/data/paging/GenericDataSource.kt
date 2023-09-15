@@ -41,7 +41,7 @@ class GenericDataSource<T : Any, S>(
             function(service, PageRequestBean(PageSizeBean(currentPageKey, size = params.loadSize)))
         }
 
-        if (resultData.responseStatus.isSuccess) {
+        if (resultData.isSuccess) {
             val result = resultData.result
             return if (result.page.current > ceil(result.page.total.toDouble() / result.page.size).toInt()) {
                 //没有更多数据了

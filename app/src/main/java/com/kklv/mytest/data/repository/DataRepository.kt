@@ -1,5 +1,6 @@
 package com.kklv.mytest.data.repository
 
+import com.drake.statelayout.Status
 import com.kklv.mytest.data.api.APIs
 import com.kklv.mytest.data.api.UserService
 import com.kklv.mytest.data.api.VisitService
@@ -70,20 +71,12 @@ class DataRepository private constructor() {
             try {
                 response = call.execute()
                 if (response.body()?.isSuccess() == true) {
-                    val responseStatus = ResponseStatus(
-                        response.isSuccessful,
-                        response.code().toString(),
-                        ResultSource.NETWORK
-                    )
-                    DataResult(response.body()?.data, responseStatus)
+                    DataResult(response.body()?.data,Status.CONTENT,response.code().toString())
                 } else {
                     throw NetWorkException(response.body()?.message ?: "网络异常，请稍后重试")
                 }
             } catch (e: IOException) {
-                DataResult(
-                    null,
-                    ResponseStatus(false, e.message?:"网络异常，请稍后重试", ResultSource.NETWORK)
-                )
+                DataResult(null,Status.ERROR,e.message?:"网络异常，请稍后重试")
             }
         }
     }

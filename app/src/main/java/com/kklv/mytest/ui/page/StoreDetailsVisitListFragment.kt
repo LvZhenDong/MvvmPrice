@@ -71,7 +71,7 @@ class StoreDetailsVisitListFragment : BaseFragment<FragmentStoreDetailsVisitList
                 val adapter = BaseSimpleAdapter<VisitTag, ItemTagBinding>(
                     tags,
                     R.layout.item_tag
-                ) { pos, data, binding ->
+                ) { _, data, binding ->
                     binding.apply {
                         text = data.getTagText()
                     }

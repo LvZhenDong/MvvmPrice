@@ -3,6 +3,7 @@ package com.kklv.mytest.domain.request
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.drake.statelayout.Status
 import com.kklv.mytest.data.api.StoreService
 import com.kklv.mytest.data.bean.SchemaBean
 import com.kklv.mytest.data.bean.StoreDetailsBean
@@ -27,7 +28,7 @@ import kotlinx.coroutines.launch
  * Desc:
  */
 class StoreDetailsRequester : Requester() {
-    private val storeDetailsInfoResult: MutableLiveData<DataResult<DetailsInfoNavBtn>> = MutableLiveData()
+    private val storeDetailsInfoResult: MutableLiveData<DataResult<DetailsInfoNavBtn>> = MutableLiveData(DataResult(Status.LOADING))
 
     fun getStoreDetailsInfoResult(): LiveData<DataResult<DetailsInfoNavBtn>> {
         return storeDetailsInfoResult
@@ -83,8 +84,8 @@ class StoreDetailsRequester : Requester() {
                 val t4 = statDataJob.await()
 
                 val dataResult =
-                    if (t1.responseStatus.isSuccess.not() || t2.responseStatus.isSuccess.not() || t3.responseStatus.isSuccess.not()) {
-                        DataResult(DetailsInfoNavBtn(null, null), ResponseStatus(false))
+                    if (t1.isSuccess.not() || t2.isSuccess.not() || t3.isSuccess.not()) {
+                        DataResult(DetailsInfoNavBtn(null, null), Status.ERROR)
                     } else {
                         val totalNavList: ArrayList<SchemaBean> = t2.result.buttons
                         totalNavList.addAll(t3.result.buttons)
@@ -111,10 +112,10 @@ class StoreDetailsRequester : Requester() {
                 map["isTokenIntercept"] = true
                 storeService.collectStore(map)
             }
-            if (result.responseStatus.isSuccess) {
+            if (result.isSuccess) {
                 collectResult.value = DataResult(!isCollected)
             } else {
-                collectResult.value = DataResult(isCollected, ResponseStatus(isSuccess = false))
+                collectResult.value = DataResult(isCollected, Status.ERROR)
             }
 
         }
