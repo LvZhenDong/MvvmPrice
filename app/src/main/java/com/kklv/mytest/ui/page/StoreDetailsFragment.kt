@@ -1,19 +1,14 @@
 package com.kklv.mytest.ui.page
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.bestbrand.lib_skeleton.skeleton.ViewSkeletonScreen
-import com.bestbrand.lib_skeleton.skeleton.buildSkeleton
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
 import com.kklv.mytest.data.bean.SchemaBean
-import com.kklv.mytest.data.bean.StoreDetailsBean
 import com.kklv.mytest.databinding.FragmentStoreDetailsBinding
 import com.kklv.mytest.databinding.ItemStoreNavigationBinding
 import com.kklv.mytest.databinding.ItemStoreTagBinding
@@ -40,8 +35,6 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
     private lateinit var mVisitRequester: VisitRequester
 
-    private lateinit var mSkeleton: ViewSkeletonScreen
-
     override fun initViewModel() {
         mStates = getFragmentScopeViewModel(StoreDetailsFragmentStates::class.java)
         mStoreDetailsRequester = getFragmentScopeViewModel(StoreDetailsRequester::class.java)
@@ -57,10 +50,9 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initView()
         mStoreDetailsRequester.getStoreDetailsInfoResult().observe(viewLifecycleOwner) {
-            if (this::mSkeleton.isInitialized && mSkeleton.isShow) hideSkeletonAndInitView()
-            else initView()
-
+            binding.stateLayout.showContent()
             if (binding.refreshLayout.isRefreshing) binding.refreshLayout.finishRefresh()
 
             if (it.responseStatus.isSuccess) {
@@ -102,7 +94,6 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
         //是否需要加载数据
         if (mStoreDetailsRequester.getStoreDetailsInfoResult().value == null) {
-            mSkeleton = buildSkeleton(binding.refreshLayout, R.layout.skeleton_activity_store_details)
             refresh()
         }
     }
@@ -122,11 +113,6 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
         )
     }
 
-    private fun hideSkeletonAndInitView() {
-        mSkeleton.hide()
-        initView()
-    }
-
     private lateinit var tagAdapter: BaseSimpleAdapter<String, ItemStoreTagBinding>
 
     /**
@@ -136,6 +122,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
     private fun initView() {
         if (isViewInitialized) return
+        initStateLayout()
         initTab()
 
         tagAdapter = BaseSimpleAdapter(
@@ -162,6 +149,13 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
             mStates.isCollapsed.value = collapsePercentage > COLLAPSE_RATE
         }
         isViewInitialized = true
+    }
+
+    private fun initStateLayout() {
+        binding.stateLayout.apply {
+            loadingLayout = R.layout.skeleton_activity_store_details
+        }
+        binding.stateLayout.showLoading()
     }
 
     private fun initTab() {

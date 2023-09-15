@@ -1,6 +1,8 @@
 package com.kklv.mytest
 
 import android.app.Application
+import com.drake.statelayout.StateConfig
+import com.kunminx.architecture.ui.view.LestOnceAnimationStateChangedHandler
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import dagger.hilt.android.HiltAndroidApp
@@ -20,5 +22,6 @@ class MyApplication : Application() {
             layout.setPrimaryColorsId(R.color.white, R.color.color_666666)
             ClassicsHeader(context)
         }
+        StateConfig.stateChangedHandler = LestOnceAnimationStateChangedHandler()
     }
 }
