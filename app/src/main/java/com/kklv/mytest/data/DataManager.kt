@@ -1,5 +1,12 @@
 package com.kklv.mytest.data
 
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import com.kklv.mytest.userInfoDataStore
+import com.kunminx.architecture.utils.Utils
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+
 /**
  * Author:lvzhendong
  * Created:2023/8/17
@@ -7,8 +14,10 @@ package com.kklv.mytest.data
  */
 class DataManager private constructor() {
 
-    private var acToken: String = "uat_7d1a5744fb0849679943c3c97a79a5d2"
-    private var rfToken:String = "urt_83a1702be63d4181a535781dfd3f8d70"
+    private val acTokenKey = stringPreferencesKey("acToken")
+    private val rfTokenKey = stringPreferencesKey("rfToken")
+    private var acTokenInit: String = "uat_7d1a5744fb0849679943c3c97a79a5d2"
+    private var rfTokenInit: String = "urt_83a1702be63d4181a535781dfd3f8d70"
 
     companion object {
 
@@ -23,18 +32,33 @@ class DataManager private constructor() {
     }
 
     fun getAcToken(): String {
-        return acToken
+        val preference = runBlocking {
+            Utils.getApp().userInfoDataStore.data.first()
+        }
+        return preference[acTokenKey] ?: acTokenInit
     }
 
     fun setAcToken(acToken: String) {
-        this.acToken = acToken
+        runBlocking {
+            Utils.getApp().userInfoDataStore.edit { preferences ->
+                preferences[acTokenKey] = acToken
+            }
+        }
     }
+
     fun getRfToken(): String {
-        return rfToken
+        val preference = runBlocking {
+            Utils.getApp().userInfoDataStore.data.first()
+        }
+        return preference[rfTokenKey] ?: rfTokenInit
     }
 
     fun setRfToken(rfToken: String) {
-        this.rfToken = rfToken
+        runBlocking {
+            Utils.getApp().userInfoDataStore.edit { preferences ->
+                preferences[rfTokenKey] = rfToken
+            }
+        }
     }
 
 }

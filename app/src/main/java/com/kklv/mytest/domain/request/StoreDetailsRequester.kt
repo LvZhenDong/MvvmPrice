@@ -11,7 +11,6 @@ import com.kklv.mytest.data.bean.StoreDetailsGraphDeviceData
 import com.kklv.mytest.data.bean.StoreDetailsStatBean
 import com.kklv.mytest.data.repository.DataRepository
 import com.kunminx.architecture.data.response.DataResult
-import com.kunminx.architecture.data.response.ResponseStatus
 import com.kunminx.architecture.domain.message.MutableResult
 import com.kunminx.architecture.domain.message.Result
 import com.kunminx.architecture.domain.request.Requester

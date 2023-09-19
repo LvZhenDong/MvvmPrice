@@ -6,9 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.drake.statelayout.StateConfig.emptyLayout
-import com.drake.statelayout.StateConfig.errorLayout
-import com.drake.statelayout.StateConfig.loadingLayout
 import com.drake.statelayout.Status
 import com.kklv.mytest.BR
 import com.kklv.mytest.R

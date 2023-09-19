@@ -1,6 +1,8 @@
 package com.kklv.mytest
 
 import android.app.Application
+import android.content.Context
+import androidx.datastore.preferences.preferencesDataStore
 import com.drake.statelayout.StateConfig
 import com.kunminx.architecture.ui.view.LestOnceAnimationStateChangedHandler
 import com.scwang.smart.refresh.header.ClassicsHeader
@@ -25,3 +27,5 @@ class MyApplication : Application() {
         StateConfig.stateChangedHandler = LestOnceAnimationStateChangedHandler()
     }
 }
+
+val Context.userInfoDataStore by preferencesDataStore(name = "userInfo")
