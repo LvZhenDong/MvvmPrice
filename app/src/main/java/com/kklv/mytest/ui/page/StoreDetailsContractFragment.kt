@@ -2,6 +2,7 @@ package com.kklv.mytest.ui.page
 
 import android.os.Bundle
 import android.view.View
+import com.drake.statelayout.Status
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
 import com.kklv.mytest.data.bean.ContractBean
@@ -47,9 +48,11 @@ class StoreDetailsContractFragment : BaseFragment<FragmentStoreDetailsContractBi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
 
         mRequester.getContractListResult().observe(viewLifecycleOwner) { resultData ->
             if (resultData.isSuccess && resultData.result.list.isNullOrEmpty().not()) {
+                binding.stateLayout.showContent()
                 mAdapter = BaseSimpleAdapter(
                     resultData.result.list!!,
                     R.layout.item_contract
@@ -59,9 +62,15 @@ class StoreDetailsContractFragment : BaseFragment<FragmentStoreDetailsContractBi
                     }
                 }
                 binding.rvContract.adapter = mAdapter
-            } else {
-
+            } else if (resultData.status == Status.EMPTY) {
+                binding.stateLayout.showEmpty()
             }
+        }
+    }
+
+    private fun initView(){
+        binding.stateLayout.apply {
+            emptyLayout = R.layout.layout_empty_list
         }
     }
 

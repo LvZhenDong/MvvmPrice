@@ -63,12 +63,12 @@ class DataRepository private constructor() {
             try {
                 response = call.execute()
                 if (response.body()?.isSuccess() == true) {
-                    DataResult(response.body()?.data,Status.CONTENT,response.code().toString())
+                    DataResult(response.body()?.data, Status.CONTENT, response.code().toString())
                 } else {
                     throw NetWorkException(response.body()?.message ?: "网络异常，请稍后重试")
                 }
             } catch (e: IOException) {
-                DataResult(null,Status.ERROR,e.message?:"网络异常，请稍后重试")
+                DataResult(null, Status.ERROR, e.message ?: "网络异常，请稍后重试")
             }
         }
     }

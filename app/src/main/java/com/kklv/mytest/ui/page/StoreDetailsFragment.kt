@@ -177,7 +177,6 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
             }
         binding.vpStoreData.adapter = mPagerAdapter
         binding.vpStoreData.offscreenPageLimit = 2
-
     }
 
     inner class ClickProxy {
@@ -206,6 +205,6 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
         val tabData: State<ArrayList<String>> = State(arrayListOf("数据", "设备", "合同"))
 
-        val uuid: State<String> = State("18fbec57-ee17-4cd7-adc2-7f95cb12b400")
+        val uuid: State<String> = State("5ebf3793-5a56-4a68-ad75-b376dd2a8eff")
     }
 }
