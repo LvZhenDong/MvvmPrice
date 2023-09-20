@@ -2,7 +2,18 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.kklv.mytest.ui.page.LoginFragment"
+        android:label="LoginFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/storeDetailsFragment"
+        android:name="com.kklv.mytest.ui.page.StoreDetailsFragment"
+        android:label="StoreDetailsFragment" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.kklv.mytest.ui.page.HomeFragment"
@@ -14,19 +25,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/storeDetailsFragment"
-        android:name="com.kklv.mytest.ui.page.StoreDetailsFragment"
-        android:label="StoreDetailsFragment" />
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.kklv.mytest.ui.page.LoginFragment"
-        android:label="LoginFragment">
         <action
-            android:id="@+id/action_loginFragment_to_storeDetailsFragment"
-            app:destination="@id/storeDetailsFragment"
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"

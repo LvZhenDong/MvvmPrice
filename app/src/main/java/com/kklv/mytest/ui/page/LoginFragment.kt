@@ -42,8 +42,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun goToStoreDetails() {
         activity?.let {
-            Navigation.findNavController(it, R.id.fragmentContainerView)
-                .navigate(R.id.action_loginFragment_to_storeDetailsFragment)
+            val navigation = Navigation.findNavController(it, R.id.fragmentContainerView)
+            navigation.navigateUp()
         }
     }
 

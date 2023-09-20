@@ -1,10 +1,11 @@
 package com.kklv.mytest.ui.page
 
- import android.os.Bundle
+import android.os.Bundle
 import android.view.View
 import androidx.navigation.Navigation
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
+import com.kklv.mytest.data.DataManager
 import com.kklv.mytest.databinding.FragmentHomeBinding
 import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
@@ -36,12 +37,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun getDataBindingConfig(): DataBindingConfig {
-        return DataBindingConfig(R.layout.fragment_home, BR.vm, mStates).addBindingParam(BR.click,ClickProxy())
+        return DataBindingConfig(R.layout.fragment_home, BR.vm, mStates).addBindingParam(BR.click, ClickProxy())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
     }
 
@@ -49,8 +49,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         fun goToStoreDetailsActivity() {
             activity?.let {
-                Navigation.findNavController(it, R.id.fragmentContainerView)
-                    .navigate(R.id.action_homeFragment_to_storeDetailsFragment)
+                val navigation = Navigation.findNavController(it, R.id.fragmentContainerView)
+                if (DataManager.getInstance().isNeedLogin())
+                    navigation.navigate(R.id.action_homeFragment_to_loginFragment)
+                else
+                    navigation.navigate(R.id.action_homeFragment_to_storeDetailsFragment)
             }
 
         }

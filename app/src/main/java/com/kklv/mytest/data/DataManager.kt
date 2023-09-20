@@ -17,8 +17,6 @@ class DataManager private constructor() {
     private val acTokenKey = stringPreferencesKey("acToken")
     private val rfTokenKey = stringPreferencesKey("rfToken")
     private val uidKey = stringPreferencesKey("uid")
-    private var acTokenInit: String = "uat_7d1a5744fb0849679943c3c97a79a5d2"
-    private var rfTokenInit: String = "urt_83a1702be63d4181a535781dfd3f8d70"
 
     companion object {
 
@@ -36,7 +34,7 @@ class DataManager private constructor() {
         val preference = runBlocking {
             Utils.getApp().userInfoDataStore.data.first()
         }
-        return preference[acTokenKey] ?: acTokenInit
+        return preference[acTokenKey] ?: ""
     }
 
     fun setAcToken(acToken: String) {
@@ -51,7 +49,7 @@ class DataManager private constructor() {
         val preference = runBlocking {
             Utils.getApp().userInfoDataStore.data.first()
         }
-        return preference[rfTokenKey] ?: rfTokenInit
+        return preference[rfTokenKey] ?: ""
     }
 
     fun setRfToken(rfToken: String) {
@@ -75,6 +73,10 @@ class DataManager private constructor() {
                 preferences[uidKey] = uid
             }
         }
+    }
+
+    fun isNeedLogin(): Boolean {
+        return getAcToken().isNullOrEmpty()
     }
 
 }
