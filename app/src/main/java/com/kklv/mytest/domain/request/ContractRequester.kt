@@ -34,8 +34,6 @@ class ContractRequester : Requester() {
                 dataResult.status = Status.EMPTY
             }
             contractListResult.value = dataResult
-
-
         }
     }
 }

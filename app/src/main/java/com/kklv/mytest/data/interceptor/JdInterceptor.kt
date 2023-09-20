@@ -13,7 +13,7 @@ import java.util.Locale
  * Created:2023/8/13
  * Desc:
  */
-class JdInterceptor:Interceptor {
+class JdInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val original = chain.request()
 
@@ -30,7 +30,10 @@ class JdInterceptor:Interceptor {
             .header("time-zone", "GMT+08:00")
             .header("ac-token", DataManager.getInstance().getAcToken())
             .addHeader("User-Agent", "XpKLpLXgf9YDALcVeYr7vsI0")
-            .addHeader("Cookie", "sid=${DataManager.getInstance().getAcToken()};uid=5af2adaa2161c")
+            .addHeader(
+                "Cookie",
+                "sid=${DataManager.getInstance().getAcToken()};uid=${DataManager.getInstance().getUid()}"
+            )
             .method(original.method, original.body)
 
         val request = builder.build()
