@@ -2,6 +2,7 @@ package com.kklv.mytest.domain.request
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.drake.statelayout.Status
 import com.kklv.mytest.data.DataManager
 import com.kklv.mytest.data.api.UserService
 import com.kklv.mytest.data.bean.base.LoginResponse
@@ -18,15 +19,17 @@ import kotlinx.coroutines.launch
  * @description
  */
 class LoginRequester : Requester() {
-    val userName: MutableLiveData<String> = MutableLiveData()
+    val userName: MutableLiveData<String> = MutableLiveData("admin1@ankerbox.com")
 
-    val password: MutableLiveData<String> = MutableLiveData()
+    val password: MutableLiveData<String> = MutableLiveData("Abc123456")
 
     private val loginResult: MutableResult<DataResult<LoginResponse>> = MutableResult()
 
     fun getLoginResult(): Result<DataResult<LoginResponse>> = loginResult
 
     fun login() {
+        loginResult.value = DataResult(Status.LOADING)
+
         viewModelScope.launch {
             val dataResult = DataRepository.getInstance().getNetWorkData(UserService::class.java) { userService ->
                 val map = HashMap<String, Any>()
