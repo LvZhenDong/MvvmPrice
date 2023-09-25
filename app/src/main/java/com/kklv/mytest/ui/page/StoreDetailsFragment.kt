@@ -3,6 +3,7 @@ package com.kklv.mytest.ui.page
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -32,13 +33,12 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
     }
 
     private lateinit var mStates: StoreDetailsFragmentStates
-    private lateinit var mStoreDetailsRequester: StoreDetailsRequester
+    val mStoreDetailsRequester: StoreDetailsRequester by viewModels()
 
     private lateinit var mVisitRequester: VisitRequester
 
     override fun initViewModel() {
         mStates = getFragmentScopeViewModel(StoreDetailsFragmentStates::class.java)
-        mStoreDetailsRequester = getFragmentScopeViewModel(StoreDetailsRequester::class.java)
         mVisitRequester = getFragmentScopeViewModel(VisitRequester::class.java)
     }
 
