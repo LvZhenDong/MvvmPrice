@@ -6,13 +6,13 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.kklv.mytest.ui.page.LoginFragment"
+        android:name="com.kklv.mytest.ui.page.LoginActivity"
         android:label="LoginFragment">
     </fragment>
 
     <fragment
         android:id="@+id/storeDetailsFragment"
-        android:name="com.kklv.mytest.ui.page.StoreDetailsFragment"
+        android:name="com.kklv.store.ui.page.StoreDetailsActivity"
         android:label="StoreDetailsFragment" />
     <fragment
         android:id="@+id/homeFragment"

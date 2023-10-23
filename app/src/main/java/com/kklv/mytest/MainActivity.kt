@@ -1,9 +1,12 @@
 package com.kklv.mytest
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import com.kklv.common.data.DataManager
 import com.kklv.mytest.databinding.ActivityMainBinding
-import com.kklv.mytest.domain.message.PageMessenger
+import com.kklv.common.domain.message.PageMessenger
+import com.kklv.mytest.ui.page.LoginActivity
 import com.kunminx.architecture.ui.page.BaseActivity
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
@@ -32,8 +35,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     inner class ClickProxy {
-        fun switchIsShow() {
-            mStates.isShow.set(!(mStates.isShow.get() ?: false))
+        fun goToStoreDetailsActivity() {
+
+            if (DataManager.getInstance().isNeedLogin()) {
+                val intent = Intent(this@MainActivity,LoginActivity::class.java)
+                startActivity(intent)
+            } else {
+
+            }
+
         }
     }
 

@@ -3,10 +3,10 @@ package com.kklv.mytest.domain.request
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.drake.statelayout.Status
-import com.kklv.mytest.data.DataManager
-import com.kklv.mytest.data.api.UserService
+import com.kklv.common.data.DataManager
+import com.kklv.common.data.api.UserService
 import com.kklv.mytest.data.bean.base.LoginResponse
-import com.kklv.mytest.data.repository.DataRepository
+import com.kklv.common.data.repository.DataRepository
 import com.kunminx.architecture.data.response.DataResult
 import com.kunminx.architecture.domain.request.Requester
 import com.kunminx.architecture.domain.result.MutableResult
