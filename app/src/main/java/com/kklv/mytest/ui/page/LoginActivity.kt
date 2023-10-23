@@ -39,7 +39,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     private fun goToStoreDetails() {
-
+        finish()
     }
 
     inner class ClickProxy {

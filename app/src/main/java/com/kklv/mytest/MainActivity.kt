@@ -7,6 +7,7 @@ import com.kklv.common.data.DataManager
 import com.kklv.mytest.databinding.ActivityMainBinding
 import com.kklv.common.domain.message.PageMessenger
 import com.kklv.mytest.ui.page.LoginActivity
+import com.kklv.store.ui.page.StoreDetailsActivity
 import com.kunminx.architecture.ui.page.BaseActivity
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
@@ -38,10 +39,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         fun goToStoreDetailsActivity() {
 
             if (DataManager.getInstance().isNeedLogin()) {
-                val intent = Intent(this@MainActivity,LoginActivity::class.java)
+                val intent = Intent(this@MainActivity, LoginActivity::class.java)
                 startActivity(intent)
             } else {
-
+                val intent = Intent(this@MainActivity, StoreDetailsActivity::class.java)
+                startActivity(intent)
             }
 
         }

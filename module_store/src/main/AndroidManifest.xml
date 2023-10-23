@@ -3,6 +3,6 @@
 
     <application>
         <activity android:name=".ui.page.StoreDetailsActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/CustomTheme"/>
     </application>
 </manifest>

@@ -47,7 +47,7 @@ class StoreDetailsVisitListFragment : BaseFragment<FragmentStoreDetailsVisitList
 
     override fun initViewModel() {
         mStates = getFragmentScopeViewModel(StoreDetailsVisitListFragmentStates::class.java)
-        mRequest = getParentFragmentScopeViewModel(VisitRequester::class.java)
+        mRequest = getActivityScopeViewModel(VisitRequester::class.java)
     }
 
     override fun getDataBindingConfig(): DataBindingConfig {

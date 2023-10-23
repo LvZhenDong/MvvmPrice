@@ -1,9 +1,8 @@
 package com.kklv.store.ui.page
 
 import android.os.Bundle
-import android.view.View
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.drake.statelayout.Status
@@ -16,7 +15,7 @@ import com.kklv.store.databinding.ItemStoreNavigationBinding
 import com.kklv.store.databinding.ItemStoreTagBinding
 import com.kklv.store.domain.request.StoreDetailsRequester
 import com.kklv.store.domain.request.VisitRequester
-import com.kunminx.architecture.ui.page.BaseFragment
+import com.kunminx.architecture.ui.page.BaseActivity
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
@@ -26,7 +25,7 @@ import com.kunminx.architecture.utils.ext.toast
 import kotlin.math.abs
 import com.kklv.common.R as CR
 
-class StoreDetailsActivity : BaseFragment<ActivityStoreDetailsBinding>() {
+class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
 
     companion object {
         private const val COLLAPSE_RATE = 0.1F
@@ -38,8 +37,8 @@ class StoreDetailsActivity : BaseFragment<ActivityStoreDetailsBinding>() {
     private lateinit var mVisitRequester: VisitRequester
 
     override fun initViewModel() {
-        mStates = getFragmentScopeViewModel(StoreDetailsFragmentStates::class.java)
-        mVisitRequester = getFragmentScopeViewModel(VisitRequester::class.java)
+        mStates = getActivityScopeViewModel(StoreDetailsFragmentStates::class.java)
+        mVisitRequester = getActivityScopeViewModel(VisitRequester::class.java)
     }
 
     override fun getDataBindingConfig(): DataBindingConfig {
@@ -48,11 +47,11 @@ class StoreDetailsActivity : BaseFragment<ActivityStoreDetailsBinding>() {
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         initView()
-        mStoreDetailsRequester.getStoreDetailsInfoResult().observe(viewLifecycleOwner) {
+        mStoreDetailsRequester.getStoreDetailsInfoResult().observe(this) {
 
             if (binding.refreshLayout.isRefreshing) binding.refreshLayout.finishRefresh()
 
@@ -86,7 +85,7 @@ class StoreDetailsActivity : BaseFragment<ActivityStoreDetailsBinding>() {
             }
         }
 
-        mStoreDetailsRequester.getCollectResult().observe(viewLifecycleOwner) {
+        mStoreDetailsRequester.getCollectResult().observe(this) {
             if (it.isSuccess) {
                 setCollectImg(mStates.isCollapsed.value ?: false, it.result)
             } else {
@@ -94,7 +93,7 @@ class StoreDetailsActivity : BaseFragment<ActivityStoreDetailsBinding>() {
             }
         }
 
-        mStates.isCollapsed.observe(viewLifecycleOwner) { isCollapsed ->
+        mStates.isCollapsed.observe(this) { isCollapsed ->
             binding.ivBack.setImageResource(if (isCollapsed) CR.drawable.icon_store_back_black else CR.drawable.icon_store_back)
             setCollectImg(isCollapsed, mStoreDetailsRequester.getCollectResult().value?.result ?: false)
         }
@@ -134,7 +133,7 @@ class StoreDetailsActivity : BaseFragment<ActivityStoreDetailsBinding>() {
             refresh(true)
         }
 
-        binding.appBarLayout.addLifecycleOnOffsetChangedListener(viewLifecycleOwner) { appBarLayout, verticalOffset ->
+        binding.appBarLayout.addLifecycleOnOffsetChangedListener(this) { appBarLayout, verticalOffset ->
             // 获取CollapsingToolbarLayout的总高度
             val totalScrollRange = appBarLayout.totalScrollRange
 
@@ -165,7 +164,7 @@ class StoreDetailsActivity : BaseFragment<ActivityStoreDetailsBinding>() {
             StoreDetailsContractFragment.getInstance(mStates.uuid.get() ?: "")
         )
         val mPagerAdapter =
-            object : FragmentStateAdapter(childFragmentManager, lifecycle) {
+            object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
                 override fun getItemCount(): Int {
                     return fragments.size
                 }
@@ -192,7 +191,7 @@ class StoreDetailsActivity : BaseFragment<ActivityStoreDetailsBinding>() {
         }
 
         fun back() {
-
+            finish()
         }
     }
 

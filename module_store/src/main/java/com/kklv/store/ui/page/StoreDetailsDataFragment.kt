@@ -37,7 +37,7 @@ class StoreDetailsDataFragment : BaseFragment<FragmentStoreDetailsDataBinding>()
     private lateinit var mStoreDetailsRequester: StoreDetailsRequester
     override fun initViewModel() {
         mStates = getFragmentScopeViewModel(StoreDetailsDataFragmentStates::class.java)
-        mStoreDetailsRequester = getParentFragmentScopeViewModel(StoreDetailsRequester::class.java)
+        mStoreDetailsRequester = getActivityScopeViewModel(StoreDetailsRequester::class.java)
     }
 
     override fun getDataBindingConfig(): DataBindingConfig {

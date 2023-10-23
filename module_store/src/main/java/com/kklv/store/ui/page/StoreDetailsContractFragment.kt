@@ -2,11 +2,10 @@ package com.kklv.store.ui.page
 
 import android.os.Bundle
 import android.view.View
-import com.drake.statelayout.StateConfig.emptyLayout
 import com.drake.statelayout.Status
 import com.kklv.common.ui.view.adapter.BaseSimpleAdapter
-import com.kklv.store.R
 import com.kklv.store.BR
+import com.kklv.store.R
 import com.kklv.store.data.bean.ContractBean
 import com.kklv.store.databinding.FragmentStoreDetailsContractBinding
 import com.kklv.store.databinding.ItemContractBinding
@@ -42,7 +41,7 @@ class StoreDetailsContractFragment : BaseFragment<FragmentStoreDetailsContractBi
     }
 
     override fun getDataBindingConfig(): DataBindingConfig {
-        return DataBindingConfig(com.kklv.store.R.layout.fragment_store_details_contract, BR.vm, mStates)
+        return DataBindingConfig(R.layout.fragment_store_details_contract, BR.vm, mStates)
     }
 
     private lateinit var mAdapter: BaseSimpleAdapter<ContractBean, ItemContractBinding>
@@ -56,7 +55,7 @@ class StoreDetailsContractFragment : BaseFragment<FragmentStoreDetailsContractBi
                 binding.stateLayout.showContent()
                 mAdapter = BaseSimpleAdapter(
                     resultData.result.list!!,
-                    com.kklv.store.R.layout.item_contract
+                    R.layout.item_contract
                 ) { _, data, binding ->
                     binding.apply {
                         this.data = data
