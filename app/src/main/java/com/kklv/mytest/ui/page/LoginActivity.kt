@@ -1,6 +1,7 @@
 package com.kklv.mytest.ui.page
 
 import android.os.Bundle
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.drake.statelayout.Status
 import com.kklv.mytest.BR
 import com.kklv.mytest.R
@@ -10,6 +11,7 @@ import com.kklv.mytest.databinding.ActivityLoginBinding
 import com.kunminx.architecture.ui.page.BaseActivity
 import com.kunminx.architecture.ui.page.DataBindingConfig
 
+@Route(path = "/login/loginActivity")
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     private lateinit var mLoginRequester: LoginRequester

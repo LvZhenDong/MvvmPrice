@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.drake.statelayout.Status
 import com.kklv.common.ui.view.adapter.BaseSimpleAdapter
 import com.kklv.store.BR
@@ -25,6 +26,7 @@ import com.kunminx.architecture.utils.ext.toast
 import kotlin.math.abs
 import com.kklv.common.R as CR
 
+@Route(path = "/store/storeDetailsActivity")
 class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
 
     companion object {

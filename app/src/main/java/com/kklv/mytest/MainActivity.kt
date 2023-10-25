@@ -1,18 +1,15 @@
 package com.kklv.mytest
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import com.alibaba.android.arouter.launcher.ARouter
 import com.kklv.common.data.DataManager
-import com.kklv.mytest.databinding.ActivityMainBinding
 import com.kklv.common.domain.message.PageMessenger
-import com.kklv.mytest.ui.page.LoginActivity
-import com.kklv.store.ui.page.StoreDetailsActivity
+import com.kklv.mytest.databinding.ActivityMainBinding
 import com.kunminx.architecture.ui.page.BaseActivity
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
-
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     private lateinit var mStates: MainActivityStates
@@ -39,11 +36,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         fun goToStoreDetailsActivity() {
 
             if (DataManager.getInstance().isNeedLogin()) {
-                val intent = Intent(this@MainActivity, LoginActivity::class.java)
-                startActivity(intent)
+                ARouter.getInstance().build("/login/loginActivity").navigation()
             } else {
-                val intent = Intent(this@MainActivity, StoreDetailsActivity::class.java)
-                startActivity(intent)
+                ARouter.getInstance().build("/store/storeDetailsActivity").navigation()
             }
 
         }
