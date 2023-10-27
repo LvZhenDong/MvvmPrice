@@ -16,6 +16,9 @@ android {
 
     defaultConfig {
         minSdk appMinSdk
+        targetSdk appTargetSdk
+        versionCode appVersionCode
+        versionName appVersionName
 
         if (isModule.toBoolean()) {
             // 独立调试时添加 applicationId ，集成调试时移除

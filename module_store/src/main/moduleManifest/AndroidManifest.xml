@@ -6,6 +6,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.MyTest">
         <activity android:name=".ui.page.StoreDetailsActivity"
+            android:exported="true"
             android:theme="@style/CustomTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
