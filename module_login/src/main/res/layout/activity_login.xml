@@ -7,11 +7,11 @@
 
         <variable
             name="vm"
-            type="com.kklv.mytest.domain.request.LoginRequester" />
+            type="com.kklv.module_login.request.LoginRequester" />
 
         <variable
             name="click"
-            type="com.kklv.mytest.ui.page.LoginActivity.ClickProxy" />
+            type="com.kklv.module_login.page.LoginActivity.ClickProxy" />
 
     </data>
 

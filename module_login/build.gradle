@@ -10,8 +10,9 @@ if (isModule.toBoolean()){
     apply plugin: 'com.android.library'
 }
 
+
 android {
-    namespace 'com.kklv.store'
+    namespace 'com.kklv.module_login'
     compileSdk appTargetSdk
 
     defaultConfig {
@@ -22,7 +23,7 @@ android {
 
         if (isModule.toBoolean()) {
             // 独立调试时添加 applicationId ，集成调试时移除
-            applicationId "com.kklv.store"
+            applicationId "com.kklv.module_login"
         }
     }
 

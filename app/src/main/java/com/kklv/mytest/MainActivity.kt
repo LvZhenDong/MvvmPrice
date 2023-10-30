@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import com.alibaba.android.arouter.launcher.ARouter
 import com.kklv.common.data.DataManager
+import com.kklv.common.data.RouterPath
 import com.kklv.common.domain.message.PageMessenger
 import com.kklv.mytest.databinding.ActivityMainBinding
 import com.kunminx.architecture.ui.page.BaseActivity
@@ -36,9 +37,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         fun goToStoreDetailsActivity() {
 
             if (DataManager.getInstance().isNeedLogin()) {
-                ARouter.getInstance().build("/login/loginActivity").navigation()
+                ARouter.getInstance().build(RouterPath.PATH_LOGIN).navigation()
             } else {
-                ARouter.getInstance().build("/store/storeDetailsActivity").navigation()
+                ARouter.getInstance().build(RouterPath.PATH_STORE_DETAILS).navigation()
             }
 
         }

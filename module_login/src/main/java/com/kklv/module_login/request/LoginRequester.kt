@@ -1,4 +1,4 @@
-package com.kklv.mytest.domain.request
+package com.kklv.module_login.request
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
