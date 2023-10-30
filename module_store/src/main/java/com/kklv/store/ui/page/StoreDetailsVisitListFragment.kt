@@ -8,6 +8,7 @@ import com.kklv.common.data.paging.FooterAdapter
 import com.kklv.common.data.paging.HeaderAdapter
 import com.kklv.common.ui.view.adapter.BasePagingListAdapter
 import com.kklv.common.ui.view.adapter.BaseSimpleAdapter
+import com.kklv.ktext.removeAllItemDecorations
 import com.kklv.store.R
 import com.kklv.store.BR
 import com.kklv.store.data.bean.VisitBean
@@ -21,7 +22,6 @@ import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
 import com.kunminx.architecture.ui.view.MyItemDecorator
-import com.kunminx.architecture.utils.ext.removeAllItemDecorations
 
 /**
  * Author:lvzhendong

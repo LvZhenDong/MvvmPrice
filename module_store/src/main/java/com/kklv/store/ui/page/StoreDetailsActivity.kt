@@ -8,6 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.drake.statelayout.Status
 import com.kklv.common.ui.view.adapter.BaseSimpleAdapter
+import com.kklv.ktext.drawableLeft
 import com.kklv.store.BR
 import com.kklv.store.R
 import com.kklv.store.data.bean.SchemaBean
@@ -21,7 +22,6 @@ import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
 import com.kunminx.architecture.utils.ext.addLifecycleOnOffsetChangedListener
-import com.kunminx.architecture.utils.ext.drawableLeft
 import com.kunminx.architecture.utils.ext.toast
 import kotlin.math.abs
 import com.kklv.common.R as CR
