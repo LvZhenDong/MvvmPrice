@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide
 import com.kklv.common.R
 import com.kklv.common.ui.view.CustomPagerTitleView
 import com.kklv.common.ui.view.adapter.BannerImageAdapter
-import com.kunminx.architecture.utils.ext.dpFloat
+import com.kklv.ktext.dpFloat
 import com.kunminx.architecture.utils.ViewPager2Helper
 import com.youth.banner.Banner
 import com.youth.banner.listener.OnPageChangeListener
