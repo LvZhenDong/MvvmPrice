@@ -21,7 +21,7 @@ import com.kunminx.architecture.ui.page.BaseFragment
 import com.kunminx.architecture.ui.page.DataBindingConfig
 import com.kunminx.architecture.ui.page.StateHolder
 import com.kunminx.architecture.ui.state.State
-import com.kunminx.architecture.ui.view.MyItemDecorator
+import com.kklv.common.ui.view.MyItemDecorator
 
 /**
  * Author:lvzhendong

@@ -1,9 +1,9 @@
-package com.kunminx.architecture.ui.view
+package com.kklv.common.ui.view
 
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.kunminx.architecture.utils.ext.dpInt
+import com.kklv.ktext.dpInt
 
 /**
  * @author lvzhendong
