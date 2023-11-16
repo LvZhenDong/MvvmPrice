@@ -16,6 +16,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private lateinit var mStates: MainActivityStates
     private lateinit var mMessenger: PageMessenger
 
+    companion object{
+        init {
+            System.loadLibrary("jnitest")
+        }
+    }
+
+    external fun stringFromJNI():String
+
+    external fun stringHello():String
+
     override fun initViewModel() {
         mStates = getActivityScopeViewModel(MainActivityStates::class.java)
         mMessenger = getApplicationScopeViewModel(PageMessenger::class.java)
@@ -31,6 +41,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         mMessenger.output(this) { message ->
             Log.i("kklv", "message id:${message.eventId}")
         }
+
+        Log.i("kklv","jin${stringFromJNI()}")
+        Log.i("kklv","jin${stringHello()}")
     }
 
     inner class ClickProxy {
