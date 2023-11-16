@@ -44,5 +44,5 @@ android {
 dependencies {
     api project(path: ':arch')
 
-    api 'com.github.LvZhenDong:KklvUtils:v1.0.6'
+    api 'com.github.LvZhenDong:KklvUtils:v1.0.7'
 }

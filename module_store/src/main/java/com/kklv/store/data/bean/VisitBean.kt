@@ -1,7 +1,7 @@
 package com.kklv.store.data.bean
 
 import com.google.gson.annotations.JsonAdapter
-import com.kklv.common.data.bean.adapter.IntToBooleanAdapter
+import com.kklv.ktext.jsonadapter.IntToBooleanAdapter
 import com.kklv.mytest.data.bean.base.TagData
 
 /**
