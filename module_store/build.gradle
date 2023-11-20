@@ -77,4 +77,7 @@ dependencies {
     api 'com.alibaba:arouter-api:1.5.2'
     api project(path: ':module_store:export_store')
     kapt 'com.alibaba:arouter-compiler:1.2.1'
+    kapt project(':arg_apt')
+    api project(':arg_apt')
+    api project(':arg_library')
 }

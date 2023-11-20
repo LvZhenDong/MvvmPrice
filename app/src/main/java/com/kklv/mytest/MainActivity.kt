@@ -16,15 +16,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private lateinit var mStates: MainActivityStates
     private lateinit var mMessenger: PageMessenger
 
-    companion object{
+    companion object {
         init {
             System.loadLibrary("jnitest")
         }
     }
 
-    external fun stringFromJNI():String
+    external fun stringFromJNI(): String
 
-    external fun stringHello():String
+    external fun stringHello(): String
 
     override fun initViewModel() {
         mStates = getActivityScopeViewModel(MainActivityStates::class.java)
@@ -42,8 +42,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             Log.i("kklv", "message id:${message.eventId}")
         }
 
-        Log.i("kklv","jin${stringFromJNI()}")
-        Log.i("kklv","jin${stringHello()}")
+        Log.i("kklv", "jin${stringFromJNI()}")
+        Log.i("kklv", "jin${stringHello()}")
     }
 
     inner class ClickProxy {
@@ -52,7 +52,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             if (DataManager.getInstance().isNeedLogin()) {
                 ARouter.getInstance().build(RouterPath.PATH_LOGIN).navigation()
             } else {
-                ARouter.getInstance().build(RouterPath.PATH_STORE_DETAILS).navigation()
+                ARouter.getInstance().build(RouterPath.PATH_STORE_DETAILS).withString("storeId", "storeId value")
+                    .navigation()
             }
 
         }

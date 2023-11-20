@@ -1,12 +1,14 @@
 package com.kklv.store.ui.page
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.drake.statelayout.Status
+import com.kklv.arg_library.BindArguments
 import com.kklv.common.data.RouterPath
 import com.kklv.common.ui.view.adapter.BaseSimpleAdapter
 import com.kklv.ktext.addLifecycleOnOffsetChangedListener
@@ -54,6 +56,8 @@ class StoreDetailsActivity : BaseActivity<ActivityStoreDetailsBinding>() {
         super.onCreate(savedInstanceState)
 
         initView()
+        BindArguments.bind(this, mStoreDetailsRequester)
+        Log.i("kklv", "storeid:${mStoreDetailsRequester.storeId}")
         mStoreDetailsRequester.getStoreDetailsInfoResult().observe(this) {
 
             if (binding.refreshLayout.isRefreshing) binding.refreshLayout.finishRefresh()

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.drake.statelayout.Status
+import com.kklv.arg_apt.ArgumentsField
 import com.kklv.common.data.repository.DataRepository
 import com.kklv.store.data.StoreService
 import com.kklv.store.data.bean.SchemaBean
@@ -27,6 +28,10 @@ import kotlinx.coroutines.launch
  * Desc:
  */
 class StoreDetailsRequester : Requester() {
+
+    @ArgumentsField
+    lateinit var storeId: String
+
     private val storeDetailsInfoResult: MutableLiveData<DataResult<DetailsInfoNavBtn>> = MutableLiveData(DataResult(Status.LOADING))
 
     fun getStoreDetailsInfoResult(): LiveData<DataResult<DetailsInfoNavBtn>> {
