@@ -8,6 +8,7 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -52,9 +53,9 @@ public class ArgumentsProcessor extends AbstractProcessor {
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        HashSet<String> supportTypes = new LinkedHashSet<>();
-        supportTypes.add(ArgumentsField.class.getCanonicalName());
-        return supportTypes;
+//        HashSet<String> supportTypes = new LinkedHashSet<>();
+//        supportTypes.add(ArgumentsField.class.getCanonicalName());
+        return Collections.singleton(ArgumentsField.class.getCanonicalName());
     }
 
     @Override
